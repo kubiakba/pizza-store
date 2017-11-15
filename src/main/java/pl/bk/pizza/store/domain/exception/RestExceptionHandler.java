@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import pl.bk.pizza.store.infrastructure.dao.error.ErrorMessage;
+import pl.bk.pizza.store.infrastructure.error.ErrorMessage;
 
 @ControllerAdvice
 @Slf4j

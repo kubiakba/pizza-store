@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.infrastructure.dao.error;
+package pl.bk.pizza.store.infrastructure.error;
 
 import pl.bk.pizza.store.domain.exception.ErrorCode;
 

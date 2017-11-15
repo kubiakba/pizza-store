@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.infrastructure.dao.dao;
+package pl.bk.pizza.store.infrastructure.dao;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Repository;
