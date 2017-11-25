@@ -1,30 +1,22 @@
-# Overview
+# Pizza store
+
+## Overview
 The goal of project is to create pizza store where you can order
  different kind of foods.
 
-## Done
-- [x] User can add information like city, address, telephone
-- [x] User can order products like pizza, toppings, kebab, salads, cola.
-- [] User can use discounts.
-- [] User can collect points.
+## Roadmap
 
-## Scenarios
-* when i go to /products then i see all products
-* when i go to /order/{userEmail} i start making order
-* when i go to /order/{orderId}/{productId} i add product to order
-* when i go to /discount then i see available discounts
-* when i go to /user/bonus then i see how much points i gather
+  <b>Done</b>
+- [x] Creating an user account.
+- [x] Adding information by user about delivery like city, address, telephone.
+- [x] Offering products like pizza, toppings, kebab, cola.
+- [x] Specifying products attributes like size or flavour.
+- [x] Ordering products.
 
-## Modules
-* product
-* order
-* user
-* discount
+  <b>To do</b>
+- [] Using discounts.
+- [] Collecting points.
 
-## Dependencies
-* user choose product to buy
-* order asks for product info
-* order asks for user info
-* order calculate discounts
-* order give points to user
-* user checks bonus points
+## Technology stack
+
+    Java 8, Spring boot, MongoDb, Spock, Docker, Gradle
