@@ -8,7 +8,7 @@ The goal of project is to create pizza store where you can order
 
   <b>Done</b>
 - [x] Creating an user account.
-- [x] Adding information by user about delivery like city, address, telephone.
+- [x] Adding information by user about delivery like address, telephone.
 - [x] Offering products like pizza, toppings, kebab, cola.
 - [x] Specifying products attributes like size or flavour.
 - [x] Ordering products.
