@@ -1,5 +1,5 @@
 # Pizza store
-[![Build Status](https://travis-ci.org/ntw222/pizza-store.svg?branch=master)(https://travis-ci.org/ntw222/pizza-store)[![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/ntw222/pizza-store)
+https://travis-ci.org/ntw222/pizza-store.svg?branch=master [![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/ntw222/pizza-store)
 ## Overview
 The goal of project is to create pizza store where you can order
  different kind of foods.
