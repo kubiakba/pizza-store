@@ -121,7 +121,7 @@ class OrderSpecification extends BasicSpecification {
             // get order
             response = get("/orders/$orderId", OrderDTO)
         then:
-            response.body.totalPrice == new BigDecimal("3.0")
+            response.body.totalPrice == new BigDecimal("6.0")
     }
 
     def "should validate userEmail"(){
