@@ -30,15 +30,22 @@ repositories {
 }
 
 dependencies {
+    // spring
     compile('org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-data-mongodb:1.5.8.RELEASE')
     compile('org.springframework.security:spring-security-core:4.2.3.RELEASE')
-    compile('org.codehaus.groovy:groovy-all:2.4.12')
+    testCompile('org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE')
+
+    // utils
     compile('commons-lang:commons-lang:2.6')
     compile('commons-validator:commons-validator:1.4.0')
     compile('org.projectlombok:lombok:1.16.18')
+
+    // embedded mongo for tests
     testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.0')
-    testCompile('org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE')
+
+    // spock
+    compile('org.codehaus.groovy:groovy-all:2.4.12')
     testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
     testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-4')
 }
