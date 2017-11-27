@@ -13,9 +13,8 @@ The goal of project is to create pizza store where you can order
 - [x] Specifying products attributes like size or flavour.
 - [x] Ordering products.
 - [x] Using discounts.
+- [x] Collecting points.
 
-  <b>To do</b>
-- [] Collecting points.
 
 ## Technology stack
 
