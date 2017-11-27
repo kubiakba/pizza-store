@@ -77,3 +77,5 @@ jacocoTestReport {
 task wrapper(type:Wrapper){
     gradleVersion = '4.3'
 }
+
+check.dependsOn jacocoTestReport
