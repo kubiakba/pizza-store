@@ -56,6 +56,12 @@ public class OrderController {
     }
 
     @ResponseStatus(NO_CONTENT)
+    @PutMapping("/{orderId}/delivered")
+    public void setStatusToDelivered(@PathVariable String orderId) {
+        orderService.setStatusToDelivered(orderId);
+    }
+
+    @ResponseStatus(NO_CONTENT)
     @PostMapping("/discounts/{orderId}")
     public void applyDiscount(@PathVariable String orderId, @RequestBody DiscountDTO discountDTO) {
         orderService.applyDiscount(discountDTO, orderId);

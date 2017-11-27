@@ -121,6 +121,7 @@ public class DtoMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setTelephone(mapTo(user.getTelephone()));
         userDTO.setAddress(mapTo(user.getAddress()));
+        userDTO.setPoints(user.getPoints());
         return userDTO;
     }
 

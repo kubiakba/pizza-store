@@ -64,6 +64,10 @@ public class Order {
         orderDateTime = LocalDateTime.now(ZoneId.of(DEFAULT_ZONE_NAME));
     }
 
+    public void setToDelivered(){
+        status = Status.DELIVERED;
+    }
+
     public void addDiscount(Discount discount){
         discounts.add(discount);
     }

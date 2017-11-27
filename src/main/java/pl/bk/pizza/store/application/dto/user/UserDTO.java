@@ -10,5 +10,5 @@ public class UserDTO {
     private String surname;
     private AddressDTO address;
     private TelephoneDTO telephone;
-
+    private int points;
 }

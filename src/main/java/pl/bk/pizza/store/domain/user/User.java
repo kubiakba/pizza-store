@@ -18,11 +18,10 @@ public class User {
     private String surname;
     private Address address;
     private Telephone telephone;
-    private Integer points;
     private UserStatus status;
+    private int points;
 
     User(String email, String name, String surname, String password, Address address, Telephone telephone) {
-        points = 0;
         status = UserStatus.ACTIVE;
         validateEmail(email);
         validateName(name);
@@ -78,11 +77,15 @@ public class User {
         this.address.changePostCode(address.getPostCode());
     }
 
+    public void addPoints(Integer numberOfPoints){
+        points += numberOfPoints;
+    }
+
     public void changeTelephone(Telephone telephone) {
         this.telephone = telephone;
     }
 
-    public Integer getPoints(){
+    public int getPoints(){
         return points;
     }
 

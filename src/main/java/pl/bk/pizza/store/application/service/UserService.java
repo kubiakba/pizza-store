@@ -69,4 +69,12 @@ public class UserService {
         user.deactivateUser();
         userRepository.save(user);
     }
+
+    public void addPointsToUser(String email, Integer points){
+        final User user = userRepository.findById(email);
+        check(user == null, () -> new MissingEntityException("user with email: " + email + "does not exists",
+            MISSING_USER));
+        user.addPoints(points);
+        userRepository.save(user);
+    }
 }

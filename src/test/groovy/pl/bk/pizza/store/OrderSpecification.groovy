@@ -11,6 +11,7 @@ import pl.bk.pizza.store.application.dto.product.PizzaDTO
 import pl.bk.pizza.store.application.dto.user.AddressDTO
 import pl.bk.pizza.store.application.dto.user.NewUserDTO
 import pl.bk.pizza.store.application.dto.user.TelephoneDTO
+import pl.bk.pizza.store.application.dto.user.UserDTO
 import pl.bk.pizza.store.common.BasicSpecification
 import pl.bk.pizza.store.domain.exception.ErrorCode
 import pl.bk.pizza.store.domain.order.Status
@@ -163,6 +164,33 @@ class OrderSpecification extends BasicSpecification {
         then:
             response.body.discounts.size() == 1
             response.body.totalPrice == new BigDecimal("3.0")
+    }
+
+    def "should start apply points"(){
+        given:
+            // create user
+            def email = "email@e.pl"
+            NewUserDTO user = getNewUserDTOStub(email)
+            post("/users", user)
+
+            //create order
+            def newOrderDTO = new NewOrderDTO(email: email)
+            def response = post("/orders", newOrderDTO)
+            String orderId = response.body.id
+
+            //create product
+            NewProductDTO productDTO = getProductDTOStub()
+            response = post("/products", productDTO)
+            String productId = response.body.id
+
+            //add products to order
+            30.times{put("/orders/$orderId/$productId", Boolean)}
+        when:
+            // set order to delivered
+            put("/orders/$orderId/delivered", String)
+            response = get("/users/$email", UserDTO)
+        then:
+            response.body.points == 9
     }
 
 
