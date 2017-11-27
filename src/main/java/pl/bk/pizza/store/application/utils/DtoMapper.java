@@ -4,6 +4,9 @@ import org.springframework.stereotype.Service;
 
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
 import pl.bk.pizza.store.application.dto.order.OrderDTO;
+import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
+import pl.bk.pizza.store.application.dto.order.discount.StandardDiscountDTO;
+import pl.bk.pizza.store.application.dto.order.discount.TotalPriceDiscountDTO;
 import pl.bk.pizza.store.application.dto.product.KebabDTO;
 import pl.bk.pizza.store.application.dto.product.NewProductDTO;
 import pl.bk.pizza.store.application.dto.product.PizzaToppingDTO;
@@ -16,6 +19,9 @@ import pl.bk.pizza.store.application.dto.product.PizzaDTO;
 import pl.bk.pizza.store.application.dto.product.ProductInfoDTO;
 
 import pl.bk.pizza.store.domain.exception.ErrorCode;
+import pl.bk.pizza.store.domain.order.discount.Discount;
+import pl.bk.pizza.store.domain.order.discount.price.TotalPriceDiscount;
+import pl.bk.pizza.store.domain.order.discount.product.StandardDiscount;
 import pl.bk.pizza.store.domain.product.PizzaTopping;
 import pl.bk.pizza.store.domain.user.UserFactory;
 import pl.bk.pizza.store.domain.exception.UnsupportedTypeException;
@@ -143,7 +149,26 @@ public class DtoMapper {
             map(this::mapTo).
             collect(toSet());
         orderDTO.setProducts(productDTOs);
+        orderDTO.setDiscounts(order.getDiscounts().stream()
+            .map(this::mapTo)
+            .collect(toSet()));
         return orderDTO;
+    }
+
+    private DiscountDTO mapTo(Discount discount) {
+        if(discount instanceof StandardDiscount) {
+            final StandardDiscountDTO standardDiscountDTO = new StandardDiscountDTO();
+            standardDiscountDTO.setDiscountPercent(((StandardDiscount) discount).getDiscountPercent());
+            return standardDiscountDTO;
+        }
+        if(discount instanceof TotalPriceDiscount) {
+            final TotalPriceDiscountDTO totalPriceDiscountDTO = new TotalPriceDiscountDTO();
+            totalPriceDiscountDTO.setMinAmountOfPaidMoneyToActivateDiscount(((TotalPriceDiscount) discount).getMinAmountOfPaidMoneyToActivateDiscount());
+            totalPriceDiscountDTO.setMoneyToReturn(((TotalPriceDiscount) discount).getMoneyToReturn());
+            return totalPriceDiscountDTO;
+        }
+        throw new UnsupportedTypeException("Not supported " + discount.getClass() + " type.",
+            ErrorCode.UNPROCESSABLE_PRODUCT_TYPE);
     }
 
     public Order mapTo(NewOrderDTO orderDTO) {
@@ -152,5 +177,16 @@ public class DtoMapper {
 
     public Product mapTo(NewProductDTO product) {
         return productFactory.createProduct(product.getPrice(), mapTo(product.getProductInfo()));
+    }
+
+    public Discount mapTo(DiscountDTO discountDTO) {
+        if(discountDTO instanceof TotalPriceDiscountDTO){
+            return new TotalPriceDiscount(((TotalPriceDiscountDTO) discountDTO).getMinAmountOfPaidMoneyToActivateDiscount()
+                ,((TotalPriceDiscountDTO) discountDTO).getMoneyToReturn());
+        } else if(discountDTO instanceof StandardDiscountDTO){
+                return new StandardDiscount(((StandardDiscountDTO) discountDTO).getDiscountPercent());
+        }
+        throw new UnsupportedTypeException("Not supported " + discountDTO.getClass() + " type.",
+            ErrorCode.UNPROCESSABLE_PRODUCT_TYPE);
     }
 }

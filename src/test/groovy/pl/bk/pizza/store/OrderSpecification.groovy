@@ -4,6 +4,8 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO
 import pl.bk.pizza.store.application.dto.order.OrderDTO
+import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO
+import pl.bk.pizza.store.application.dto.order.discount.StandardDiscountDTO
 import pl.bk.pizza.store.application.dto.product.NewProductDTO
 import pl.bk.pizza.store.application.dto.product.PizzaDTO
 import pl.bk.pizza.store.application.dto.user.AddressDTO
@@ -135,6 +137,34 @@ class OrderSpecification extends BasicSpecification {
             email << ["", " ", null]
     }
 
+    def "should apply discount to order"(){
+        given:
+            // create user
+            def email = "email@e.pl"
+            NewUserDTO user = getNewUserDTOStub(email)
+            post("/users", user)
+
+            // create order
+            def newOrderDTO = new NewOrderDTO(email: email)
+            def response = post("/orders", newOrderDTO)
+            String orderId = response.body.id
+
+            //create product
+            NewProductDTO productDTO = getProductDTOStub()
+            response = post("/products", productDTO)
+            String productId = response.body.id
+
+            //add products to order
+            2.times{put("/orders/$orderId/$productId", Boolean)}
+        when:
+            //apply discount to order
+            post("/orders/discounts/$orderId", getNewDiscountDTOStub())
+            response = get("/orders/$orderId", OrderDTO)
+        then:
+            response.body.discounts.size() == 1
+            response.body.totalPrice == new BigDecimal("3.0")
+    }
+
 
     private static NewUserDTO getNewUserDTOStub(String email){
         AddressDTO addressDTO = new AddressDTO(city: "Poz", street: "ul", streetNumber: "4", postCode: "49-399")
@@ -144,6 +174,10 @@ class OrderSpecification extends BasicSpecification {
 
     private static NewProductDTO getProductDTOStub(){
         def productInfo = new PizzaDTO(size: PizzaSize.BIG, dough: Dough.THICK)
-        return new NewProductDTO(price:new BigDecimal("1.50"), productInfo: productInfo )
+        return new NewProductDTO(price:new BigDecimal("3.0"), productInfo: productInfo )
+    }
+
+    private static DiscountDTO getNewDiscountDTOStub(){
+        return new StandardDiscountDTO(discountPercent: new BigDecimal("0.5"))
     }
 }

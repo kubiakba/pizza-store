@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 
 import pl.bk.pizza.store.domain.exception.ErrorCode;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
+import pl.bk.pizza.store.domain.order.discount.Discount;
 import pl.bk.pizza.store.domain.product.Product;
 
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ public class Order {
     private final Set<Product> products;
     private Status status;
     private LocalDateTime orderDateTime;
+    private Set<Discount> discounts;
 
     Order(String id, String userEmail){
         validateUserEmail(userEmail);
@@ -32,6 +34,7 @@ public class Order {
         this.userEmail = userEmail;
         status = Status.STARTED;
         products = new HashSet<>();
+        discounts = new HashSet<>();
     }
 
     private void validateUserEmail(String userEmail) {
@@ -44,14 +47,25 @@ public class Order {
     }
 
     public BigDecimal calculateTotalPrice(){
-        return products.stream()
-            .map(Product::getPrice)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal priceToPay = products.stream()
+           .map(Product::getPrice)
+           .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        for(Discount discount :discounts){
+            priceToPay = discount.calculateDiscount(priceToPay);
+        }
+
+        return priceToPay;
     }
 
     public void setToRealization(){
         status = Status.TO_REALIZATION;
         orderDateTime = LocalDateTime.now(ZoneId.of(DEFAULT_ZONE_NAME));
+    }
+
+    public void addDiscount(Discount discount){
+        discounts.add(discount);
     }
 
     public String getId() {
@@ -68,6 +82,10 @@ public class Order {
 
     public Set<Product> getProducts() {
         return products;
+    }
+
+    public Set<Discount> getDiscounts() {
+        return discounts;
     }
 }
 

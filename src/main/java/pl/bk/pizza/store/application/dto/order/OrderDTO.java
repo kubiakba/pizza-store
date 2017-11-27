@@ -2,6 +2,7 @@ package pl.bk.pizza.store.application.dto.order;
 
 import lombok.Data;
 
+import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
 import pl.bk.pizza.store.application.dto.product.ProductDTO;
 import pl.bk.pizza.store.domain.order.Status;
 
@@ -16,4 +17,5 @@ public class OrderDTO {
     private Set<ProductDTO> products;
     private Status status;
     private BigDecimal totalPrice;
+    private Set<DiscountDTO> discounts;
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
 import pl.bk.pizza.store.application.dto.order.OrderDTO;
+import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
 import pl.bk.pizza.store.application.service.OrderService;
 
 import java.net.URI;
@@ -53,4 +54,11 @@ public class OrderController {
     public void setStatusToRealization(@PathVariable String orderId) {
         orderService.setStatusToRealization(orderId);
     }
+
+    @ResponseStatus(NO_CONTENT)
+    @PostMapping("/discounts/{orderId}")
+    public void applyDiscount(@PathVariable String orderId, @RequestBody DiscountDTO discountDTO) {
+        orderService.applyDiscount(discountDTO, orderId);
+    }
+
 }

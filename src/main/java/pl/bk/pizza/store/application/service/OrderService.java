@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
 import pl.bk.pizza.store.application.dto.order.OrderDTO;
+import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
 import pl.bk.pizza.store.application.utils.DtoMapper;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
 import pl.bk.pizza.store.domain.order.Order;
@@ -51,5 +52,13 @@ public class OrderService {
 
     public OrderDTO getOrderById(String orderId) {
         return dtoMapper.mapTo(orderRepository.getOrderById(orderId));
+    }
+
+    public void applyDiscount(DiscountDTO discountDTO, String orderId){
+        final Order order = orderRepository.getOrderById(orderId);
+        check(order == null,() -> new MissingEntityException("Cannot find order with id: " + orderId,
+            MISSING_ORDER));
+        order.addDiscount(dtoMapper.mapTo(discountDTO));
+        orderRepository.save(order);
     }
 }
