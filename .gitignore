@@ -3,3 +3,5 @@
 data
 build
 out
+*.iml
+node_modules
