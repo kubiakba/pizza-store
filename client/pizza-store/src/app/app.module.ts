@@ -5,6 +5,7 @@ import {NavbarComponent} from "./navbar/navbar.component";
 import {UserComponent} from "./user/user.component";
 import {UserService} from "./user-service/user.service";
 import {HttpClientModule} from "@angular/common/http";
+import {RouterModule} from "@angular/router";
 
 
 @NgModule({
@@ -14,7 +15,10 @@ import {HttpClientModule} from "@angular/common/http";
     UserComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule
+    BrowserModule, HttpClientModule,
+    RouterModule.forRoot([
+      { path:'users', component: UserComponent }
+    ])
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
