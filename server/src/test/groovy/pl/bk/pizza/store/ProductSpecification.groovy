@@ -149,4 +149,61 @@ class ProductSpecification extends BasicSpecification{
         where:
             name << ["", " ", null]
     }
+
+    def "should get only pizzas"(){
+        given:
+            // create products
+            def pizzaDTO = new PizzaDTO(size: PizzaSize.BIG, dough: Dough.THICK)
+            def kebabDTO = new KebabDTO(description: "Z dodatkami", name: "Duży")
+            def pizza = new NewProductDTO(price:new BigDecimal("1.50"), productInfo: pizzaDTO )
+            def kebab = new NewProductDTO(price:new BigDecimal("1.50"), productInfo: kebabDTO )
+            // add products
+            2.times{post("/products", kebab)}
+            post("/products", pizza)
+        when:
+            // get products
+            def response = get("/products/pizzas", new ParameterizedTypeReference<List<ProductDTO>>(){})
+        then:
+            response.statusCode == HttpStatus.OK
+            response.body.size() == 1
+            response.body[0].productInfo.class == PizzaDTO.class
+    }
+
+    def "should get only kebabs"(){
+        given:
+            // create products
+            def pizzaDTO = new PizzaDTO(size: PizzaSize.BIG, dough: Dough.THICK)
+            def kebabDTO = new KebabDTO(description: "Z dodatkami", name: "Duży")
+            def pizza = new NewProductDTO(price:new BigDecimal("1.50"), productInfo: pizzaDTO )
+            def kebab = new NewProductDTO(price:new BigDecimal("1.50"), productInfo: kebabDTO )
+            // add products
+            post("/products", pizza)
+            2.times{post("/products", kebab)}
+        when:
+            // get products
+            def response = get("/products/kebabs", new ParameterizedTypeReference<List<ProductDTO>>(){})
+        then:
+            response.statusCode == HttpStatus.OK
+            response.body.size() == 2
+            response.body[0].productInfo.class == KebabDTO.class
+    }
+
+    def "should get only pizza toppings"(){
+        given:
+            // create products
+            def pizzaToppingsDTO = new PizzaToppingDTO(name: "Salami")
+            def kebabDTO = new KebabDTO(description: "Z dodatkami", name: "Duży")
+            def pizzaTopping = new NewProductDTO(price:new BigDecimal("1.50"), productInfo: pizzaToppingsDTO )
+            def kebab = new NewProductDTO(price:new BigDecimal("1.50"), productInfo: kebabDTO )
+            // add products
+            post("/products", pizzaTopping)
+            post("/products", kebab)
+        when:
+            // get products
+            def response = get("/products/pizzaToppings", new ParameterizedTypeReference<List<ProductDTO>>(){})
+        then:
+            response.statusCode == HttpStatus.OK
+            response.body.size() == 1
+            response.body[0].productInfo.class == PizzaToppingDTO.class
+    }
 }

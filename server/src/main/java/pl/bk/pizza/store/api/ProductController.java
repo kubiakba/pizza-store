@@ -45,6 +45,24 @@ public class ProductController {
     }
 
     @ResponseStatus(OK)
+    @GetMapping("/pizzas")
+    public List<ProductDTO> getAllPizzas() {
+        return productService.getAllPizzas();
+    }
+
+    @ResponseStatus(OK)
+    @GetMapping("/kebabs")
+    public List<ProductDTO> getAllKebabs() {
+        return productService.getAllKebabs();
+    }
+
+    @ResponseStatus(OK)
+    @GetMapping("/pizzaToppings")
+    public List<ProductDTO> getAllPizzaToppings() {
+        return productService.getAllPizzaToppings();
+    }
+
+    @ResponseStatus(OK)
     @GetMapping("/available")
     public List<ProductDTO> getAllAvailableProducts(){
         return productService.getAllAvailableProducts();

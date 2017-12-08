@@ -11,6 +11,7 @@ import pl.bk.pizza.store.domain.product.Product;
 import pl.bk.pizza.store.domain.product.ProductRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.*;
@@ -68,4 +69,26 @@ public class ProductService {
         product.makeNonavailable();
         productRepository.save(product);
     }
+
+    public List<ProductDTO> getAllPizzas() {
+        return productRepository.getAllPizzas()
+            .stream()
+            .map(dtoMapper::mapTo)
+            .collect(toList());
+    }
+
+    public List<ProductDTO> getAllKebabs() {
+        return productRepository.getAllKebabs()
+            .stream()
+            .map(dtoMapper::mapTo)
+            .collect(toList());
+    }
+
+    public List<ProductDTO> getAllPizzaToppings() {
+        return productRepository.getAllPizzaToppings()
+            .stream()
+            .map(dtoMapper::mapTo)
+            .collect(toList());
+    }
+
 }

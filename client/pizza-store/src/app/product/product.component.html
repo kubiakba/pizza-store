@@ -1,0 +1,25 @@
+<h1>Pizzas</h1>
+<ul>
+  <li *ngFor="let pizza of pizzas">
+    price : {{ pizza.price }} zł
+    size : {{ pizza.productInfo.size }}
+    dough : {{ pizza.productInfo.dough }}
+  </li>
+</ul>
+
+<h1>Kebabs</h1>
+<ul>
+  <li *ngFor="let kebab of kebabs">
+    price: {{ kebab.price }}
+    description: {{ kebab.productInfo.description }}
+    name: {{ kebab.productInfo.name }}
+  </li>
+</ul>
+
+<h1>Pizza Toppings</h1>
+<ul>
+  <li *ngFor="let pizzaTopping of pizzaToppings">
+    price: {{ pizzaTopping.price }}
+    name: {{ pizzaTopping.productInfo.name }}
+  </li>
+</ul>
