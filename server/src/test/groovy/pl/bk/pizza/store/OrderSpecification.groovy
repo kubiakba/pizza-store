@@ -1,5 +1,6 @@
 package pl.bk.pizza.store
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO
@@ -14,14 +15,25 @@ import pl.bk.pizza.store.application.dto.user.TelephoneDTO
 import pl.bk.pizza.store.application.dto.user.UserDTO
 import pl.bk.pizza.store.common.BasicSpecification
 import pl.bk.pizza.store.domain.exception.ErrorCode
+import pl.bk.pizza.store.domain.order.OrderRepository
 import pl.bk.pizza.store.domain.order.Status
 import pl.bk.pizza.store.domain.product.Dough
 import pl.bk.pizza.store.domain.product.PizzaSize
+import pl.bk.pizza.store.domain.report.OrderReport
+
+import java.nio.file.Files
+import java.time.Duration
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class OrderSpecification extends BasicSpecification {
+
+    @Autowired
+    private OrderRepository orderRepository
+
+    @Autowired
+    private OrderReport orderReport
 
     def "should create order and get it"(){
         given:
@@ -193,6 +205,62 @@ class OrderSpecification extends BasicSpecification {
             response.body.points == 9
     }
 
+    def "should create order and find it via findLastOrders()"(){
+        given:
+            // create user
+            def email = "email@e.pl"
+            NewUserDTO user = getNewUserDTOStub(email)
+            post("/users", user)
+
+            //create order
+            def newOrderDTO = new NewOrderDTO(email: email)
+            def response = post("/orders", newOrderDTO)
+            String orderId = response.body.id
+
+            // start order realization
+            put("/orders/$orderId/to-realization", String)
+        when:
+            def orders = orderRepository.findLastOrders(Duration.ofHours(1))
+        then:
+            orders.size() == 1
+    }
+
+    def "should generate order report"(){
+        given:
+            // create user
+            def email = "email@e.pl"
+            NewUserDTO user = getNewUserDTOStub(email)
+            post("/users", user)
+
+            //create order
+            def newOrderDTO = new NewOrderDTO(email: email)
+            def response = post("/orders", newOrderDTO)
+            String orderId = response.body.id
+
+            //create 2 order
+            def newOrderDTO2 = new NewOrderDTO(email: email)
+            def response2 = post("/orders", newOrderDTO2)
+            String orderId2 = response2.body.id
+
+            // start order realizations
+            put("/orders/$orderId/to-realization", String)
+            put("/orders/$orderId2/to-realization", String)
+        when:
+            orderRepository.findLastOrders(Duration.ofHours(1))
+            orderReport.generateLastOrdersReport(Duration.ofHours(1))
+        and:
+            final String homeDir = System.getProperty("user.home")
+            File file = new File(homeDir + "/Download")
+        then:
+            file.exists()
+        cleanup:
+            removeNewestFile(file)
+    }
+
+    private void removeNewestFile(File file) {
+        File newestFile = file.listFiles().max {it.lastModified()}
+        Files.delete(newestFile.toPath())
+    }
 
     private static NewUserDTO getNewUserDTOStub(String email){
         AddressDTO addressDTO = new AddressDTO(city: "Poz", street: "ul", streetNumber: "4", postCode: "49-399")

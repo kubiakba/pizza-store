@@ -27,11 +27,13 @@ public class Order {
     private Status status;
     private LocalDateTime orderDateTime;
     private Set<Discount> discounts;
+    private BigDecimal totalPrice;
 
     Order(String id, String userEmail){
         validateUserEmail(userEmail);
         this.id = id;
         this.userEmail = userEmail;
+        totalPrice = BigDecimal.ZERO;
         status = Status.STARTED;
         products = new HashSet<>();
         discounts = new HashSet<>();
@@ -62,6 +64,7 @@ public class Order {
     public void setToRealization(){
         status = Status.TO_REALIZATION;
         orderDateTime = LocalDateTime.now(ZoneId.of(DEFAULT_ZONE_NAME));
+        totalPrice = calculateTotalPrice();
     }
 
     public void setToDelivered(){
@@ -90,6 +93,14 @@ public class Order {
 
     public Set<Discount> getDiscounts() {
         return discounts;
+    }
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
     }
 }
 
