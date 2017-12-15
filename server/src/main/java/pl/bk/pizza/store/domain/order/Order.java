@@ -95,9 +95,13 @@ public class Order {
         return discounts;
     }
 
-    public BigDecimal getTotalPrice() { return totalPrice; }
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
 
-    public LocalDateTime getOrderDateTime() { return orderDateTime; }
+    public LocalDateTime getOrderDateTime() {
+        return orderDateTime;
+    }
 }
 
 

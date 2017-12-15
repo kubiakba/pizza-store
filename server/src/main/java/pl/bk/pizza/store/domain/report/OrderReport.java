@@ -39,11 +39,10 @@ public class OrderReport {
             .fromIterable(orders)
             .zipWith(Flowable.range(1, Integer.MAX_VALUE),
                 (order, counter) -> counter + "." + "\n"
-                                        +("Id: " + order.getId() + "\n")
-                                        +("Status: " + order.getStatus() + "\n")
-                                        +("User email: " + order.getUserEmail() + "\n")
-                                        +("Total price: " + order.getTotalPrice() + "\n")
-                                        +("\n")
+                                        + ("Id: " + order.getId() + "\n")
+                                        + ("Status: " + order.getStatus() + "\n")
+                                        + ("User email: " + order.getUserEmail() + "\n")
+                                        + ("Total price: " + order.getTotalPrice() + "\n" + "\n")
             )
             .subscribe(
                 str -> Files.append(str, file, Charset.defaultCharset()),
