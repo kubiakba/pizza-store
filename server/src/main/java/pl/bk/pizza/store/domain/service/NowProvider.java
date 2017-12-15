@@ -3,7 +3,7 @@ package pl.bk.pizza.store.domain.service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-public class NowProvider {
+public final class NowProvider {
 
     private NowProvider() {
     }
