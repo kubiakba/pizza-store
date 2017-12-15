@@ -25,6 +25,7 @@ allprojects {
         testCompile('org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE')
 
         // utils
+        compile('io.reactivex.rxjava2:rxjava:2.1.7')
         compile('commons-lang:commons-lang:2.6')
         compile('commons-validator:commons-validator:1.4.0')
         compile('org.projectlombok:lombok:1.16.18')
