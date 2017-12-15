@@ -96,6 +96,8 @@ public class Order {
     }
 
     public BigDecimal getTotalPrice() { return totalPrice; }
+
+    public LocalDateTime getOrderDateTime() { return orderDateTime; }
 }
 
 
