@@ -1,7 +1,5 @@
 package pl.bk.pizza.store.domain.product;
 
-import pl.bk.pizza.store.application.dto.product.ProductDTO;
-
 import java.util.List;
 
 public interface ProductRepository {

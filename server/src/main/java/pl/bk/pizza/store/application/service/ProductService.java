@@ -11,7 +11,6 @@ import pl.bk.pizza.store.domain.product.Product;
 import pl.bk.pizza.store.domain.product.ProductRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.*;
