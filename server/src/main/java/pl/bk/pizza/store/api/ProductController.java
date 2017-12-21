@@ -23,7 +23,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/products")
-public class ProductController {
+class ProductController {
 
     private final ProductService productService;
 

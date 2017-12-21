@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/orders")
-public class OrderController {
+class OrderController {
 
     private final OrderService orderService;
 
