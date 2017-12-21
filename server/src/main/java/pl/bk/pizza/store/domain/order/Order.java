@@ -26,7 +26,7 @@ public class Order {
     private final Set<Product> products;
     private Status status;
     private LocalDateTime orderDateTime;
-    private Set<Discount> discounts;
+    private final Set<Discount> discounts;
     private BigDecimal totalPrice;
 
     Order(String id, String userEmail){
