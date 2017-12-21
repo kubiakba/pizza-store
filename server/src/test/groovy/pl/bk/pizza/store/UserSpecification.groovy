@@ -174,6 +174,19 @@ class UserSpecification extends BasicSpecification {
 
     }
 
+    def "should not create user with email which was used before"() {
+        given:
+            // create user
+            def email = "email@e.pl"
+            NewUserDTO user = getNewUserDTOStub(email)
+            post("/users", user)
+        when:
+            def response = post("/users", user)
+        then:
+            response.getStatusCode() == HttpStatus.UNPROCESSABLE_ENTITY
+            response.body.errorCode == USER_EXISTS.toString()
+    }
+
     private static NewUserDTO getNewUserDTOStub(){
         AddressDTO addressDTO = new AddressDTO(city: "Poz", street: "ul", streetNumber: "4", postCode: "49-399")
         TelephoneDTO telephoneDTO = new TelephoneDTO(number: "222")

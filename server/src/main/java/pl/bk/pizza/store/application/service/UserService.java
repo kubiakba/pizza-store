@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.dto.user.UserDTO;
 import pl.bk.pizza.store.application.utils.DtoMapper;
+import pl.bk.pizza.store.domain.exception.DuplicateEntityException;
+import pl.bk.pizza.store.domain.exception.ErrorCode;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
 import pl.bk.pizza.store.domain.user.User;
 import pl.bk.pizza.store.domain.user.UserRepository;
@@ -25,6 +27,8 @@ public class UserService {
     }
 
     public UserDTO createUser(NewUserDTO userDTO) {
+        check(userRepository.findById(userDTO.getEmail()) != null,
+            () -> new DuplicateEntityException("User with email: " + userDTO.getEmail() + " already exists", ErrorCode.USER_EXISTS));
         User user = dtoMapper.mapTo((userDTO));
         userRepository.save(user);
         return dtoMapper.mapTo(user);

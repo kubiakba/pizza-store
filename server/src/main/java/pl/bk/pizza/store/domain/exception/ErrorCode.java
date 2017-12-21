@@ -24,5 +24,6 @@ public enum ErrorCode {
     MISSING_ORDER,
     MISSING_PRODUCT,
     MISSING_USER,
+    USER_EXISTS,
     EMPTY_PRODUCT_PRICE
 }
