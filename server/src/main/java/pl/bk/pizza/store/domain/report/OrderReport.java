@@ -29,7 +29,7 @@ public class OrderReport {
     }
 
     public void generateLastOrdersReport(Duration time) throws IOException {
-        List<Order> orders = orderRepository.findLastOrders(time);
+        final List<Order> orders = orderRepository.findLastOrders(time);
         final String homeDir = System.getProperty("user.home");
         final String now = NowProvider.now().toString();
         final File file = new File(homeDir + "/Download/last-order-report-" + now + ".txt");
