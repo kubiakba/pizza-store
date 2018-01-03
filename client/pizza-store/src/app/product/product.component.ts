@@ -30,4 +30,9 @@ export class ProductComponent implements OnInit {
         this.pizzaToppings = data;
       })
   }
+
+  addToBasket(price) {
+    console.log(price);
+  }
+
 }

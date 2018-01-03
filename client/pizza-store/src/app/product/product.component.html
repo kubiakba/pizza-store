@@ -1,25 +1,34 @@
-<h1>Pizzas</h1>
-<ul>
-  <li *ngFor="let pizza of pizzas">
-    price : {{ pizza.price }} zł
-    size : {{ pizza.productInfo.size }}
-    dough : {{ pizza.productInfo.dough }}
-  </li>
-</ul>
+<div class="container color-dark">
+  <h1 class="product-category">Pizza</h1>
+  <ul>
+    <li *ngFor="let pizza of pizzas">
+      cena : {{ pizza.price }} zł
+      rozmiar : {{ pizza.productInfo.size }}
+      ciasto : {{ pizza.productInfo.dough }}
+      <button (click)="addToBasket(pizza.id)">Dodaj do koszyka</button>
+    </li>
+  </ul>
+</div>
 
-<h1>Kebabs</h1>
+<div class="container color-dark">
+  <h1 class="product-category">Kebab</h1>
 <ul>
   <li *ngFor="let kebab of kebabs">
-    price: {{ kebab.price }}
-    description: {{ kebab.productInfo.description }}
-    name: {{ kebab.productInfo.name }}
+    cena: {{ kebab.price }}
+    opis: {{ kebab.productInfo.description }}
+    nazwa: {{ kebab.productInfo.name }}
+    <button (click)="addToBasket(kebab.id)">Dodaj do koszyka</button>
   </li>
 </ul>
+</div>
 
-<h1>Pizza Toppings</h1>
+<div class="container color-dark">
+<h1 class="product-category">Dodatki</h1>
 <ul>
   <li *ngFor="let pizzaTopping of pizzaToppings">
-    price: {{ pizzaTopping.price }}
-    name: {{ pizzaTopping.productInfo.name }}
+    cena: {{ pizzaTopping.price }}
+    nazwa: {{ pizzaTopping.productInfo.name }}
+    <button (click)="addToBasket(pizzaTopping.id)">Dodaj do koszyka</button>
   </li>
 </ul>
+</div>
