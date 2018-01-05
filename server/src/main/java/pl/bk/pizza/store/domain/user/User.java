@@ -9,7 +9,7 @@ import static org.apache.commons.lang.StringUtils.isBlank;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.*;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
 
-public class User {
+public class User{
 
     @Id
     private final String email;
@@ -20,14 +20,17 @@ public class User {
     private Telephone telephone;
     private UserStatus status;
     private int points;
+    private String role;
 
-    User(String email, String name, String surname, String password, Address address, Telephone telephone) {
+    User(String email, String name, String surname, String password, Address address,
+         Telephone telephone, String role) {
         status = UserStatus.ACTIVE;
         validateEmail(email);
         validateName(name);
         validateSurname(surname);
         validateAddress(address);
         validateTelephone(telephone);
+        this.role = role;
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -102,4 +105,6 @@ public class User {
     public Address getAddress() { return address; }
 
     public Telephone getTelephone() { return telephone; }
+
+    public String getRole() { return role; }
 }

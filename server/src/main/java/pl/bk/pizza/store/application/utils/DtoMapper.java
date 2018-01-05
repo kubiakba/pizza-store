@@ -56,7 +56,7 @@ public class DtoMapper {
 
     public User mapTo(NewUserDTO newUser){
         return userFactory.createUser(newUser.getEmail(), newUser.getName(), newUser.getSurname(),
-            newUser.getPassword(), mapTo(newUser.getAddress()),mapTo(newUser.getTelephone()));
+            newUser.getPassword(), mapTo(newUser.getAddress()),mapTo(newUser.getTelephone()), newUser.getRole());
     }
 
     public Telephone mapTo(TelephoneDTO telephone) {

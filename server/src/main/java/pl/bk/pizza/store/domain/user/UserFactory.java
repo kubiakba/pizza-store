@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserFactory {
 
-    public User createUser(String email, String name, String surname, String password, Address address, Telephone telephone) {
-        return new User(email, name, surname, new BCryptPasswordEncoder().encode(password), address, telephone);
+    public User createUser(String email, String name, String surname, String password, Address address, Telephone telephone, String role) {
+        return new User(email, name, surname, new BCryptPasswordEncoder().encode(password), address, telephone,
+            role);
     }
 }
