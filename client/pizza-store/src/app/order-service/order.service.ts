@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class OrderService {
 
-  url ="/api/orders/"
+  url ="/orders/"
   constructor(private http: HttpClient) { }
 
   public getOrder(id :String): Observable<any> {

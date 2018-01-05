@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 @Injectable()
 export class ProductService {
 
-  url ="/api/products/";
+  url ="/products/";
   pizzaUrl ="pizzas";
   kebabUrl ="kebabs";
   pizzaToppingUrl ="pizzaToppings";
