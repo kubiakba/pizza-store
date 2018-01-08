@@ -10,7 +10,8 @@ import { OrderComponent } from './order/order.component';
 import { ProductComponent } from './product/product.component';
 import {OrderService} from "./order-service/order.service";
 import {ProductService} from "./product-service/product.service";
-
+import { RegistrationComponent } from './registration/registration.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,14 +19,16 @@ import {ProductService} from "./product-service/product.service";
     NavbarComponent,
     UserComponent,
     OrderComponent,
-    ProductComponent
+    ProductComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
-      { path:'users', component: UserComponent },
-      { path:'orders', component: OrderComponent },
-      { path:'products', component: ProductComponent }
+      { path:'offer', component: ProductComponent },
+      { path:'register', component: RegistrationComponent }
     ])
   ],
   providers: [UserService, OrderService, ProductService],
