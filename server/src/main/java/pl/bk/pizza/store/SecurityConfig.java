@@ -3,6 +3,7 @@ package pl.bk.pizza.store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,12 +26,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         httpSecurity
             .authorizeRequests()
-            .antMatchers("/users", "/orders")
-            .hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST,"/products")
+                .hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/products/*")
+                .hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/orders/{\\d+}/delivered")
+                .hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET,"/users/{\\d+}/bonus")
+                .permitAll()
+                .antMatchers(HttpMethod.GET,"/users/*")
+                .hasRole("ADMIN")
+                .antMatchers("/*")
+                .permitAll()
             .and()
             .formLogin()
             .and()
-            .csrf();
+            .csrf().disable();
     }
 
     @Override
