@@ -1,0 +1,74 @@
+
+<form class="form-horizontal" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+
+  <div class="registration-sign">Rejestracja</div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="email" class="control-label">Email</label>
+      <input type="text" id="email" class="form-control" formControlName="email">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="password" class="control-label">Hasło</label>
+      <input type="password" id="password" class="form-control" formControlName="password">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="name" class="control-label">Imię</label>
+      <input type="text" id="name" class="form-control" formControlName="name">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="surname" class="control-label">Nazwisko</label>
+      <input type="text" id="surname" class="form-control" formControlName="surname">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="telephone" class="control-label">Telefon</label>
+      <input type="text" id="telephone" class="form-control" formControlName="telephone">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="city" class="control-label">Miejscowość</label>
+      <input type="text" id="city" class="form-control" formControlName="city">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="postCode" class="control-label">Kod pocztowy</label>
+      <input type="text" id="postCode" class="form-control" formControlName="postCode">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="street" class="control-label">Ulica</label>
+      <input type="text" id="street" class="form-control" formControlName="street">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-17">
+      <label for="streetNumber" class="control-label">Numer domu</label>
+      <input type="text" id="streetNumber" class="form-control" formControlName="streetNumber">
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary">
+    Zarejestruj
+  </button>
+
+</form>
+

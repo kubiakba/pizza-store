@@ -6,11 +6,15 @@ import {User} from "./user";
 @Injectable()
 export class UserService {
 
-  url = "/users/";
+  url = "/users";
   constructor(private http: HttpClient) { }
 
   public getUser(id :String): Observable<User> {
     return this.http.get<User>(this.url + id);
+  }
+
+  public createUser(user: User): Observable<User> {
+    return this.http.post<User>(this.url, user);
   }
 
 }

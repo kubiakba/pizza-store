@@ -1,6 +1,6 @@
 export class Address {
-   city :String;
-   street :String;
-   streetNumber :String;
-   postCode :String;
+   public city :String;
+   public street :String;
+   public streetNumber :String;
+   public postCode :String;
 }
