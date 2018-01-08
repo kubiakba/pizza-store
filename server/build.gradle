@@ -1,4 +1,7 @@
 apply plugin: 'docker'
+apply plugin: 'application'
+
+mainClassName = 'pl.bk.pizza.store.Initializer'
 
 task buildDocker(type: Docker, dependsOn: build) {
     applicationName = jar.baseName

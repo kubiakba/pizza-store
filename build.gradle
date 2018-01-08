@@ -8,9 +8,6 @@ buildscript {
     }
 }
 
-apply plugin: 'application'
-mainClassName = 'pl.bk.pizza.store.Initializer'
-
 allprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
