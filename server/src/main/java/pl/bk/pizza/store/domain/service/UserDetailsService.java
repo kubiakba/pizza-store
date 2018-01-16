@@ -21,13 +21,13 @@ public class UserDetailsService implements org.springframework.security.core.use
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final User user = userRepository.findById(username);
-        check(user == null, ()-> new MissingEntityException("User with id: " + username +" does not exists.",
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        final User user = userRepository.findById(email);
+        check(user == null, ()-> new MissingEntityException("User with email: " + email +" does not exists.",
             ErrorCode.MISSING_USER));
 
         return org.springframework.security.core.userdetails.User
-            .withUsername(username)
+            .withUsername(user.getEmail())
             .password(user.getPassword())
             .roles(user.getRole())
             .build();
