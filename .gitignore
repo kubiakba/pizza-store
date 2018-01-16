@@ -5,3 +5,10 @@ build
 out
 *.iml
 node_modules
+.gitignore
+
+server/build
+server/gradlew
+server/resources
+server/gradle
+server/src/main/resources/static
