@@ -3,6 +3,7 @@ package pl.bk.pizza.store
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpStatus
+import org.springframework.test.context.ActiveProfiles
 import pl.bk.pizza.store.application.dto.product.KebabDTO
 import pl.bk.pizza.store.application.dto.product.NewProductDTO
 import pl.bk.pizza.store.application.dto.product.NewProductPriceDTO
@@ -18,6 +19,7 @@ import pl.bk.pizza.store.domain.product.Status
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@ActiveProfiles("no-security")
 class ProductSpecification extends BasicSpecification{
 
     def "should create product and get it"(){

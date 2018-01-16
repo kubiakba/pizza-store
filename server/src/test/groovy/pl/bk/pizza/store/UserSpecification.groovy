@@ -2,6 +2,7 @@ package pl.bk.pizza.store
 
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
+import org.springframework.test.context.ActiveProfiles
 import pl.bk.pizza.store.application.dto.user.AddressDTO
 import pl.bk.pizza.store.application.dto.user.NewUserDTO
 import pl.bk.pizza.store.application.dto.user.TelephoneDTO
@@ -14,6 +15,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 import static pl.bk.pizza.store.domain.exception.ErrorCode.*
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@ActiveProfiles("no-security")
 class UserSpecification extends BasicSpecification {
 
     def "should create user and get it"() {

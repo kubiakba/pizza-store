@@ -3,6 +3,7 @@ package pl.bk.pizza.store
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
+import org.springframework.test.context.ActiveProfiles
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO
 import pl.bk.pizza.store.application.dto.order.OrderDTO
 import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO
@@ -27,6 +28,7 @@ import java.time.Duration
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@ActiveProfiles("no-security")
 class OrderSpecification extends BasicSpecification {
 
     @Autowired
