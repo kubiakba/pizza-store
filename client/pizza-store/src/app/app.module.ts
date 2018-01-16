@@ -12,6 +12,7 @@ import {OrderService} from "./order-service/order.service";
 import {ProductService} from "./product-service/product.service";
 import { RegistrationComponent } from './registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HttpClientXsrfModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule, HttpClientModule,
+    HttpClientXsrfModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
