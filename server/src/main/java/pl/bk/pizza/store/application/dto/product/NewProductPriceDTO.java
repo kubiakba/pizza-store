@@ -1,11 +1,13 @@
 package pl.bk.pizza.store.application.dto.product;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@Data
-public class NewProductPriceDTO {
-
+@AllArgsConstructor
+@Getter
+public class NewProductPriceDTO
+{
     private BigDecimal price;
 }

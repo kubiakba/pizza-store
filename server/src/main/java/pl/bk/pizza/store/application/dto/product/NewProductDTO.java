@@ -1,15 +1,14 @@
 package pl.bk.pizza.store.application.dto.product;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@Data
-public class NewProductDTO {
-
+@AllArgsConstructor
+@Getter
+public class NewProductDTO<T extends ProductInfoDTO>
+{
     private BigDecimal price;
-    @JsonTypeInfo(use= JsonTypeInfo.Id.MINIMAL_CLASS, include= JsonTypeInfo.As.PROPERTY, property="@class")
-    private ProductInfoDTO productInfo;
+    private T productInfo;
 }

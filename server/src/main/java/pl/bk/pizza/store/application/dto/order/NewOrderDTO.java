@@ -1,9 +1,11 @@
 package pl.bk.pizza.store.application.dto.order;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
-public class NewOrderDTO {
-
-    private String email;
+@AllArgsConstructor
+@Getter
+public class NewOrderDTO
+{
+    private final String email;
 }

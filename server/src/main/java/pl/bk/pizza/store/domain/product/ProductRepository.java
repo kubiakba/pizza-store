@@ -1,18 +1,7 @@
 package pl.bk.pizza.store.domain.product;
 
-import java.util.List;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-public interface ProductRepository {
-
-    void save(Product product);
-
-    Product getProductById(String id);
-
-    List<Product> getAllProducts();
-
-    List<Product> getAllPizzas();
-
-    List<Product> getAllKebabs();
-
-    List<Product> getAllPizzaToppings();
+public interface ProductRepository extends ReactiveMongoRepository<Product, String>
+{
 }

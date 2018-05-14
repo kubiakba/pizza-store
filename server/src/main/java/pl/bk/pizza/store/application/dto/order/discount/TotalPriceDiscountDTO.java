@@ -1,12 +1,14 @@
 package pl.bk.pizza.store.application.dto.order.discount;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@Data
-public class TotalPriceDiscountDTO implements DiscountDTO{
-
-    private BigDecimal minAmountOfPaidMoneyToActivateDiscount;
+@AllArgsConstructor
+@Getter
+public class TotalPriceDiscountDTO implements DiscountDTO
+{
+    private BigDecimal moneyLimitActivator;
     private BigDecimal moneyToReturn;
 }

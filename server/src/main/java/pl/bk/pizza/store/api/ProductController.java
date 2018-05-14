@@ -1,5 +1,6 @@
 package pl.bk.pizza.store.api;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,80 +10,89 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
 import pl.bk.pizza.store.application.dto.product.NewProductDTO;
 import pl.bk.pizza.store.application.dto.product.NewProductPriceDTO;
 import pl.bk.pizza.store.application.dto.product.ProductDTO;
 import pl.bk.pizza.store.application.service.ProductService;
+import pl.bk.pizza.store.domain.product.kebab.Kebab;
+import pl.bk.pizza.store.domain.product.pizza.Pizza;
+import pl.bk.pizza.store.domain.product.pizza.PizzaTopping;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping("/products")
-class ProductController {
-
+@AllArgsConstructor
+class ProductController
+{
     private final ProductService productService;
-
-    public ProductController(ProductService productService){
-        this.productService = productService;
-    }
-
+    
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody NewProductDTO product){
-        ProductDTO productDTO = productService.createProduct(product);
-        URI location = URI.create("/products/" + productDTO.getId());
-        return ResponseEntity.created(location).body(productDTO);
+    public Mono<ResponseEntity<ProductDTO>> createProduct(@RequestBody NewProductDTO newProduct)
+    {
+        final Mono<ProductDTO> just = productService.createProduct(newProduct);
+        final Mono<URI> map = just.map(product -> URI.create("/products/" + product.getId()));
+        return map.zipWith(just).map(objects -> ResponseEntity.created(objects.getT1()).body(objects.getT2()));
     }
-
+    
     @ResponseStatus(OK)
     @GetMapping
-    public List<ProductDTO> getAllProducts(){
+    public Flux<ProductDTO> getAllProducts()
+    {
         return productService.getAllProducts();
     }
-
+    
     @ResponseStatus(OK)
     @GetMapping("/pizzas")
-    public List<ProductDTO> getAllPizzas() {
-        return productService.getAllPizzas();
+    public Flux<ProductDTO> getAllPizzas()
+    {
+        return productService.getAllProducts(Pizza.class);
     }
-
+    
     @ResponseStatus(OK)
     @GetMapping("/kebabs")
-    public List<ProductDTO> getAllKebabs() {
-        return productService.getAllKebabs();
+    public Flux<ProductDTO> getAllKebabs()
+    {
+        return productService.getAllProducts(Kebab.class);
     }
-
+    
     @ResponseStatus(OK)
     @GetMapping("/pizzaToppings")
-    public List<ProductDTO> getAllPizzaToppings() {
-        return productService.getAllPizzaToppings();
+    public Flux<ProductDTO> getAllPizzaToppings()
+    {
+        return productService.getAllProducts(PizzaTopping.class);
     }
-
+    
     @ResponseStatus(OK)
     @GetMapping("/available")
-    public List<ProductDTO> getAllAvailableProducts(){
+    public Flux<ProductDTO> getAllAvailableProducts()
+    {
         return productService.getAllAvailableProducts();
     }
-
+    
     @ResponseStatus(OK)
     @GetMapping("/{productId}")
-    public ProductDTO getProduct(@PathVariable String productId){
+    public Mono<ProductDTO> getProduct(@PathVariable String productId)
+    {
         return productService.getProduct(productId);
     }
-
+    
     @ResponseStatus(NO_CONTENT)
     @PutMapping("/{productId}/changePrice")
-    public void changeProductPrice(@RequestBody NewProductPriceDTO newProductPriceDTO, @PathVariable String productId){
+    public void changeProductPrice(@RequestBody NewProductPriceDTO newProductPriceDTO, @PathVariable String productId)
+    {
         productService.changeProductPrice(productId, newProductPriceDTO);
     }
-
+    
     @ResponseStatus(NO_CONTENT)
     @PutMapping("/{productId}/non-available")
-    public void makeProductNonAvailable(@PathVariable String productId){
+    public void makeProductNonAvailable(@PathVariable String productId)
+    {
         productService.makeProductNonAvailable(productId);
     }
 }

@@ -1,13 +1,8 @@
 package pl.bk.pizza.store.domain.order;
 
-import java.time.Duration;
-import java.util.List;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-public interface OrderRepository {
+public interface OrderRepository extends ReactiveMongoRepository<Order, String>
+{
 
-    void save(Order order);
-
-    Order getOrderById(String orderId);
-
-    List<Order> findLastOrders(Duration time);
 }

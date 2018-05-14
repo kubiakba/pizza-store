@@ -1,9 +1,11 @@
 package pl.bk.pizza.store.application.dto.user;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
-public class TelephoneDTO {
-
+@AllArgsConstructor
+@Getter
+public class TelephoneDTO
+{
     private String number;
 }

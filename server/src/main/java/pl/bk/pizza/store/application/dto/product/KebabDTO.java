@@ -1,12 +1,12 @@
 package pl.bk.pizza.store.application.dto.product;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class KebabDTO extends ProductInfoDTO {
-
+@AllArgsConstructor
+@Getter
+public class KebabDTO implements ProductInfoDTO
+{
     private String description;
     private String name;
 }

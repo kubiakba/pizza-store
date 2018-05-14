@@ -1,7 +1,7 @@
 package pl.bk.pizza.store.domain.exception;
 
-public enum ErrorCode {
-
+public enum ErrorCode
+{
     UNPROCESSABLE_PRODUCT_DTO_TYPE,
     UNPROCESSABLE_PRODUCT_TYPE,
     EMPTY_PRODUCT_INFO,
@@ -25,5 +25,6 @@ public enum ErrorCode {
     MISSING_PRODUCT,
     MISSING_USER,
     USER_EXISTS,
-    EMPTY_PRODUCT_PRICE
+    EMPTY_PRODUCT_PRICE,
+    INVALID_DISCOUNT_PERCENT
 }

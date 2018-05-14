@@ -1,59 +1,75 @@
 buildscript {
     repositories {
+        mavenCentral()
         jcenter()
     }
     dependencies {
         classpath 'se.transmode.gradle:gradle-docker:1.2'
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE'
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE'
     }
 }
 
 allprojects {
+
+    ext {
+        spring = '2.0.2.RELEASE'
+        guava = '25.0-jre'
+        reactor = '3.1.7.RELEASE'
+        rxjava = "2.1.7"
+        commonsLang = "2.6"
+        commonsLangValidator = "1.4.0"
+        lombok = "1.16.18"
+        embeddedMongo = "2.0.0"
+        groovy = "2.4.12"
+        spockCore ="1.1-groovy-2.4"
+        spockSpring = "1.1-groovy-2.4-rc-4"
+    }
+
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'groovy'
     apply plugin: 'jacoco'
 
     dependencies {
+
         // spring
-        compile('org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE')
-        compile('org.springframework.boot:spring-boot-starter-data-mongodb:1.5.8.RELEASE')
-        compile('org.springframework.boot:spring-boot-starter-security:1.5.8.RELEASE')
-        testCompile('org.springframework.boot:spring-boot-starter-test:1.5.8.RELEASE')
+        compile "org.springframework.boot:spring-boot-starter-webflux:${spring}"
+        compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${spring}"
+        compile "org.springframework.boot:spring-boot-starter-security:${spring}"
+        testCompile "org.springframework.boot:spring-boot-starter-test:${spring}"
 
         // utils
-        compile('io.reactivex.rxjava2:rxjava:2.1.7')
-        compile('commons-lang:commons-lang:2.6')
-        compile('commons-validator:commons-validator:1.4.0')
-        compile('org.projectlombok:lombok:1.16.18')
+        compile "com.google.guava:guava:${guava}"
+        compile "io.projectreactor:reactor-core:${reactor}"
+        compile "io.reactivex.rxjava2:rxjava:${rxjava}"
+        compile "commons-lang:commons-lang:${commonsLang}"
+        compile "commons-validator:commons-validator:${commonsLangValidator}"
+        compileOnly "org.projectlombok:lombok:${lombok}"
 
         // embedded mongo for tests
-        testCompile('de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.0')
-
-        //swagger
-        compile('io.springfox:springfox-swagger-ui:2.7.0')
-        compile('io.springfox:springfox-swagger2:2.7.0')
+        testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongo}"
 
         // spock
-        compile('org.codehaus.groovy:groovy-all:2.4.12')
-        testCompile('org.spockframework:spock-core:1.1-groovy-2.4')
-        testCompile('org.spockframework:spock-spring:1.1-groovy-2.4-rc-4')
+        compile "org.codehaus.groovy:groovy-all:${groovy}"
+        testCompile "org.spockframework:spock-core:${spockCore}"
+        testCompile "org.spockframework:spock-spring:${spockSpring}"
     }
 
     repositories {
         mavenCentral()
+        jcenter()
     }
+}
 
-    jar {
-        baseName = 'pizza-store'
-        version = '1.0'
-    }
+jar {
+    baseName = 'pizza-store'
+    version = '1.0'
+}
 
-    sourceCompatibility = 1.8
+sourceCompatibility = 1.8
 
-    task wrapper(type:Wrapper){
-        gradleVersion = '4.3'
-    }
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.3'
 }
 
 jacocoTestReport {

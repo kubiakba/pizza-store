@@ -1,10 +1,12 @@
 package pl.bk.pizza.store.application.dto.user;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
-public class AddressDTO {
-
+@AllArgsConstructor
+@Getter
+public class AddressDTO
+{
     private String city;
     private String street;
     private String streetNumber;

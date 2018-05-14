@@ -1,36 +1,40 @@
 package pl.bk.pizza.store.domain.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-
+import pl.bk.pizza.store.domain.customer.user.User;
+import pl.bk.pizza.store.domain.customer.user.UserRepository;
 import pl.bk.pizza.store.domain.exception.ErrorCode;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
-import pl.bk.pizza.store.domain.user.User;
-import pl.bk.pizza.store.domain.user.UserRepository;
 
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
 
 @Component
-public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-
+@AllArgsConstructor
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService
+{
     private UserRepository userRepository;
-
-    public UserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        final User user = userRepository.findById(email);
-        check(user == null, ()-> new MissingEntityException("User with email: " + email +" does not exists.",
-            ErrorCode.MISSING_USER));
-
-        return org.springframework.security.core.userdetails.User
-            .withUsername(user.getEmail())
-            .password(user.getPassword())
-            .roles(user.getRole())
-            .build();
+    public UserDetails loadUserByUsername(String email)
+    {
+        return userRepository
+            .findById(email)
+            .doOnNext(this::checkIfUserExists)
+            .map(user -> org.springframework.security.core.userdetails.User
+                .withUsername(user.getEmail())
+                .password(user.getPassword())
+                .roles(user.getRole())
+                .build())
+            .block();
     }
-
+    
+    private final void checkIfUserExists(User user)
+    {
+        check(user == null, () -> new MissingEntityException(
+            "User with email: " + user.getEmail() + " does not exists.",
+            ErrorCode.MISSING_USER
+        ));
+    }
 }

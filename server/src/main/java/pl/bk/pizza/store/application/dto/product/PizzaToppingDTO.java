@@ -1,11 +1,11 @@
 package pl.bk.pizza.store.application.dto.product;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class PizzaToppingDTO extends ProductInfoDTO {
-
+@AllArgsConstructor
+@Getter
+public class PizzaToppingDTO implements ProductInfoDTO
+{
     private String name;
 }

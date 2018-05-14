@@ -1,10 +1,12 @@
 package pl.bk.pizza.store.application.dto.user;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-@Data
-public class NewUserDTO {
-
+@AllArgsConstructor
+@Getter
+public class NewUserDTO
+{
     private String email;
     private String password;
     private String name;

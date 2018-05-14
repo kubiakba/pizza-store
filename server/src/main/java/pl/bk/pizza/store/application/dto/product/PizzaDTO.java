@@ -1,15 +1,14 @@
 package pl.bk.pizza.store.application.dto.product;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import pl.bk.pizza.store.domain.product.pizza.Dough;
+import pl.bk.pizza.store.domain.product.pizza.PizzaSize;
 
-import pl.bk.pizza.store.domain.product.Dough;
-import pl.bk.pizza.store.domain.product.PizzaSize;
-
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class PizzaDTO extends ProductInfoDTO {
-
+@AllArgsConstructor
+@Getter
+public class PizzaDTO implements ProductInfoDTO
+{
     private PizzaSize size;
     private Dough dough;
 }
