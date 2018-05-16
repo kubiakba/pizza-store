@@ -1,27 +1,35 @@
 package pl.bk.pizza.store.domain.order;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.bk.pizza.store.domain.validator.EmailValidator;
 
 import java.math.BigDecimal;
 
 import static java.util.Collections.emptySet;
 import static pl.bk.pizza.store.domain.service.IdGenerator.generateID;
+import static pl.bk.pizza.store.domain.validator.EmailValidator.validateEmail;
 
 @Service
-@AllArgsConstructor
 public class OrderFactory
 {
-    private EmailValidator emailValidator;
-    
     public Order create(String email)
     {
-        emailValidator.validateEmail(email);
+        validateEmail(email);
         
         return new Order(
             generateID(),
             email,
+            emptySet(),
+            emptySet(),
+            OrderStatus.STARTED,
+            BigDecimal.ZERO
+        );
+    }
+    
+    public Order create()
+    {
+        return new Order(
+            generateID(),
+            null,
             emptySet(),
             emptySet(),
             OrderStatus.STARTED,

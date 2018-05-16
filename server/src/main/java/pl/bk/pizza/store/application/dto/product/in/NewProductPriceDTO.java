@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.application.dto.product;
+package pl.bk.pizza.store.application.dto.product.in;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,7 @@ import java.math.BigDecimal;
 
 @AllArgsConstructor
 @Getter
-public class NewProductDTO<T extends ProductInfoDTO>
+public class NewProductPriceDTO
 {
     private BigDecimal price;
-    private T productInfo;
 }

@@ -2,14 +2,13 @@ package pl.bk.pizza.store.application.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.bk.pizza.store.application.dto.product.NewProductDTO;
-import pl.bk.pizza.store.application.dto.product.NewProductPriceDTO;
-import pl.bk.pizza.store.application.dto.product.ProductDTO;
-import pl.bk.pizza.store.application.mapper.product.GenericProductMapper;
+import pl.bk.pizza.store.application.dto.product.in.NewProductDTO;
+import pl.bk.pizza.store.application.dto.product.in.NewProductPriceDTO;
+import pl.bk.pizza.store.application.dto.product.out.ProductDTO;
 import pl.bk.pizza.store.application.mapper.product.NewProductMapper;
+import pl.bk.pizza.store.application.mapper.product.ProductMapper;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
-import pl.bk.pizza.store.domain.product.Product;
-import pl.bk.pizza.store.domain.product.ProductInfo;
+import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.ProductRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -23,71 +22,72 @@ public class ProductService
 {
     private final ProductRepository productRepository;
     private final NewProductMapper newProductMapper;
-    private final GenericProductMapper genericProductMapper;
+    private final ProductMapper productMapper;
     
-    // TODO check warnings
     public Mono<ProductDTO> createProduct(NewProductDTO newProduct)
     {
-        final Mono<Product> product = Mono.just(newProductMapper.mapFromDTO(newProduct))
-                                          .doOnNext(productRepository::save);
-        return product.map(genericProductMapper::mapToDTO);
+        return Mono.just(newProductMapper.mapFromDTO(newProduct))
+                   .flatMap(productRepository::save)
+                   .map(productMapper::mapToDTO);
+        
     }
     
     public Mono<ProductDTO> getProduct(String productId)
     {
         return productRepository
             .findById(productId)
-            .doOnNext((product) -> check(product == null, () -> new MissingEntityException(
-                "Product with id: " + productId + "does not exists",
-                MISSING_PRODUCT
-            )))
-            .map(genericProductMapper::mapToDTO);
+            .doOnNext(it -> productShouldExists(it, productId))
+            .map(productMapper::mapToDTO);
     }
     
     public Flux<ProductDTO> getAllProducts()
     {
         return productRepository
             .findAll()
-            .map(genericProductMapper::mapToDTO);
+            .map(productMapper::mapToDTO);
     }
     
     public Flux<ProductDTO> getAllAvailableProducts()
     {
         return productRepository
             .findAll()
-            .filter(Product::isAvailable)
-            .map(genericProductMapper::mapToDTO);
+            .filter(BaseProductInfo::isAvailable)
+            .map(productMapper::mapToDTO);
     }
     
-    public void changeProductPrice(String productId, NewProductPriceDTO newProductPriceDTO)
+    public Mono<ProductDTO> changeProductPrice(String productId, NewProductPriceDTO newProductPriceDTO)
     {
-        productRepository
+        return productRepository
             .findById(productId)
-            .doOnNext(product -> check(product == null, () -> new MissingEntityException(
-                "Product with id: " + productId + "does not exists",
-                MISSING_PRODUCT
-            )))
+            .doOnNext(it -> productShouldExists(it, productId))
             .doOnNext(product -> product.changePrice(newProductPriceDTO.getPrice()))
-            .doOnNext(productRepository::save);
+            .flatMap(productRepository::save)
+            .map(productMapper::mapToDTO);
     }
     
-    public void makeProductNonAvailable(String productId)
+    public Mono<ProductDTO> makeProductNonAvailable(String productId)
     {
-        productRepository
+        return productRepository
             .findById(productId)
-            .doOnNext(product -> check(product == null, () -> new MissingEntityException(
-                "Product with id: " + productId + "does not exists",
-                MISSING_PRODUCT
-            )))
-            .doOnNext(Product::makeNonavailable)
-            .doOnNext(productRepository::save);
+            .doOnNext(it -> productShouldExists(it, productId))
+            .doOnNext(BaseProductInfo::makeNonavailable)
+            .flatMap(productRepository::save)
+            .map(productMapper::mapToDTO);
     }
     
-    //TODO use example of and test how it works
-    public Flux<ProductDTO> getAllProducts(Class<? extends ProductInfo> clazz)
+    //TODO use example.of() and test how it works
+    public Flux<ProductDTO> getAllProducts(Class<?> clazz)
     {
         return productRepository
             .findAll()
-            .map(genericProductMapper::mapToDTO);
+            .map(productMapper::mapToDTO);
+    }
+    
+    private void productShouldExists(BaseProductInfo product, String productId)
+    {
+        check(product == null, () -> new MissingEntityException(
+            "Product with id: " + productId + "does not exists",
+            MISSING_PRODUCT
+        ));
     }
 }

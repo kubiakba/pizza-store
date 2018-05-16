@@ -10,6 +10,9 @@ public class PizzaToppingValidator
 {
     public static void validateName(String name)
     {
-        check(isBlank(name), () -> new InvalidEntityException("PizzaTopping name is null or empty.", EMPTY_PIZZA_TOPPING_NAME));
+        check(isBlank(name), () -> new InvalidEntityException(
+            "PizzaTopping name is null or empty.",
+            EMPTY_PIZZA_TOPPING_NAME
+        ));
     }
 }

@@ -1,7 +1,6 @@
 package pl.bk.pizza.store.api;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +15,6 @@ import pl.bk.pizza.store.application.service.UserService;
 import pl.bk.pizza.store.domain.customer.user.Points;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
@@ -31,16 +28,9 @@ class UserController
     
     @ResponseStatus(CREATED)
     @PostMapping
-    public Mono<ResponseEntity<UserDTO>> addUser(@RequestBody NewUserDTO userDTO)
+    public Mono<UserDTO> addUser(@RequestBody NewUserDTO userDTO)
     {
-        final Mono<UserDTO> user = userService.createUser(userDTO);
-        final Mono<URI> uri = user.map(it -> URI.create("/users/" + it.getEmail()));
-        
-        return uri
-            .zipWith(user)
-            .map(it -> ResponseEntity
-                .created(it.getT1())
-                .body(it.getT2()));
+        return userService.createUser(userDTO);
     }
     
     @ResponseStatus(OK)
@@ -59,8 +49,8 @@ class UserController
     
     @ResponseStatus(NO_CONTENT)
     @PatchMapping("/{email}/deactivate")
-    public void deactivate(@PathVariable String email)
+    public Mono<UserDTO> deactivate(@PathVariable String email)
     {
-        userService.deactivateUser(email);
+        return userService.deactivateUser(email);
     }
 }

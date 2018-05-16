@@ -12,3 +12,4 @@ public class Preconditions
         }
     }
 }
+/*pl.bk.pizza.store.domain.exception.InvalidEntityException: Invalid email address.*/

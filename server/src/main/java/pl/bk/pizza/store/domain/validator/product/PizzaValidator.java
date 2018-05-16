@@ -12,11 +12,17 @@ public class PizzaValidator
 {
     public static void validateSize(PizzaSize size)
     {
-        check(size == null, () -> new InvalidEntityException("PizzaSize is null.", EMPTY_PIZZA_SIZE));
+        check(size == null, () -> new InvalidEntityException(
+            "PizzaSize is null.",
+            EMPTY_PIZZA_SIZE
+        ));
     }
     
     public static void validateDough(Dough dough)
     {
-        check(dough == null, () -> new InvalidEntityException("Dough is null.", EMPTY_DOUGH));
+        check(dough == null, () -> new InvalidEntityException(
+            "Dough is null.",
+            EMPTY_DOUGH
+        ));
     }
 }

@@ -3,7 +3,7 @@ package pl.bk.pizza.store.application.dto.order;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
-import pl.bk.pizza.store.application.dto.product.ProductDTO;
+import pl.bk.pizza.store.application.dto.product.out.ProductDTO;
 import pl.bk.pizza.store.domain.order.OrderStatus;
 
 import java.math.BigDecimal;

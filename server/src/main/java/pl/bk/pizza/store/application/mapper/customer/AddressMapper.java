@@ -1,27 +1,22 @@
 package pl.bk.pizza.store.application.mapper.customer;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.bk.pizza.store.application.dto.user.AddressDTO;
 import pl.bk.pizza.store.application.mapper.GenericMapper;
-import pl.bk.pizza.store.domain.customer.address.Address;
-import pl.bk.pizza.store.domain.customer.address.AddressFactory;
+import pl.bk.pizza.store.domain.customer.Address;
 
 @Component
-@AllArgsConstructor
 public class AddressMapper implements GenericMapper<AddressDTO, Address>
 {
-    private final AddressFactory addressFactory;
-    
     @Override
     public Address mapFromDTO(AddressDTO addressDTO)
     {
-        return addressFactory.create(
+        return new Address(
             addressDTO.getCity(),
             addressDTO.getStreet(),
             addressDTO.getStreetNumber(),
             addressDTO.getPostCode()
-                                    );
+        );
     }
     
     @Override

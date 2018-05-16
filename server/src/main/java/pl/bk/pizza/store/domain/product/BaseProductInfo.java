@@ -1,21 +1,29 @@
 package pl.bk.pizza.store.domain.product;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import pl.bk.pizza.store.domain.validator.product.ProductValidator;
 
 import java.math.BigDecimal;
 
+import static pl.bk.pizza.store.domain.service.IdGenerator.generateID;
+import static pl.bk.pizza.store.domain.validator.product.ProductValidator.*;
+
 @Getter
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-public class Product<T extends ProductInfo>
+public abstract class BaseProductInfo
 {
     @Id
     private final String id;
-    private final T productInfo;
     private BigDecimal price;
     private ProductStatus productStatus;
+    
+    protected BaseProductInfo(BigDecimal price)
+    {
+        validatePrice(price);
+        this.id = generateID();
+        this.price = price;
+        this.productStatus = ProductStatus.AVAILABLE;
+    }
     
     public boolean isAvailable()
     {

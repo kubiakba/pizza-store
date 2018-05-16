@@ -1,18 +1,18 @@
 buildscript {
+    ext.spring = '2.0.2.RELEASE'
     repositories {
         mavenCentral()
         jcenter()
     }
     dependencies {
-        classpath 'se.transmode.gradle:gradle-docker:1.2'
-        classpath 'org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE'
+        classpath "se.transmode.gradle:gradle-docker:1.2"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring"
     }
 }
 
 allprojects {
 
     ext {
-        spring = '2.0.2.RELEASE'
         guava = '25.0-jre'
         reactor = '3.1.7.RELEASE'
         rxjava = "2.1.7"
@@ -23,6 +23,7 @@ allprojects {
         groovy = "2.4.12"
         spockCore ="1.1-groovy-2.4"
         spockSpring = "1.1-groovy-2.4-rc-4"
+        assertJ = "3.10.0"
     }
 
     apply plugin: 'java'
@@ -35,10 +36,12 @@ allprojects {
         // spring
         compile "org.springframework.boot:spring-boot-starter-webflux:${spring}"
         compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${spring}"
-        compile "org.springframework.boot:spring-boot-starter-security:${spring}"
+        //TODO add security
+        /*compile "org.springframework.boot:spring-boot-starter-security:${spring}"*/
         testCompile "org.springframework.boot:spring-boot-starter-test:${spring}"
 
         // utils
+        testCompile "org.assertj:assertj-core:${assertJ}"
         compile "com.google.guava:guava:${guava}"
         compile "io.projectreactor:reactor-core:${reactor}"
         compile "io.reactivex.rxjava2:rxjava:${rxjava}"

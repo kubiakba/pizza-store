@@ -3,7 +3,6 @@ package pl.bk.pizza.store.domain.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.bk.pizza.store.domain.order.Order;
-import pl.bk.pizza.store.domain.order.OrderStatus;
 
 import java.math.BigDecimal;
 

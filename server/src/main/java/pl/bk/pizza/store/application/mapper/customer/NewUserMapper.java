@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.mapper.DtoToObjectMapper;
-import pl.bk.pizza.store.domain.customer.address.Address;
-import pl.bk.pizza.store.domain.customer.telephone.Telephone;
+import pl.bk.pizza.store.domain.customer.Address;
+import pl.bk.pizza.store.domain.customer.Telephone;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.customer.user.UserFactory;
 
@@ -18,16 +18,16 @@ public class NewUserMapper implements DtoToObjectMapper<NewUserDTO, User>
     private final TelephoneMapper telephoneMapper;
     
     @Override
-    public User mapFromDTO(NewUserDTO newUserDTO)
+    public User mapFromDTO(NewUserDTO newUserDto)
     {
-        final Address address = addressMapper.mapFromDTO(newUserDTO.getAddress());
-        final Telephone telephone = telephoneMapper.mapFromDTO(newUserDTO.getTelephone());
+        final Address address = addressMapper.mapFromDTO(newUserDto.getAddress());
+        final Telephone telephone = telephoneMapper.mapFromDTO(newUserDto.getTelephone());
         
         return factory.create(
-            newUserDTO.getEmail(),
-            newUserDTO.getName(),
-            newUserDTO.getSurname(),
-            newUserDTO.getPassword(),
+            newUserDto.getEmail(),
+            newUserDto.getName(),
+            newUserDto.getSurname(),
+            newUserDto.getPassword(),
             address,
             telephone,
             "USER"

@@ -1,7 +1,6 @@
 package pl.bk.pizza.store.api;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.bk.pizza.store.application.dto.product.NewProductDTO;
-import pl.bk.pizza.store.application.dto.product.NewProductPriceDTO;
-import pl.bk.pizza.store.application.dto.product.ProductDTO;
+import pl.bk.pizza.store.application.dto.product.in.NewProductDTO;
+import pl.bk.pizza.store.application.dto.product.in.NewProductPriceDTO;
+import pl.bk.pizza.store.application.dto.product.out.ProductDTO;
 import pl.bk.pizza.store.application.service.ProductService;
 import pl.bk.pizza.store.domain.product.kebab.Kebab;
 import pl.bk.pizza.store.domain.product.pizza.Pizza;
@@ -20,8 +19,7 @@ import pl.bk.pizza.store.domain.product.pizza.PizzaTopping;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -32,12 +30,11 @@ class ProductController
 {
     private final ProductService productService;
     
+    @ResponseStatus(CREATED)
     @PostMapping
-    public Mono<ResponseEntity<ProductDTO>> createProduct(@RequestBody NewProductDTO newProduct)
+    public Mono<ProductDTO> createProduct(@RequestBody NewProductDTO newProduct)
     {
-        final Mono<ProductDTO> just = productService.createProduct(newProduct);
-        final Mono<URI> map = just.map(product -> URI.create("/products/" + product.getId()));
-        return map.zipWith(just).map(objects -> ResponseEntity.created(objects.getT1()).body(objects.getT2()));
+        return productService.createProduct(newProduct);
     }
     
     @ResponseStatus(OK)
@@ -84,15 +81,15 @@ class ProductController
     
     @ResponseStatus(NO_CONTENT)
     @PutMapping("/{productId}/changePrice")
-    public void changeProductPrice(@RequestBody NewProductPriceDTO newProductPriceDTO, @PathVariable String productId)
+    public Mono<ProductDTO> changeProductPrice(@RequestBody NewProductPriceDTO newProductPriceDTO, @PathVariable String productId)
     {
-        productService.changeProductPrice(productId, newProductPriceDTO);
+        return productService.changeProductPrice(productId, newProductPriceDTO);
     }
     
     @ResponseStatus(NO_CONTENT)
     @PutMapping("/{productId}/non-available")
-    public void makeProductNonAvailable(@PathVariable String productId)
+    public Mono<ProductDTO> makeProductNonAvailable(@PathVariable String productId)
     {
-        productService.makeProductNonAvailable(productId);
+         return productService.makeProductNonAvailable(productId);
     }
 }

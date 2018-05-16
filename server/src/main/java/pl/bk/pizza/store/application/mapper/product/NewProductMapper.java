@@ -1,22 +1,40 @@
 package pl.bk.pizza.store.application.mapper.product;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.bk.pizza.store.application.dto.product.NewProductDTO;
+import pl.bk.pizza.store.application.dto.product.in.NewKebabDTO;
+import pl.bk.pizza.store.application.dto.product.in.NewPizzaDTO;
+import pl.bk.pizza.store.application.dto.product.in.NewPizzaToppingDTO;
+import pl.bk.pizza.store.application.dto.product.in.NewProductDTO;
 import pl.bk.pizza.store.application.mapper.DtoToObjectMapper;
-import pl.bk.pizza.store.domain.product.Product;
-import pl.bk.pizza.store.domain.product.ProductFactory;
-import pl.bk.pizza.store.domain.product.ProductInfo;
+import pl.bk.pizza.store.domain.product.BaseProductInfo;
+import pl.bk.pizza.store.domain.product.kebab.Kebab;
+import pl.bk.pizza.store.domain.product.pizza.Pizza;
+import pl.bk.pizza.store.domain.product.pizza.PizzaTopping;
 
-@AllArgsConstructor
 @Component
-public class NewProductMapper implements DtoToObjectMapper<NewProductDTO, Product>
+public class NewProductMapper implements DtoToObjectMapper<NewProductDTO, BaseProductInfo>
 {
-    private final ProductFactory factory;
-    
     @Override
-    public Product mapFromDTO(NewProductDTO newProductDTO)
+    public BaseProductInfo mapFromDTO(NewProductDTO newProductDTO)
     {
-        return factory.create(newProductDTO.getPrice(), (ProductInfo) newProductDTO.getProductInfo());
+        if(newProductDTO instanceof NewPizzaDTO)
+        {
+            NewPizzaDTO pizzaDto = (NewPizzaDTO) newProductDTO;
+            return new Pizza(pizzaDto.getSize(), pizzaDto.getDough(), pizzaDto.getPrice());
+        }
+        
+        if(newProductDTO instanceof NewPizzaToppingDTO)
+        {
+            NewPizzaToppingDTO pizzaToppingDto = (NewPizzaToppingDTO) newProductDTO;
+            return new PizzaTopping(pizzaToppingDto.getToppingName(), pizzaToppingDto.getPrice());
+        }
+        
+        if(newProductDTO instanceof NewKebabDTO)
+        {
+            NewKebabDTO kebabDto = (NewKebabDTO) newProductDTO;
+            return new Kebab(kebabDto.getDescription(), kebabDto.getKebabName(), kebabDto.getPrice());
+        }
+        
+        throw new IllegalArgumentException("Passed argument is null or cannot be parsed: " + newProductDTO);
     }
 }

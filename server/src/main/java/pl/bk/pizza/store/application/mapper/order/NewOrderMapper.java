@@ -16,6 +16,13 @@ public class NewOrderMapper implements DtoToObjectMapper<NewOrderDTO, Order>
     @Override
     public Order mapFromDTO(NewOrderDTO newOrderDTO)
     {
-        return factory.create(newOrderDTO.getEmail());
+        if(newOrderDTO.getEmail() != null)
+        {
+            return factory.create(newOrderDTO.getEmail());
+        }
+        else
+        {
+            return factory.create();
+        }
     }
 }

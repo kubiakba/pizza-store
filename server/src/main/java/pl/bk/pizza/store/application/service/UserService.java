@@ -9,13 +9,8 @@ import pl.bk.pizza.store.application.mapper.customer.UserMapper;
 import pl.bk.pizza.store.domain.customer.user.Points;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.customer.user.UserRepository;
-import pl.bk.pizza.store.domain.exception.DuplicateEntityException;
-import pl.bk.pizza.store.domain.exception.ErrorCode;
-import pl.bk.pizza.store.domain.exception.MissingEntityException;
+import pl.bk.pizza.store.domain.validator.customer.UserValidator;
 import reactor.core.publisher.Mono;
-
-import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_USER;
-import static pl.bk.pizza.store.domain.exception.Preconditions.check;
 
 @Service
 @AllArgsConstructor
@@ -29,11 +24,11 @@ public class UserService
     {
         return Mono
             .just(userDTO)
-            .doOnNext((newUser) -> Mono.just(newUser)
-                                    .flatMap(it -> userRepository.findById(it.getEmail()))
-                                    .doOnNext(this::userShouldNotExists))
+            .doOnNext(newUser -> Mono.just(newUser)
+                                     .flatMap(it -> userRepository.findById(it.getEmail()))
+                                     .doOnNext(it -> UserValidator.userShouldExists(it, userDTO.getEmail())))
             .map(newUserMapper::mapFromDTO)
-            .doOnNext(userRepository::save)
+            .flatMap(userRepository::save)
             .map(userMapper::mapToDTO);
     }
     
@@ -41,7 +36,7 @@ public class UserService
     {
         return userRepository
             .findById(email)
-            .doOnNext(this::userShouldExists)
+            .doOnNext(it -> UserValidator.userShouldExists(it, email))
             .map(User::getPoints);
     }
     
@@ -49,42 +44,27 @@ public class UserService
     {
         return userRepository
             .findById(email)
-            .doOnNext(this::userShouldExists)
+            .doOnNext(it -> UserValidator.userShouldExists(it, email))
             .map(userMapper::mapToDTO);
     }
     
-    public void deactivateUser(String email)
+    public Mono<UserDTO> deactivateUser(String email)
     {
-        userRepository
+        return userRepository
             .findById(email)
-            .doOnNext(this::userShouldExists)
+            .doOnNext(it -> UserValidator.userShouldExists(it, email))
             .doOnNext(User::deactivateUser)
-            .subscribe(userRepository::save);
+            .flatMap(userRepository::save)
+            .map(userMapper::mapToDTO);
     }
     
-    public void addPointsToUser(String email, Integer points)
+    public Mono<UserDTO> addPointsToUser(String email, Integer points)
     {
-        userRepository
+        return userRepository
             .findById(email)
-            .doOnNext(this::userShouldExists)
+            .doOnNext(it -> UserValidator.userShouldExists(it, email))
             .doOnNext(user -> user.addPoints(points))
-            .doOnNext(userRepository::save);
-    }
-    
-    private void userShouldNotExists(User user)
-    {
-        check(
-            user != null, () -> new DuplicateEntityException(
-                "User with email: " + user.getEmail() + " already exists.",
-                ErrorCode.USER_EXISTS
-            ));
-    }
-    
-    private void userShouldExists(User user)
-    {
-        check(user == null, () -> new MissingEntityException(
-            "user with email: " + user.getEmail() + "does not exists",
-            MISSING_USER
-        ));
+            .flatMap(userRepository::save)
+            .map(userMapper::mapToDTO);
     }
 }

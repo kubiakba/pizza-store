@@ -3,10 +3,11 @@ package pl.bk.pizza.store.domain.order;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import pl.bk.pizza.store.domain.order.discount.Discount;
-import pl.bk.pizza.store.domain.product.Product;
+import pl.bk.pizza.store.domain.product.BaseProductInfo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
@@ -17,13 +18,13 @@ public class Order
     @Id
     private final String id;
     private final String userEmail;
-    private final Set<Product> products;
+    private final Set<BaseProductInfo> products;
     private final Set<Discount> discounts;
     private OrderStatus orderStatus;
     private LocalDateTime orderDateTime;
     private BigDecimal totalPrice;
     
-    Order(String id, String userEmail, Set<Product> products, Set<Discount> discounts, OrderStatus orderStatus, BigDecimal totalPrice)
+    Order(String id, String userEmail, Set<BaseProductInfo> products, Set<Discount> discounts, OrderStatus orderStatus, BigDecimal totalPrice)
     {
         this.id = id;
         this.userEmail = userEmail;
@@ -33,7 +34,7 @@ public class Order
         this.totalPrice = totalPrice;
     }
     
-    public void addProduct(Product product)
+    public void addProduct(BaseProductInfo product)
     {
         products.add(product);
     }
@@ -48,8 +49,8 @@ public class Order
     private BigDecimal calculateTotalPrice()
     {
         return products.stream()
-                       .map(Product::getPrice)
-                       .reduce(BigDecimal.ZERO, BigDecimal::add);
+                                          .map(BaseProductInfo::getPrice)
+                                          .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     
     public void setToDelivered()
@@ -62,5 +63,3 @@ public class Order
         discounts.add(discount);
     }
 }
-
-

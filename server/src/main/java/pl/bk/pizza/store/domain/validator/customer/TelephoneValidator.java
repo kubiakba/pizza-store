@@ -1,6 +1,6 @@
 package pl.bk.pizza.store.domain.validator.customer;
 
-import pl.bk.pizza.store.domain.customer.telephone.Telephone;
+import pl.bk.pizza.store.domain.customer.Telephone;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
 
 import static org.apache.commons.lang.StringUtils.isBlank;

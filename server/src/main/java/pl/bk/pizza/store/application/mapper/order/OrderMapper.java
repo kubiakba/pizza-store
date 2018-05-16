@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.bk.pizza.store.application.dto.order.OrderDTO;
 import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
-import pl.bk.pizza.store.application.dto.product.ProductDTO;
+import pl.bk.pizza.store.application.dto.product.out.ProductDTO;
 import pl.bk.pizza.store.application.mapper.ObjectToDtoMapper;
 import pl.bk.pizza.store.application.mapper.order.discount.GenericDiscountMapper;
-import pl.bk.pizza.store.application.mapper.product.GenericProductMapper;
+import pl.bk.pizza.store.application.mapper.product.ProductMapper;
 import pl.bk.pizza.store.domain.order.Order;
 
 import java.util.Set;
@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toSet;
 @Component
 public class OrderMapper implements ObjectToDtoMapper<Order, OrderDTO>
 {
-    private final GenericProductMapper productMapper;
+    private final ProductMapper productMapper;
     private final GenericDiscountMapper discountMapper;
     
     @Override

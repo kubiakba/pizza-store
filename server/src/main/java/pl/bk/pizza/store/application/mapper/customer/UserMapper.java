@@ -20,6 +20,15 @@ public class UserMapper implements ObjectToDtoMapper<User, UserDTO>
     {
         final AddressDTO addressDTO = addressMapper.mapToDTO(user.getAddress());
         final TelephoneDTO telephoneDTO = telephoneMapper.mapToDTO(user.getTelephone());
-        return new UserDTO(user.getEmail(), user.getName(), user.getSurname(), addressDTO, telephoneDTO, 0);
+        
+        return new UserDTO(
+            user.getEmail(),
+            user.getName(),
+            user.getSurname(),
+            addressDTO,
+            telephoneDTO,
+            user.getStatus(),
+            0
+        );
     }
 }
