@@ -1,16 +1,4 @@
-buildscript {
-    ext.spring = '2.0.2.RELEASE'
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath "se.transmode.gradle:gradle-docker:1.2"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring"
-    }
-}
-
-allprojects {
+subprojects {
 
     ext {
         guava = '25.0-jre'
@@ -25,61 +13,8 @@ allprojects {
         spockSpring = "1.1-groovy-2.4-rc-4"
         assertJ = "3.10.0"
     }
-
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'groovy'
-    apply plugin: 'jacoco'
-
-    dependencies {
-
-        // spring
-        compile "org.springframework.boot:spring-boot-starter-webflux:${spring}"
-        compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${spring}"
-        //TODO add security
-        /*compile "org.springframework.boot:spring-boot-starter-security:${spring}"*/
-        testCompile "org.springframework.boot:spring-boot-starter-test:${spring}"
-
-        // utils
-        testCompile "org.assertj:assertj-core:${assertJ}"
-        compile "com.google.guava:guava:${guava}"
-        compile "io.projectreactor:reactor-core:${reactor}"
-        compile "io.reactivex.rxjava2:rxjava:${rxjava}"
-        compile "commons-lang:commons-lang:${commonsLang}"
-        compile "commons-validator:commons-validator:${commonsLangValidator}"
-        compileOnly "org.projectlombok:lombok:${lombok}"
-
-        // embedded mongo for tests
-        testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongo}"
-
-        // spock
-        compile "org.codehaus.groovy:groovy-all:${groovy}"
-        testCompile "org.spockframework:spock-core:${spockCore}"
-        testCompile "org.spockframework:spock-spring:${spockSpring}"
-    }
-
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
 }
-
-jar {
-    baseName = 'pizza-store'
-    version = '1.0'
-}
-
-sourceCompatibility = 1.8
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.3'
 }
-
-jacocoTestReport {
-    reports {
-        xml.enabled true
-        html.enabled false
-    }
-}
-
-check.dependsOn jacocoTestReport

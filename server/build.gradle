@@ -1,7 +1,72 @@
-apply plugin: 'docker'
+buildscript {
+    ext.spring = '2.0.2.RELEASE'
+    ext.gradleDocker = '1.2'
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "se.transmode.gradle:gradle-docker:$gradleDocker"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring"
+    }
+}
+
+apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'docker'
+apply plugin: 'jacoco'
+
+dependencies {
+
+    // spring
+    compile "org.springframework.boot:spring-boot-starter-webflux:${spring}"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${spring}"
+    //TODO add security
+    /*compile "org.springframework.boot:spring-boot-starter-security:${spring}"*/
+    testCompile "org.springframework.boot:spring-boot-starter-test:${spring}"
+
+    // utils
+    testCompile "org.assertj:assertj-core:${assertJ}"
+    compile "com.google.guava:guava:${guava}"
+    compile "io.projectreactor:reactor-core:${reactor}"
+    compile "io.reactivex.rxjava2:rxjava:${rxjava}"
+    compile "commons-lang:commons-lang:${commonsLang}"
+    compile "commons-validator:commons-validator:${commonsLangValidator}"
+    compileOnly "org.projectlombok:lombok:${lombok}"
+
+    // embedded mongo for tests
+    testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongo}"
+
+    // spock
+    compile "org.codehaus.groovy:groovy-all:${groovy}"
+    testCompile "org.spockframework:spock-core:${spockCore}"
+    testCompile "org.spockframework:spock-spring:${spockSpring}"
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
 
 mainClassName = 'pl.bk.pizza.store.Initializer'
+
+bootJar {
+    baseName = 'pizza-store'
+    version = '1.0'
+}
+
+sourceCompatibility = 1.8
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
+}
+
+check.dependsOn jacocoTestReport
 
 task buildDocker(type: Docker, dependsOn: build) {
     applicationName = jar.baseName
