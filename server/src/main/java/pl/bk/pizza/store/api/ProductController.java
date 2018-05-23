@@ -38,6 +38,13 @@ class ProductController
     }
     
     @ResponseStatus(OK)
+    @GetMapping("/{productId}")
+    public Mono<ProductDTO> getProduct(@PathVariable String productId)
+    {
+        return productService.getProduct(productId);
+    }
+    
+    @ResponseStatus(OK)
     @GetMapping
     public Flux<ProductDTO> getAllProducts()
     {
@@ -70,13 +77,6 @@ class ProductController
     public Flux<ProductDTO> getAllAvailableProducts()
     {
         return productService.getAllAvailableProducts();
-    }
-    
-    @ResponseStatus(OK)
-    @GetMapping("/{productId}")
-    public Mono<ProductDTO> getProduct(@PathVariable String productId)
-    {
-        return productService.getProduct(productId);
     }
     
     @ResponseStatus(NO_CONTENT)

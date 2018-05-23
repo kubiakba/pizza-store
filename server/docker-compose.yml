@@ -1,13 +1,11 @@
-version: '3'
+version: '2'
 services:
     pizza-store:
-        image: pizza-store/pizza-store:1.0
+        image: pizza-store/server:latest
         ports:
             - 8081:8081
         depends_on:
             - mongodb
-        environment:
-             SPRING_DATA_MONGODB_URI: mongodb://mongodb/pizza-store
     mongodb:
         image: mongo:latest
         container_name: "mongodb"

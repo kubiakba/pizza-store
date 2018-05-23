@@ -1,8 +1,18 @@
+server:
+ port: 8081
+
+spring:
+    data:
+      mongodb:
+        database: pizza-store
+        uri: mongodb://localhost:27017
+
 price-point-multiplier : 0.1
 
-#spring :
-#  profiles:
-#    active : dev
-#  data:
-#    mongodb:
-#      uri: mongodb://localhost:27017/webflux_demo
+---
+spring:
+  profiles: docker
+  data:
+    mongodb:
+      database: pizza-store
+      uri: mongodb://mongodb:27017

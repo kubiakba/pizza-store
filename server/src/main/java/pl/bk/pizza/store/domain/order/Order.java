@@ -7,7 +7,6 @@ import pl.bk.pizza.store.domain.product.BaseProductInfo;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Set;
 
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
@@ -48,9 +47,10 @@ public class Order
     
     private BigDecimal calculateTotalPrice()
     {
-        return products.stream()
-                                          .map(BaseProductInfo::getPrice)
-                                          .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return products
+            .stream()
+            .map(BaseProductInfo::getPrice)
+            .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     
     public void setToDelivered()

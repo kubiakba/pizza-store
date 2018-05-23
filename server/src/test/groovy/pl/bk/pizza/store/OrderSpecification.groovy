@@ -36,13 +36,14 @@ class OrderSpecification extends CommonSpecification
 
     def "should start order realization"()
     {
-        when:
+        given:
         def order = createOrder()
 
         def product = createProduct(getNewPizzaDTOStub())
 
         addProductToOrder(order.id, product.id)
 
+        when:
         def orderStarted = startOrderRealization(order.id)
 
         then:
@@ -54,13 +55,13 @@ class OrderSpecification extends CommonSpecification
         given:
         def productDto = getNewPizzaDTOStub()
 
-        when:
         def order = createOrder()
 
         def product = createProduct(productDto)
 
         addProductToOrder(order.id, product.id)
 
+        when:
         def orderStarted = startOrderRealization(order.id)
 
         then:
@@ -80,6 +81,7 @@ class OrderSpecification extends CommonSpecification
         addProductToOrder(order.id, product.id)
 
         def orderStarted = deliverOrder(order.id)
+
         then:
         assertThat(orderStarted.orderStatus).isEqualTo(DELIVERED)
     }

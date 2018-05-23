@@ -56,11 +56,11 @@ public class OrderService
             .map(orderMapper::mapToDTO);
     }
     
-    public Mono<OrderDTO> setStatusToRealization(String orderId)
+    public Mono<OrderDTO> setToRealization(String orderId)
     {
         return orderRepository
             .findById(orderId)
-            .doOnNext(it->orderShouldExists(it,orderId))
+            .doOnNext(it -> orderShouldExists(it, orderId))
             .doOnNext(Order::setToRealization)
             .flatMap(orderRepository::save)
             .map(orderMapper::mapToDTO);
@@ -87,7 +87,7 @@ public class OrderService
             .map(orderMapper::mapToDTO);
     }
     
-    public Mono<OrderDTO> setStatusToDelivered(String orderId)
+    public Mono<OrderDTO> setToDelivered(String orderId)
     {
         return orderRepository
             .findById(orderId)
@@ -108,6 +108,8 @@ public class OrderService
             .doOnNext(objects -> userService.addPointsToUser(objects.getT2().getUserEmail(), objects.getT1()))
             .map(Tuple2::getT2);
     }
+    
+    // TODO Move these methods to Validators classes
     
     private void orderShouldExists(Order order, String id)
     {

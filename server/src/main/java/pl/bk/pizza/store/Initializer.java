@@ -11,3 +11,4 @@ public class Initializer
         SpringApplication.run(Initializer.class, args);
     }
 }
+

@@ -49,16 +49,16 @@ class OrderController
     
     @ResponseStatus(NO_CONTENT)
     @PutMapping("/{orderId}/to-realization")
-    public Mono<OrderDTO> setStatusToRealization(@PathVariable String orderId)
+    public Mono<OrderDTO> setToRealization(@PathVariable String orderId)
     {
-        return orderService.setStatusToRealization(orderId);
+        return orderService.setToRealization(orderId);
     }
     
     @ResponseStatus(NO_CONTENT)
     @PutMapping("/{orderId}/delivered")
-    public Mono<OrderDTO> setStatusToDelivered(@PathVariable String orderId)
+    public Mono<OrderDTO> setToDelivered(@PathVariable String orderId)
     {
-        return orderService.setStatusToDelivered(orderId);
+        return orderService.setToDelivered(orderId);
     }
     
     @ResponseStatus(NO_CONTENT)
