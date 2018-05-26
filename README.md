@@ -1,5 +1,5 @@
 # Pizza store
-[![Build Status](https://travis-ci.org/ntw222/pizza-store.svg?branch=master)](https://travis-ci.org/ntw222/pizza-store)[![codecov](https://codecov.io/gh/ntw222/pizza-store/branch/master/graph/badge.svg)](https://codecov.io/gh/ntw222/pizza-store)[![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/ntw222/pizza-store)
+[![Build Status](https://travis-ci.org/kubiakba/pizza-store.svg?branch=master)](https://travis-ci.org/kubiakba/pizza-store)[![codecov](https://codecov.io/gh/kubiakba/pizza-store/branch/master/graph/badge.svg)](https://codecov.io/gh/kubiakba/pizza-store)[![Sputnik](https://sputnik.ci/conf/badge)](https://sputnik.ci/app#/builds/kubiakba/pizza-store)
 ## Overview
 The goal of project is to create pizza store where you can order
  different kind of foods.
@@ -9,7 +9,7 @@ The goal of project is to create pizza store where you can order
   <b>Done</b>
 - [x] Creating an user account.
 - [x] Adding information by user about delivery like address, telephone.
-- [x] Offering products like pizza, toppings, kebab, cola.
+- [x] Offering products like pizza, toppings, kebab.
 - [x] Specifying products attributes like size or flavour.
 - [x] Ordering products.
 - [x] Using discounts.
@@ -18,4 +18,4 @@ The goal of project is to create pizza store where you can order
 
 ## Technology stack
 
-    Java 8, Spring boot, MongoDb, Spock, Docker, Gradle
+    Java 8, Spring boot, Webflux, MongoDb, Spock, Docker, Gradle
