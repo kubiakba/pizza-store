@@ -1,10 +1,10 @@
 package pl.bk.pizza.store.application.mapper.product;
 
 import org.springframework.stereotype.Component;
-import pl.bk.pizza.store.application.dto.product.out.KebabDTO;
-import pl.bk.pizza.store.application.dto.product.out.PizzaDTO;
-import pl.bk.pizza.store.application.dto.product.out.PizzaToppingDTO;
-import pl.bk.pizza.store.application.dto.product.out.ProductDTO;
+import pl.bk.pizza.store.application.dto.product.output.KebabDTO;
+import pl.bk.pizza.store.application.dto.product.output.PizzaDTO;
+import pl.bk.pizza.store.application.dto.product.output.PizzaToppingDTO;
+import pl.bk.pizza.store.application.dto.product.output.ProductDTO;
 import pl.bk.pizza.store.application.mapper.ObjectToDtoMapper;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.kebab.Kebab;

@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.application.dto.product.in;
+package pl.bk.pizza.store.application.dto.product.input;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

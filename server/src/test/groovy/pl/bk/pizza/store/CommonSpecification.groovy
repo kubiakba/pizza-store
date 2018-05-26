@@ -6,10 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.reactive.server.WebTestClient
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO
 import pl.bk.pizza.store.application.dto.order.OrderDTO
-import pl.bk.pizza.store.application.dto.product.in.NewPizzaDTO
-import pl.bk.pizza.store.application.dto.product.in.NewProductDTO
-import pl.bk.pizza.store.application.dto.product.in.NewProductPriceDTO
-import pl.bk.pizza.store.application.dto.product.out.ProductDTO
+import pl.bk.pizza.store.application.dto.product.input.NewPizzaDTO
+import pl.bk.pizza.store.application.dto.product.input.NewProductDTO
+import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
+import pl.bk.pizza.store.application.dto.product.output.ProductDTO
 import pl.bk.pizza.store.application.dto.user.AddressDTO
 import pl.bk.pizza.store.application.dto.user.NewUserDTO
 import pl.bk.pizza.store.application.dto.user.TelephoneDTO

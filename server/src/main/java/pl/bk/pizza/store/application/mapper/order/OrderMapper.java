@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.bk.pizza.store.application.dto.order.OrderDTO;
 import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
-import pl.bk.pizza.store.application.dto.product.out.ProductDTO;
+import pl.bk.pizza.store.application.dto.product.output.ProductDTO;
 import pl.bk.pizza.store.application.mapper.ObjectToDtoMapper;
 import pl.bk.pizza.store.application.mapper.order.discount.GenericDiscountMapper;
 import pl.bk.pizza.store.application.mapper.product.ProductMapper;

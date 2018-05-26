@@ -2,9 +2,9 @@ package pl.bk.pizza.store.application.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.bk.pizza.store.application.dto.product.in.NewProductDTO;
-import pl.bk.pizza.store.application.dto.product.in.NewProductPriceDTO;
-import pl.bk.pizza.store.application.dto.product.out.ProductDTO;
+import pl.bk.pizza.store.application.dto.product.input.NewProductDTO;
+import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO;
+import pl.bk.pizza.store.application.dto.product.output.ProductDTO;
 import pl.bk.pizza.store.application.mapper.product.NewProductMapper;
 import pl.bk.pizza.store.application.mapper.product.ProductMapper;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
