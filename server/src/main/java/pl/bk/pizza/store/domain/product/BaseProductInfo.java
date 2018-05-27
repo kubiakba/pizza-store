@@ -2,6 +2,7 @@ package pl.bk.pizza.store.domain.product;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
 
@@ -9,6 +10,7 @@ import static pl.bk.pizza.store.domain.service.IdGenerator.generateID;
 import static pl.bk.pizza.store.domain.validator.product.ProductValidator.validatePrice;
 
 @Getter
+@Document(collection = "product")
 public abstract class BaseProductInfo
 {
     @Id

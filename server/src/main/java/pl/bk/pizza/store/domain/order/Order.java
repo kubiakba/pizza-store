@@ -2,6 +2,7 @@ package pl.bk.pizza.store.domain.order;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import pl.bk.pizza.store.domain.order.discount.Discount;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
 
 @Getter
+@Document(collection = "order")
 public class Order
 {
     @Id
