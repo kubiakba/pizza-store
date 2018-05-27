@@ -12,7 +12,7 @@ public class PointsService
     @Value("${price-point-multiplier}")
     private String multiplier;
     
-    public int applyPoints(Order order)
+    public int calculateAmountOfPoints(Order order)
     {
         return order
             .getTotalPrice()

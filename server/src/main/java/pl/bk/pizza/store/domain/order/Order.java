@@ -53,6 +53,7 @@ public class Order
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     
+    //TODO validate if status is TO_REALIZATION
     public void setToDelivered()
     {
         orderStatus = OrderStatus.DELIVERED;

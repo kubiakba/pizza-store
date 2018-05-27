@@ -18,4 +18,4 @@ The goal of project is to create pizza store where you can order
 
 ## Technology stack
 
-    Java 8, Spring boot, Webflux, MongoDb, Spock, Docker, Gradle
+    Java 8, Spring boot, WebFlux, MongoDb, Spock, Docker, Gradle

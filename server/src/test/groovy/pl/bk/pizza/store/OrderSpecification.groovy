@@ -1,7 +1,12 @@
 package pl.bk.pizza.store
 
+import pl.bk.pizza.store.application.dto.order.OrderDTO
+import pl.bk.pizza.store.helpers.CommonSpecification
+
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.order.OrderStatus.*
+import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
+import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 
 class OrderSpecification extends CommonSpecification
 {
@@ -70,19 +75,52 @@ class OrderSpecification extends CommonSpecification
 
     def "should deliver order"()
     {
-        given:
-        def productDto = getNewPizzaDTOStub()
+        given: "create user"
+        def email = "aa@wp.pl"
+        createUser(getNewUserDTOStub(email))
 
-        when:
-        def order = createOrder()
+        and: "create product"
+        def product = createProduct(getNewPizzaDTOStub())
 
-        def product = createProduct(productDto)
+        and: "create order"
+        def order = createOrder(email)
 
+        and:"add product to order"
         addProductToOrder(order.id, product.id)
 
+        and: "start realization"
+        startOrderRealization(order.id)
+
+        when:
         def orderStarted = deliverOrder(order.id)
 
         then:
         assertThat(orderStarted.orderStatus).isEqualTo(DELIVERED)
     }
+
+    def "should add points to user"()
+    {
+        given: "create user"
+        def email = "aa@wp.pl"
+        createUser(getNewUserDTOStub(email))
+
+        and: "create product"
+        def productDto = getNewPizzaDTOStub()
+        def product = createProduct(productDto)
+
+        and: "add product to order"
+        def order = createOrder(email)
+        addProductToOrder(order.id, product.id)
+
+        and: "start order"
+        startOrderRealization(order.id)
+
+        when:
+        def order1 = deliverOrder(order.id)
+        def user = getUser(email)
+
+        then:
+        assertThat(user.points).isEqualTo(3)
+    }
+
 }

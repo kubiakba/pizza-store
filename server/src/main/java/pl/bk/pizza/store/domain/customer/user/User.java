@@ -19,7 +19,7 @@ public class User
     private Address address;
     private Telephone telephone;
     private UserStatus status;
-    private Points points;
+    private Integer points;
     private String role;
     
     public void deactivateUser()
@@ -29,6 +29,6 @@ public class User
     
     public void addPoints(Integer numberOfPoints)
     {
-        points = new Points(points.getAmount() + numberOfPoints);
+        points +=numberOfPoints;
     }
 }

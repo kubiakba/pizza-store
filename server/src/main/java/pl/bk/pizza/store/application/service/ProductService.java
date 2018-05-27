@@ -10,11 +10,13 @@ import pl.bk.pizza.store.application.mapper.product.ProductMapper;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.ProductRepository;
+import pl.bk.pizza.store.domain.validator.product.ProductValidator;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_PRODUCT;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
+import static pl.bk.pizza.store.domain.validator.product.ProductValidator.productShouldExists;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +31,6 @@ public class ProductService
         return Mono.just(newProductMapper.mapFromDTO(newProduct))
                    .flatMap(productRepository::save)
                    .map(productMapper::mapToDTO);
-        
     }
     
     public Mono<ProductDTO> getProduct(String productId)
@@ -81,13 +82,5 @@ public class ProductService
         return productRepository
             .findAll()
             .map(productMapper::mapToDTO);
-    }
-    
-    private void productShouldExists(BaseProductInfo product, String productId)
-    {
-        check(product == null, () -> new MissingEntityException(
-            "Product with id: " + productId + "does not exists",
-            MISSING_PRODUCT
-        ));
     }
 }

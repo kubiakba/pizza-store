@@ -1,7 +1,10 @@
 package pl.bk.pizza.store
 
+import pl.bk.pizza.store.helpers.CommonSpecification
+
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.customer.user.UserStatus.INACTIVE
+import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 
 class UserSpecification extends CommonSpecification
 {
@@ -27,6 +30,19 @@ class UserSpecification extends CommonSpecification
             assertThat(street).isEqualTo(userDto.address.street)
             assertThat(streetNumber).isEqualTo(userDto.address.streetNumber)
         }
+    }
+
+    def "should get user"()
+    {
+        given:
+        def userDto = getNewUserDTOStub()
+        createUser(userDto)
+
+        when:
+        def user = getUser(userDto.email)
+
+        then:
+        assertThat(user).isNotNull()
     }
 
     def "should deactivate user"()

@@ -8,6 +8,7 @@ import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
 import pl.bk.pizza.store.application.mapper.order.NewOrderMapper;
 import pl.bk.pizza.store.application.mapper.order.OrderMapper;
 import pl.bk.pizza.store.application.mapper.order.discount.GenericDiscountMapper;
+import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
 import pl.bk.pizza.store.domain.order.Order;
 import pl.bk.pizza.store.domain.order.OrderRepository;
@@ -15,12 +16,15 @@ import pl.bk.pizza.store.domain.order.discount.Discount;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.ProductRepository;
 import pl.bk.pizza.store.domain.service.PointsService;
+import pl.bk.pizza.store.domain.validator.order.OrderValidator;
+import pl.bk.pizza.store.domain.validator.product.ProductValidator;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
 
 import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_ORDER;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_PRODUCT;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
+import static pl.bk.pizza.store.domain.validator.order.OrderValidator.*;
+import static pl.bk.pizza.store.domain.validator.product.ProductValidator.*;
 
 @Service
 @AllArgsConstructor
@@ -89,41 +93,19 @@ public class OrderService
     
     public Mono<OrderDTO> setToDelivered(String orderId)
     {
-        return orderRepository
-            .findById(orderId)
-            .doOnNext(it -> orderShouldExists(it, orderId))
-            .doOnNext(Order::setToDelivered)
-            .doOnNext(this::applyPointsToUser)
-            .flatMap(orderRepository::save)
+        final Mono<Order> order = orderRepository.findById(orderId)
+                                                 .doOnNext(it -> orderShouldExists(it, orderId))
+                                                 .doOnNext(Order::setToDelivered);
+    
+        final Mono<User> appliedPoints = order.flatMap(this::applyPointsToUser);
+        
+        return order.zipWith(appliedPoints)
+            .flatMap(objects->orderRepository.save(objects.getT1()))
             .map(orderMapper::mapToDTO);
     }
     
-    private Mono<Order> applyPointsToUser(Order order)
+    private Mono<User> applyPointsToUser(Order order)
     {
-        final Mono<Order> orderMono = Mono.just(order);
-        final Mono<Integer> points = orderMono.map(pointsService::applyPoints);
-        
-        return points
-            .zipWith(orderMono)
-            .doOnNext(objects -> userService.addPointsToUser(objects.getT2().getUserEmail(), objects.getT1()))
-            .map(Tuple2::getT2);
-    }
-    
-    // TODO Move these methods to Validators classes
-    
-    private void orderShouldExists(Order order, String id)
-    {
-        check(order == null, () -> new MissingEntityException(
-            "Cannot find order with id: " + id,
-            MISSING_ORDER
-        ));
-    }
-    
-    private void productShouldExists(BaseProductInfo product, String productId)
-    {
-        check(product == null, () -> new MissingEntityException(
-            "Product with id: " + productId + "does not exists",
-            MISSING_PRODUCT
-        ));
+        return userService.addPoints(order.getUserEmail(), pointsService.calculateAmountOfPoints(order));
     }
 }

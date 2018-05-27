@@ -28,7 +28,7 @@ public class UserMapper implements ObjectToDtoMapper<User, UserDTO>
             addressDTO,
             telephoneDTO,
             user.getStatus(),
-            0
+            user.getPoints()
         );
     }
 }

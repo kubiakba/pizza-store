@@ -6,7 +6,6 @@ import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.dto.user.UserDTO;
 import pl.bk.pizza.store.application.mapper.customer.NewUserMapper;
 import pl.bk.pizza.store.application.mapper.customer.UserMapper;
-import pl.bk.pizza.store.domain.customer.user.Points;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.customer.user.UserRepository;
 import pl.bk.pizza.store.domain.validator.customer.UserValidator;
@@ -32,7 +31,7 @@ public class UserService
             .map(userMapper::mapToDTO);
     }
     
-    public Mono<Points> getBonusPoints(String email)
+    public Mono<Integer> getBonusPoints(String email)
     {
         return userRepository
             .findById(email)
@@ -58,13 +57,12 @@ public class UserService
             .map(userMapper::mapToDTO);
     }
     
-    public Mono<UserDTO> addPointsToUser(String email, Integer points)
+    Mono<User> addPoints(String email, Integer points)
     {
         return userRepository
             .findById(email)
             .doOnNext(it -> UserValidator.userShouldExists(it, email))
             .doOnNext(user -> user.addPoints(points))
-            .flatMap(userRepository::save)
-            .map(userMapper::mapToDTO);
+            .flatMap(userRepository::save);
     }
 }

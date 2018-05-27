@@ -42,7 +42,7 @@ class UserController
     
     @ResponseStatus(OK)
     @GetMapping("/{email}/bonus")
-    public Mono<Points> getBonusPoints(@PathVariable String email)
+    public Mono<Integer> getBonusPoints(@PathVariable String email)
     {
         return userService.getBonusPoints(email);
     }

@@ -38,7 +38,7 @@ public class UserFactory
             address,
             telephone,
             UserStatus.ACTIVE,
-            new Points(0),
+            0,
             role
         );
     }
