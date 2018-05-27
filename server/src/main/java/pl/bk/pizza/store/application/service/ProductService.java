@@ -1,6 +1,8 @@
 package pl.bk.pizza.store.application.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import pl.bk.pizza.store.application.dto.product.input.NewProductDTO;
 import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO;
@@ -21,6 +23,7 @@ public class ProductService
     private final ProductRepository productRepository;
     private final NewProductMapper newProductMapper;
     private final ProductMapper productMapper;
+    private final ReactiveMongoTemplate mongoTemplate;
     
     public Mono<ProductDTO> createProduct(NewProductDTO newProduct)
     {
@@ -72,11 +75,10 @@ public class ProductService
             .map(productMapper::mapToDTO);
     }
     
-    //TODO use example.of() and test how it works
-    public Flux<ProductDTO> getAllProducts(Class<?> clazz)
+    public Flux<ProductDTO> getAllProducts(Class<? extends BaseProductInfo> clazz)
     {
-        return productRepository
-            .findAll()
+        final Query query = new Query().restrict(clazz);
+        return mongoTemplate.find(query, clazz, "product")
             .map(productMapper::mapToDTO);
     }
 }

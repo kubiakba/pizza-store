@@ -6,6 +6,7 @@ import pl.bk.pizza.store.helpers.CommonSpecification
 
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.product.ProductStatus.AVAILABLE
+import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewKebabDTOStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.newPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.productPriceStub
 
@@ -57,5 +58,31 @@ class ProductSpecification extends CommonSpecification
 
         then:
         assertThat(productWithNewPrice.price).isEqualTo(newPrice.price)
+    }
+
+    def "should get product"()
+    {
+        given:
+        def productDto = createProduct(getNewPizzaDTOStub())
+
+        when:
+        def product = getProduct(productDto.id)
+
+        then:
+        assertThat(product).isNotNull()
+    }
+
+    def "should get pizzas"()
+    {
+        given:
+        createProduct(getNewPizzaDTOStub())
+        createProduct(getNewKebabDTOStub())
+
+        when:
+        def product = getPizzas()
+
+        then:
+        assertThat(product).isInstanceOf(PizzaDTO)
+        assertThat(product.size()).isEqualTo(1)
     }
 }

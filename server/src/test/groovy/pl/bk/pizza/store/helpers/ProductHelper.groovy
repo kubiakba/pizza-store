@@ -7,6 +7,8 @@ import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO
 import reactor.core.publisher.Mono
 
+import static org.springframework.http.HttpMethod.*
+
 trait ProductHelper
 {
     abstract WebTestClient getClient()
@@ -20,6 +22,19 @@ trait ProductHelper
             .exchange()
             .expectStatus()
             .isCreated()
+            .expectBody(ProductDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    ProductDTO getProduct(String id)
+    {
+        client
+            .method(GET)
+            .uri("/products/$id")
+            .exchange()
+            .expectStatus()
+            .isOk()
             .expectBody(ProductDTO)
             .returnResult()
             .responseBody
@@ -63,4 +78,17 @@ trait ProductHelper
             .responseBody
     }
 
+    List<ProductDTO> getPizzas()
+    {
+        client
+            .method(GET)
+            .uri("/products/pizzas")
+            .exchange()
+            .expectStatus()
+            .isOk()
+            .returnResult(ProductDTO)
+            .getResponseBody()
+            .collectList()
+            .block()
+    }
 }
