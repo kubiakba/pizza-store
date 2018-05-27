@@ -2,12 +2,11 @@ package pl.bk.pizza.store.domain.product;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
-import pl.bk.pizza.store.domain.validator.product.ProductValidator;
 
 import java.math.BigDecimal;
 
 import static pl.bk.pizza.store.domain.service.IdGenerator.generateID;
-import static pl.bk.pizza.store.domain.validator.product.ProductValidator.*;
+import static pl.bk.pizza.store.domain.validator.product.ProductValidator.validatePrice;
 
 @Getter
 public abstract class BaseProductInfo

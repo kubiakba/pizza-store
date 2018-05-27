@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.dto.user.UserDTO;
 import pl.bk.pizza.store.application.service.UserService;
-import pl.bk.pizza.store.domain.customer.user.Points;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.http.HttpStatus.CREATED;

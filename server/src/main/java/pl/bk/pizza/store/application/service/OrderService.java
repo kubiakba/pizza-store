@@ -9,22 +9,16 @@ import pl.bk.pizza.store.application.mapper.order.NewOrderMapper;
 import pl.bk.pizza.store.application.mapper.order.OrderMapper;
 import pl.bk.pizza.store.application.mapper.order.discount.GenericDiscountMapper;
 import pl.bk.pizza.store.domain.customer.user.User;
-import pl.bk.pizza.store.domain.exception.MissingEntityException;
 import pl.bk.pizza.store.domain.order.Order;
 import pl.bk.pizza.store.domain.order.OrderRepository;
 import pl.bk.pizza.store.domain.order.discount.Discount;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.ProductRepository;
 import pl.bk.pizza.store.domain.service.PointsService;
-import pl.bk.pizza.store.domain.validator.order.OrderValidator;
-import pl.bk.pizza.store.domain.validator.product.ProductValidator;
 import reactor.core.publisher.Mono;
 
-import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_ORDER;
-import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_PRODUCT;
-import static pl.bk.pizza.store.domain.exception.Preconditions.check;
-import static pl.bk.pizza.store.domain.validator.order.OrderValidator.*;
-import static pl.bk.pizza.store.domain.validator.product.ProductValidator.*;
+import static pl.bk.pizza.store.domain.validator.order.OrderValidator.orderShouldExists;
+import static pl.bk.pizza.store.domain.validator.product.ProductValidator.productShouldExists;
 
 @Service
 @AllArgsConstructor
