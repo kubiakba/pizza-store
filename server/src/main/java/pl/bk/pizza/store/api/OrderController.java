@@ -26,20 +26,6 @@ class OrderController
 {
     private final OrderService orderService;
     
-    @PostMapping
-    @ResponseStatus(CREATED)
-    public Mono<OrderDTO> createOrder(@RequestBody NewOrderDTO orderDTO)
-    {
-        return orderService.createOrder(orderDTO);
-    }
-    
-    @ResponseStatus(OK)
-    @GetMapping("/{orderId}")
-    public Mono<OrderDTO> getOrder(@PathVariable String orderId)
-    {
-        return orderService.getOrderById(orderId);
-    }
-    
     @ResponseStatus(NO_CONTENT)
     @PutMapping("/{orderId}/{productId}")
     public Mono<OrderDTO> addProductToOrder(@PathVariable String orderId, @PathVariable String productId)
