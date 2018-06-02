@@ -26,10 +26,9 @@ public class OrderRouter
     {
         return Mono.from(request.bodyToMono(NewOrderDTO.class))
                    .flatMap(orderService::createOrder)
-                   .map(order -> ServerResponse.created(create("/orders/" + order.getId()))
+                   .flatMap(order -> ServerResponse.created(create("/orders/" + order.getId()))
                                                .body(fromObject(order)))
-                   .onErrorResume(OrderRouter::handleException)
-                   .flatMap(Function.identity());
+                   .onErrorResume(OrderRouter::handleException);
     }
     
     public Mono<ServerResponse> getOrder(ServerRequest request)
@@ -37,19 +36,18 @@ public class OrderRouter
         final String orderId = request.pathVariable("id");
         return Mono.just(orderId)
                    .flatMap(orderService::getOrderById)
-                   .map(order -> ServerResponse.ok()
+                   .flatMap(order -> ServerResponse.ok()
                                                .body(fromObject(order)))
-                   .onErrorResume(OrderRouter::handleException)
-                   .flatMap(Function.identity());
+                   .onErrorResume(OrderRouter::handleException);
     }
     
-    private static Mono<Mono<ServerResponse>> handleException(Throwable exception)
+    private static Mono<ServerResponse> handleException(Throwable exception)
     {
         if(exception instanceof AppException)
         {
             AppException e = (AppException) exception;
-            return Mono.just(ServerResponse.status(e.getHttpStatus()).body(fromObject(e.getHttpStatus())));
+            return ServerResponse.status(e.getHttpStatus()).body(fromObject(e.getHttpStatus()));
         }
-        return Mono.just(ServerResponse.badRequest().body(fromObject(new AppException("Internal error occure.", INTERNAL_SERVER_ERROR, ErrorCode.INTERNAL_ERROR))));
+        return ServerResponse.badRequest().body(fromObject(new AppException("Internal error occure.", INTERNAL_SERVER_ERROR, ErrorCode.INTERNAL_ERROR)));
     }
 }
