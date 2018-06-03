@@ -7,9 +7,7 @@ import pl.bk.pizza.store.helpers.CommonSpecification
 
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.product.ProductStatus.AVAILABLE
-import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewKebabDTOStub
-import static pl.bk.pizza.store.helpers.stubs.ProductStub.newPizzaDTOStub
-import static pl.bk.pizza.store.helpers.stubs.ProductStub.productPriceStub
+import static pl.bk.pizza.store.helpers.stubs.ProductStub.*
 
 class ProductSpecification extends CommonSpecification
 {

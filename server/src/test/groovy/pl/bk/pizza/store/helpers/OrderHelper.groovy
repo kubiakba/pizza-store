@@ -48,5 +48,4 @@ trait OrderHelper
             .returnResult()
             .responseBody
     }
-
 }

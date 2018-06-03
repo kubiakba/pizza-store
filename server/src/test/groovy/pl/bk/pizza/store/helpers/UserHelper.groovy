@@ -3,6 +3,7 @@ package pl.bk.pizza.store.helpers
 import org.springframework.test.web.reactive.server.WebTestClient
 import pl.bk.pizza.store.application.dto.user.NewUserDTO
 import pl.bk.pizza.store.application.dto.user.UserDTO
+import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import reactor.core.publisher.Mono
 
 import static org.springframework.http.HttpMethod.GET
@@ -51,4 +52,15 @@ trait UserHelper
             .responseBody
     }
 
+    ErrorMessage createUserWithError(NewUserDTO newUserDTO)
+    {
+        client
+            .post()
+            .uri("/users")
+            .body(Mono.just(newUserDTO), NewUserDTO)
+            .exchange()
+            .expectBody(ErrorMessage)
+            .returnResult()
+            .responseBody
+    }
 }

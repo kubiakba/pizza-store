@@ -17,14 +17,14 @@ class UserSpecification extends CommonSpecification
         def user = createUser(userDto)
 
         then:
-        with(user){
+        with(user) {
             assertThat(email).isEqualTo(userDto.email)
             assertThat(name).isEqualTo(userDto.name)
             assertThat(surname).isEqualTo(userDto.surname)
             assertThat(telephone.number).isEqualTo(userDto.telephone.number)
             assertThat(points).isEqualTo(0)
         }
-        with(user.address){
+        with(user.address) {
             assertThat(city).isEqualTo(userDto.address.city)
             assertThat(postCode).isEqualTo(userDto.address.postCode)
             assertThat(street).isEqualTo(userDto.address.street)
