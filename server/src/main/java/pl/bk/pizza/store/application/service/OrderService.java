@@ -4,14 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
 import pl.bk.pizza.store.application.dto.order.OrderDTO;
-import pl.bk.pizza.store.application.dto.order.discount.DiscountDTO;
 import pl.bk.pizza.store.application.mapper.order.NewOrderMapper;
 import pl.bk.pizza.store.application.mapper.order.OrderMapper;
-import pl.bk.pizza.store.application.mapper.order.discount.GenericDiscountMapper;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.order.Order;
 import pl.bk.pizza.store.domain.order.OrderRepository;
-import pl.bk.pizza.store.domain.order.discount.Discount;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.ProductRepository;
 import pl.bk.pizza.store.domain.service.PointsService;
@@ -28,7 +25,6 @@ public class OrderService
     private final ProductRepository productRepository;
     private final OrderMapper orderMapper;
     private final NewOrderMapper newOrderMapper;
-    private final GenericDiscountMapper discountMapper;
     private final UserService userService;
     private final PointsService pointsService;
     
@@ -68,20 +64,6 @@ public class OrderService
     {
         return orderRepository
             .findById(orderId)
-            .map(orderMapper::mapToDTO);
-    }
-    
-    public Mono<OrderDTO> applyDiscount(DiscountDTO discountDTO, String orderId)
-    {
-        final Mono<Order> order = orderRepository.findById(orderId)
-                                                 .doOnNext(it -> orderShouldExists(it, orderId));
-        
-        final Mono<Discount> discount = Mono.just(discountMapper.mapFromDTO(discountDTO));
-        
-        return order
-            .zipWith(discount)
-            .doOnNext(objects -> objects.getT1().addDiscount(objects.getT2()))
-            .flatMap(objects -> orderRepository.save(objects.getT1()))
             .map(orderMapper::mapToDTO);
     }
     

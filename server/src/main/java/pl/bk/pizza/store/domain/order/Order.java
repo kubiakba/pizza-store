@@ -3,7 +3,6 @@ package pl.bk.pizza.store.domain.order;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import pl.bk.pizza.store.domain.order.discount.Discount;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 
 import java.math.BigDecimal;
@@ -20,17 +19,15 @@ public class Order
     private final String id;
     private final String userEmail;
     private final Set<BaseProductInfo> products;
-    private final Set<Discount> discounts;
     private OrderStatus orderStatus;
     private LocalDateTime orderDateTime;
     private BigDecimal totalPrice;
     
-    Order(String id, String userEmail, Set<BaseProductInfo> products, Set<Discount> discounts, OrderStatus orderStatus, BigDecimal totalPrice)
+    Order(String id, String userEmail, Set<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice)
     {
         this.id = id;
         this.userEmail = userEmail;
         this.products = products;
-        this.discounts = discounts;
         this.orderStatus = orderStatus;
         this.totalPrice = totalPrice;
     }
@@ -59,10 +56,5 @@ public class Order
     public void setToDelivered()
     {
         orderStatus = OrderStatus.DELIVERED;
-    }
-    
-    public void addDiscount(Discount discount)
-    {
-        discounts.add(discount);
     }
 }

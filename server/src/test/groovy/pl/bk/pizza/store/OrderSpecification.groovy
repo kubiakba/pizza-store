@@ -21,7 +21,6 @@ class OrderSpecification extends CommonSpecification
             assertThat(products).isEmpty()
             assertThat(orderStatus).isEqualTo(STARTED)
             assertThat(totalPrice).isEqualTo(BigDecimal.ZERO)
-            assertThat(discounts).isEmpty()
         }
     }
 

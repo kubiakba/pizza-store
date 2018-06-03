@@ -12,7 +12,6 @@ The goal of project is to create pizza store where you can order
 - [x] Offering products like pizza, toppings, kebab.
 - [x] Specifying products attributes like size or flavour.
 - [x] Ordering products.
-- [x] Using discounts.
 - [x] Collecting points.
 
 

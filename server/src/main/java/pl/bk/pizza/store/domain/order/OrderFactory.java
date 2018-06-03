@@ -19,7 +19,6 @@ public class OrderFactory
             generateID(),
             email,
             emptySet(),
-            emptySet(),
             OrderStatus.STARTED,
             BigDecimal.ZERO
         );
@@ -30,7 +29,6 @@ public class OrderFactory
         return new Order(
             generateID(),
             null,
-            emptySet(),
             emptySet(),
             OrderStatus.STARTED,
             BigDecimal.ZERO
