@@ -7,7 +7,7 @@ import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO
 import reactor.core.publisher.Mono
 
-import static org.springframework.http.HttpMethod.*
+import static org.springframework.http.HttpMethod.GET
 
 trait ProductHelper
 {
@@ -46,6 +46,8 @@ trait ProductHelper
             .put()
             .uri("/orders/$orderId/$productId")
             .exchange()
+            .expectStatus()
+            .isOk()
             .expectBody(OrderDTO)
             .returnResult()
             .responseBody
@@ -58,7 +60,7 @@ trait ProductHelper
             .uri("/products/$id/non-available")
             .exchange()
             .expectStatus()
-            .isNoContent()
+            .isOk()
             .expectBody(ProductDTO)
             .returnResult()
             .responseBody
@@ -72,7 +74,7 @@ trait ProductHelper
             .body(Mono.just(productPriceDTO), NewProductPriceDTO)
             .exchange()
             .expectStatus()
-            .isNoContent()
+            .isOk()
             .expectBody(ProductDTO)
             .returnResult()
             .responseBody

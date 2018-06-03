@@ -30,7 +30,7 @@ trait OrderHelper
             .uri("/orders/$id/to-realization")
             .exchange()
             .expectStatus()
-            .isNoContent()
+            .isOk()
             .expectBody(OrderDTO)
             .returnResult()
             .responseBody
@@ -43,7 +43,7 @@ trait OrderHelper
             .uri("/orders/$id/delivered")
             .exchange()
             .expectStatus()
-            .isNoContent()
+            .isOk()
             .expectBody(OrderDTO)
             .returnResult()
             .responseBody

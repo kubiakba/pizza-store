@@ -26,28 +26,7 @@ class OrderController
 {
     private final OrderService orderService;
     
-    @ResponseStatus(NO_CONTENT)
-    @PutMapping("/{orderId}/{productId}")
-    public Mono<OrderDTO> addProductToOrder(@PathVariable String orderId, @PathVariable String productId)
-    {
-        return orderService.addProductToOrder(orderId, productId);
-    }
-    
-    @ResponseStatus(NO_CONTENT)
-    @PutMapping("/{orderId}/to-realization")
-    public Mono<OrderDTO> setToRealization(@PathVariable String orderId)
-    {
-        return orderService.setToRealization(orderId);
-    }
-    
-    @ResponseStatus(NO_CONTENT)
-    @PutMapping("/{orderId}/delivered")
-    public Mono<OrderDTO> setToDelivered(@PathVariable String orderId)
-    {
-        return orderService.setToDelivered(orderId);
-    }
-    
-    @ResponseStatus(NO_CONTENT)
+    @ResponseStatus(OK)
     @PostMapping("/discounts/{orderId}")
     public Mono<OrderDTO> applyDiscount(@PathVariable String orderId, @RequestBody DiscountDTO discountDTO)
     {

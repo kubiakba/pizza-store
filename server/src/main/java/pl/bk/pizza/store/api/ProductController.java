@@ -79,14 +79,14 @@ class ProductController
         return productService.getAllAvailableProducts();
     }
     
-    @ResponseStatus(NO_CONTENT)
+    @ResponseStatus(OK)
     @PutMapping("/{productId}/changePrice")
     public Mono<ProductDTO> changeProductPrice(@RequestBody NewProductPriceDTO newProductPriceDTO, @PathVariable String productId)
     {
         return productService.changeProductPrice(productId, newProductPriceDTO);
     }
     
-    @ResponseStatus(NO_CONTENT)
+    @ResponseStatus(OK)
     @PutMapping("/{productId}/non-available")
     public Mono<ProductDTO> makeProductNonAvailable(@PathVariable String productId)
     {

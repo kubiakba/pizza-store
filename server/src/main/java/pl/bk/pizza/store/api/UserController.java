@@ -15,7 +15,6 @@ import pl.bk.pizza.store.application.service.UserService;
 import reactor.core.publisher.Mono;
 
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
 
 @RestController
@@ -46,7 +45,7 @@ class UserController
         return userService.getBonusPoints(email);
     }
     
-    @ResponseStatus(NO_CONTENT)
+    @ResponseStatus(OK)
     @PatchMapping("/{email}/deactivate")
     public Mono<UserDTO> deactivate(@PathVariable String email)
     {

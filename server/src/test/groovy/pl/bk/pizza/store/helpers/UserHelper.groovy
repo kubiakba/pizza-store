@@ -32,7 +32,7 @@ trait UserHelper
             .uri("/users/$email/deactivate")
             .exchange()
             .expectStatus()
-            .isNoContent()
+            .isOk()
             .expectBody(UserDTO)
             .returnResult()
             .responseBody

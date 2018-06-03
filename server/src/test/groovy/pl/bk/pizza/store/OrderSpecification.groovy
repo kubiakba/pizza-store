@@ -41,7 +41,11 @@ class OrderSpecification extends CommonSpecification
     def "should start order realization"()
     {
         given:
-        def order = createOrder()
+        def email = "aa@wp.pl"
+        createUser(getNewUserDTOStub(email))
+
+        and:
+        def order = createOrder(email)
 
         def product = createProduct(getNewPizzaDTOStub())
 

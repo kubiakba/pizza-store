@@ -9,6 +9,7 @@ import pl.bk.pizza.store.api.OrderRouter;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RequestPredicates.PUT;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @SpringBootApplication
@@ -23,7 +24,10 @@ public class Initializer
     public RouterFunction<ServerResponse> routes(OrderRouter orderRouter)
     {
         return route(POST("/orders"), orderRouter::createOrder)
-            .and(route(GET("/orders/{orderId}"),orderRouter::getOrder));
+            .andRoute(GET("/orders/{orderId}"),orderRouter::getOrder)
+            .andRoute(PUT("/orders/{orderId}/to-realization"),orderRouter::setToRealization)
+            .andRoute(PUT("/orders/{orderId}/delivered"),orderRouter::setToDelivered)
+            .andRoute(PUT("/orders/{orderId}/{productId}"),orderRouter::addProductToOrder);
     }
 }
 
