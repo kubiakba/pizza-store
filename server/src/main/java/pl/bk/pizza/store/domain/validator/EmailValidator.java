@@ -19,7 +19,7 @@ public class EmailValidator
         ));
         
         check(!validator.isValid(email), () -> new InvalidEntityException(
-            "Invalid format of email address: "+ email,
+            "Invalid format of email address: " + email,
             INVALID_EMAIL
         ));
         

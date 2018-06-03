@@ -38,15 +38,15 @@ public class OrderService
     public Mono<OrderDTO> addProductToOrder(String orderId, String productId)
     {
         final Mono<Order> order = orderRepository.findById(orderId)
-                                                 .doOnNext(it -> orderShouldExists(it, orderId));
+                                                 .switchIfEmpty(orderShouldExists(orderId));
         
         final Mono<BaseProductInfo> product = productRepository.findById(productId)
-                                                               .doOnNext(it -> productShouldExists(it, productId));
+                                                               .switchIfEmpty(productShouldExists(productId));
         
         return order
             .zipWith(product)
-            .doOnNext(objects -> objects.getT1().addProduct(objects.getT2()))
-            .flatMap(objects -> orderRepository.save(objects.getT1()))
+            .map(objects -> objects.getT1().addProduct(objects.getT2()))
+            .flatMap(orderRepository::save)
             .map(orderMapper::mapToDTO);
     }
     
@@ -54,8 +54,8 @@ public class OrderService
     {
         return orderRepository
             .findById(orderId)
-            .doOnNext(it -> orderShouldExists(it, orderId))
-            .doOnNext(Order::setToRealization)
+            .map(Order::setToRealization)
+            .switchIfEmpty(orderShouldExists(orderId))
             .flatMap(orderRepository::save)
             .map(orderMapper::mapToDTO);
     }
@@ -64,19 +64,20 @@ public class OrderService
     {
         return orderRepository
             .findById(orderId)
+            .switchIfEmpty(orderShouldExists(orderId))
             .map(orderMapper::mapToDTO);
     }
     
     public Mono<OrderDTO> setToDelivered(String orderId)
     {
         final Mono<Order> order = orderRepository.findById(orderId)
-                                                 .doOnNext(it -> orderShouldExists(it, orderId))
-                                                 .doOnNext(Order::setToDelivered);
-    
-        final Mono<User> appliedPoints = order.flatMap(this::applyPointsToUser);
+                                                 .map(Order::setToDelivered)
+                                                 .switchIfEmpty(orderShouldExists(orderId));
         
-        return order.zipWith(appliedPoints)
-            .flatMap(objects->orderRepository.save(objects.getT1()))
+        return order
+            .flatMap(this::applyPointsToUser)
+            .then(order)
+            .flatMap(orderRepository::save)
             .map(orderMapper::mapToDTO);
     }
     

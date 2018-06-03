@@ -32,16 +32,18 @@ public class Order
         this.totalPrice = totalPrice;
     }
     
-    public void addProduct(BaseProductInfo product)
+    public Order addProduct(BaseProductInfo product)
     {
         products.add(product);
+        return this;
     }
     
-    public void setToRealization()
+    public Order setToRealization()
     {
         orderStatus = OrderStatus.TO_REALIZATION;
         orderDateTime = now();
         totalPrice = calculateTotalPrice();
+        return this;
     }
     
     private BigDecimal calculateTotalPrice()
@@ -53,8 +55,9 @@ public class Order
     }
     
     //TODO validate if status is TO_REALIZATION
-    public void setToDelivered()
+    public Order setToDelivered()
     {
         orderStatus = OrderStatus.DELIVERED;
+        return this;
     }
 }

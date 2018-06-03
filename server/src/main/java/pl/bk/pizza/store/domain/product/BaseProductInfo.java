@@ -31,13 +31,15 @@ public abstract class BaseProductInfo
         return ProductStatus.AVAILABLE.equals(productStatus);
     }
     
-    public void changePrice(BigDecimal price)
+    public BaseProductInfo changePrice(BigDecimal price)
     {
         this.price = price;
+        return this;
     }
     
-    public void makeNonavailable()
+    public BaseProductInfo makeNonavailable()
     {
         productStatus = ProductStatus.NONAVAILABLE;
+        return this;
     }
 }

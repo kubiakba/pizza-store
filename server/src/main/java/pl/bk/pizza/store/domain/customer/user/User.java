@@ -24,13 +24,15 @@ public class User
     private Integer points;
     private String role;
     
-    public void deactivateUser()
+    public User deactivateUser()
     {
         status = UserStatus.INACTIVE;
+        return this;
     }
     
-    public void addPoints(Integer numberOfPoints)
+    public User addPoints(Integer numberOfPoints)
     {
-        points +=numberOfPoints;
+        points += numberOfPoints;
+        return this;
     }
 }

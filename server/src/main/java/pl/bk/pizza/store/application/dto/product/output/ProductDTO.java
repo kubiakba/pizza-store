@@ -8,7 +8,6 @@ import pl.bk.pizza.store.domain.product.ProductStatus;
 
 import java.math.BigDecimal;
 
-
 @Getter
 @NoArgsConstructor
 @JsonTypeInfo(

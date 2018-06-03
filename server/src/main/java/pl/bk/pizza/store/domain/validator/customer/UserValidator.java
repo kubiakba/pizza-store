@@ -5,6 +5,7 @@ import pl.bk.pizza.store.domain.exception.DuplicateEntityException;
 import pl.bk.pizza.store.domain.exception.ErrorCode;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
+import reactor.core.publisher.Mono;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_USER_NAME;
@@ -24,21 +25,20 @@ public class UserValidator
         check(isBlank(surname), () -> new InvalidEntityException("Surname is null or empty.", EMPTY_USER_SURNAME));
     }
     
-    public static void userShouldNotExists(User user, String email)
+    public static Mono<User> userShouldExists(String email)
     {
-        check(
-            user != null, () -> new DuplicateEntityException(
-                "User with email: " + email + " already exists.",
-                ErrorCode.USER_EXISTS
-            ));
-    }
-    
-    public static void userShouldExists(User user, String email)
-    {
-        check(user == null, () -> new MissingEntityException(
-            "user with email: " + email + "does not exists",
+        return Mono.error(new MissingEntityException(
+            "User with email: " + email + "does not exists",
             MISSING_USER
         ));
     }
-
+    
+    public Mono<Error> userShouldNotExists(String email)
+    {
+        return Mono.error(new DuplicateEntityException(
+            "User with email: " + email + " already exists.",
+            ErrorCode.USER_EXISTS
+        ));
+    }
+    
 }

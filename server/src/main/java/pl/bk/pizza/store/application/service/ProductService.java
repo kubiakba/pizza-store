@@ -36,7 +36,7 @@ public class ProductService
     {
         return productRepository
             .findById(productId)
-            .doOnNext(it -> productShouldExists(it, productId))
+            .switchIfEmpty(productShouldExists(productId))
             .map(productMapper::mapToDTO);
     }
     
@@ -59,8 +59,8 @@ public class ProductService
     {
         return productRepository
             .findById(productId)
-            .doOnNext(it -> productShouldExists(it, productId))
-            .doOnNext(product -> product.changePrice(newProductPriceDTO.getPrice()))
+            .switchIfEmpty(productShouldExists(productId))
+            .map(product -> product.changePrice(newProductPriceDTO.getPrice()))
             .flatMap(productRepository::save)
             .map(productMapper::mapToDTO);
     }
@@ -69,8 +69,8 @@ public class ProductService
     {
         return productRepository
             .findById(productId)
-            .doOnNext(it -> productShouldExists(it, productId))
-            .doOnNext(BaseProductInfo::makeNonavailable)
+            .switchIfEmpty(productShouldExists(productId))
+            .map(BaseProductInfo::makeNonavailable)
             .flatMap(productRepository::save)
             .map(productMapper::mapToDTO);
     }
@@ -78,7 +78,9 @@ public class ProductService
     public Flux<ProductDTO> getAllProducts(Class<? extends BaseProductInfo> clazz)
     {
         final Query query = new Query().restrict(clazz);
-        return mongoTemplate.find(query, clazz, "product")
+        
+        return mongoTemplate
+            .find(query, clazz, "product")
             .map(productMapper::mapToDTO);
     }
 }

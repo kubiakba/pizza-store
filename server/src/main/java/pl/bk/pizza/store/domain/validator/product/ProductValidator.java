@@ -3,6 +3,7 @@ package pl.bk.pizza.store.domain.validator.product;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
+import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 
@@ -20,9 +21,9 @@ public class ProductValidator
         ));
     }
     
-    public static void productShouldExists(BaseProductInfo product, String productId)
+    public static Mono<BaseProductInfo> productShouldExists(String productId)
     {
-        check(product == null, () -> new MissingEntityException(
+        return Mono.error(new MissingEntityException(
             "Product with id: " + productId + "does not exists",
             MISSING_PRODUCT
         ));

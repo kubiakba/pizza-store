@@ -1,5 +1,6 @@
 package pl.bk.pizza.store
 
+import pl.bk.pizza.store.application.dto.order.OrderDTO
 import pl.bk.pizza.store.helpers.CommonSpecification
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -88,10 +89,10 @@ class OrderSpecification extends CommonSpecification
         def order = createOrder(email)
 
         and:"add product to order"
-        addProductToOrder(order.id, product.id)
+        def order1 = addProductToOrder(order.id, product.id)
 
         and: "start realization"
-        startOrderRealization(order.id)
+        def realization = startOrderRealization(order.id)
 
         when:
         def orderStarted = deliverOrder(order.id)

@@ -89,6 +89,6 @@ class ProductController
     @PutMapping("/{productId}/non-available")
     public Mono<ProductDTO> makeProductNonAvailable(@PathVariable String productId)
     {
-         return productService.makeProductNonAvailable(productId);
+        return productService.makeProductNonAvailable(productId);
     }
 }

@@ -11,6 +11,8 @@ import pl.bk.pizza.store.domain.customer.user.UserRepository;
 import pl.bk.pizza.store.domain.validator.customer.UserValidator;
 import reactor.core.publisher.Mono;
 
+import static pl.bk.pizza.store.domain.validator.customer.UserValidator.userShouldExists;
+
 @Service
 @AllArgsConstructor
 public class UserService
@@ -21,11 +23,14 @@ public class UserService
     
     public Mono<UserDTO> createUser(NewUserDTO userDTO)
     {
-        return Mono
-            .just(userDTO)
-            .doOnNext(newUser -> Mono.just(newUser)
-                                     .flatMap(it -> userRepository.findById(it.getEmail()))
-                                     .doOnNext(it -> UserValidator.userShouldExists(it, userDTO.getEmail())))
+        final Mono<NewUserDTO> userDto = Mono.just(userDTO);
+        
+        final Mono<Error> duplicateUser = userDto
+            .flatMap(it -> userRepository.findById(it.getEmail()))
+            .flatMap(it -> new UserValidator().userShouldNotExists(userDTO.getEmail()));
+        
+        return duplicateUser
+            .then(userDto)
             .map(newUserMapper::mapFromDTO)
             .flatMap(userRepository::save)
             .map(userMapper::mapToDTO);
@@ -35,7 +40,7 @@ public class UserService
     {
         return userRepository
             .findById(email)
-            .doOnNext(it -> UserValidator.userShouldExists(it, email))
+            .switchIfEmpty(userShouldExists(email))
             .map(User::getPoints);
     }
     
@@ -43,7 +48,7 @@ public class UserService
     {
         return userRepository
             .findById(email)
-            .doOnNext(it -> UserValidator.userShouldExists(it, email))
+            .switchIfEmpty(userShouldExists(email))
             .map(userMapper::mapToDTO);
     }
     
@@ -51,8 +56,8 @@ public class UserService
     {
         return userRepository
             .findById(email)
-            .doOnNext(it -> UserValidator.userShouldExists(it, email))
-            .doOnNext(User::deactivateUser)
+            .switchIfEmpty(userShouldExists(email))
+            .map(User::deactivateUser)
             .flatMap(userRepository::save)
             .map(userMapper::mapToDTO);
     }
@@ -61,8 +66,8 @@ public class UserService
     {
         return userRepository
             .findById(email)
-            .doOnNext(it -> UserValidator.userShouldExists(it, email))
-            .doOnNext(user -> user.addPoints(points))
+            .switchIfEmpty(userShouldExists(email))
+            .map(user -> user.addPoints(points))
             .flatMap(userRepository::save);
     }
 }
