@@ -6,6 +6,8 @@ import pl.bk.pizza.store.application.dto.order.OrderDTO
 import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import reactor.core.publisher.Mono
 
+import static org.springframework.http.HttpMethod.GET
+
 trait OrderHelper
 {
     abstract WebTestClient getClient()
@@ -32,6 +34,19 @@ trait OrderHelper
             .body(Mono.just(new NewOrderDTO(email)), NewOrderDTO.class)
             .exchange()
             .expectBody(ErrorMessage)
+            .returnResult()
+            .responseBody
+    }
+
+    OrderDTO getOrder(String orderId)
+    {
+        client
+            .method(GET)
+            .uri("/orders/${orderId}")
+            .exchange()
+            .expectStatus()
+            .isOk()
+            .expectBody(OrderDTO)
             .returnResult()
             .responseBody
     }

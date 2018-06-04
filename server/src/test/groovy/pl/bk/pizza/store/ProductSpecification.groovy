@@ -1,6 +1,7 @@
 package pl.bk.pizza.store
 
 import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
+import pl.bk.pizza.store.application.dto.product.output.PizzaToppingDTO
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO
 import pl.bk.pizza.store.domain.product.ProductStatus
 import pl.bk.pizza.store.helpers.CommonSpecification
@@ -84,4 +85,65 @@ class ProductSpecification extends CommonSpecification
         assertThat(product).hasOnlyElementsOfType(ProductDTO)
         assertThat(product.size()).isEqualTo(1)
     }
+
+    def "should get kebabs"()
+    {
+        given:
+        createProduct(getNewPizzaDTOStub())
+        createProduct(getNewKebabDTOStub())
+
+        when:
+        def product = getKebabs()
+
+        then:
+        assertThat(product).hasOnlyElementsOfType(ProductDTO)
+        assertThat(product.size()).isEqualTo(1)
+    }
+
+    def "should get pizzaToppings"()
+    {
+        given:
+        createProduct(getNewPizzaToppingDTOStub())
+        createProduct(getNewKebabDTOStub())
+
+        when:
+        def product = getPizzaToppings()
+
+        then:
+        assertThat(product).hasOnlyElementsOfType(ProductDTO)
+        assertThat(product.size()).isEqualTo(1)
+    }
+
+    def "should get all products"()
+    {
+        given:
+        createProduct(getNewPizzaToppingDTOStub())
+        createProduct(getNewPizzaToppingDTOStub())
+        createProduct(getNewKebabDTOStub())
+        createProduct(getNewKebabDTOStub())
+        createProduct(getNewPizzaDTOStub())
+
+        when:
+        def products = getAllProducts()
+
+        then:
+        assertThat(products.size()).isEqualTo(5)
+    }
+
+    def "should get all available products"()
+    {
+        given:
+        createProduct(getNewPizzaToppingDTOStub())
+        def kebab = createProduct(getNewKebabDTOStub())
+        createProduct(getNewPizzaDTOStub())
+
+        when:
+        makeProductNonAvailable(kebab.id)
+        def products = getAllAvailableProducts()
+
+        then:
+        assertThat(products.size()).isEqualTo(2)
+    }
+
+
 }

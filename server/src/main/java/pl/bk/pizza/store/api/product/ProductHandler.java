@@ -2,8 +2,6 @@ package pl.bk.pizza.store.api.product;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import pl.bk.pizza.store.api.ErrorHandler;
@@ -19,7 +17,6 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
-import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.web.reactive.function.BodyInserters.fromObject;
 import static org.springframework.web.reactive.function.server.ServerResponse.created;
 
@@ -49,7 +46,7 @@ public class ProductHandler
     {
         final Flux<ProductDTO> products = productService.getAllProducts();
         
-        return ServerResponse.ok().body(fromObject(products))
+        return ServerResponse.ok().body(products, ProductDTO.class)
                              .onErrorResume(ErrorHandler::handleException);
     }
     
@@ -92,7 +89,7 @@ public class ProductHandler
         return request
             .bodyToMono(NewProductPriceDTO.class)
             .flatMap(it -> productService.changeProductPrice(productId, it))
-            .flatMap(it->ServerResponse.ok().body(fromObject(it)))
+            .flatMap(it -> ServerResponse.ok().body(fromObject(it)))
             .onErrorResume(ErrorHandler::handleException);
     }
     
@@ -102,9 +99,9 @@ public class ProductHandler
         
         return productService
             .makeProductNonAvailable(productId)
-            .flatMap(it->ServerResponse.ok().body(fromObject(it)))
+            .flatMap(it -> ServerResponse.ok().body(fromObject(it)))
             .onErrorResume(ErrorHandler::handleException);
     }
-
+    
 }
 

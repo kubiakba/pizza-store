@@ -24,6 +24,17 @@ class OrderSpecification extends CommonSpecification
         }
     }
 
+    def "should get order"(){
+        given:
+        def order = createOrder()
+
+        when:
+        def response = getOrder(order.id)
+
+        then:
+        assertThat(response).isNotNull()
+    }
+
     def "should create order and add product to order"()
     {
         when:

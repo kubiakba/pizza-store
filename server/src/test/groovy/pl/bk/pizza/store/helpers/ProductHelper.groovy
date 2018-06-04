@@ -4,7 +4,9 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import pl.bk.pizza.store.application.dto.order.OrderDTO
 import pl.bk.pizza.store.application.dto.product.input.NewProductDTO
 import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
+import pl.bk.pizza.store.application.dto.product.output.KebabDTO
 import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
+import pl.bk.pizza.store.application.dto.product.output.PizzaToppingDTO
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO
 import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import reactor.core.publisher.Mono
@@ -50,6 +52,28 @@ trait ProductHelper
             .expectStatus()
             .isOk()
             .expectBody(ProductDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    List<ProductDTO> getAllProducts()
+    {
+        client
+            .method(GET)
+            .uri("/products")
+            .exchange()
+            .expectBodyList(ProductDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    List<ProductDTO> getAllAvailableProducts()
+    {
+        client
+            .method(GET)
+            .uri("/products/available")
+            .exchange()
+            .expectBodyList(ProductDTO)
             .returnResult()
             .responseBody
     }
@@ -101,6 +125,28 @@ trait ProductHelper
             .uri("/products/pizzas")
             .exchange()
             .expectBodyList(PizzaDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    List<KebabDTO> getKebabs()
+    {
+        client
+            .method(GET)
+            .uri("/products/kebabs")
+            .exchange()
+            .expectBodyList(KebabDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    List<PizzaToppingDTO> getPizzaToppings()
+    {
+        client
+            .method(GET)
+            .uri("/products/pizzaToppings")
+            .exchange()
+            .expectBodyList(PizzaToppingDTO)
             .returnResult()
             .responseBody
     }
