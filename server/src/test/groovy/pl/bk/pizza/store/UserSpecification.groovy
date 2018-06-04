@@ -4,6 +4,7 @@ import pl.bk.pizza.store.helpers.CommonSpecification
 
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.customer.user.UserStatus.INACTIVE
+import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 
 class UserSpecification extends CommonSpecification
@@ -57,5 +58,23 @@ class UserSpecification extends CommonSpecification
 
         then:
         assertThat(deactivatedUser.getStatus()).isEqualTo(INACTIVE)
+    }
+
+    def "should get user points"()
+    {
+        given:
+        def user = createUser(getNewUserDTOStub())
+        def product = createProduct(getNewPizzaDTOStub())
+        def order = createOrder(user.email)
+
+        addProductToOrder(order.id,product.id)
+        startOrderRealization(order.id)
+        deliverOrder(order.id)
+
+        when:
+        def points = getUserPoints(user.email)
+
+        then:
+        assertThat(points).isNotEqualTo(0)
     }
 }

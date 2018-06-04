@@ -18,7 +18,7 @@ public class UserRouter
     {
         return route(POST("/users"), userHandler::addUser)
             .andRoute(GET("/users/{email:.+}"), userHandler::getUser)
-            .andRoute(GET("users/{email}/bonus"), userHandler::getBonusPoints)
+            .andRoute(GET("/users/{email}/bonus"), userHandler::getBonusPoints)
             .andRoute(PATCH("/users/{email}/deactivate"), userHandler::deactivate);
     }
 }

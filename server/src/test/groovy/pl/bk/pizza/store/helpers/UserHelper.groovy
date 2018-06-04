@@ -52,6 +52,19 @@ trait UserHelper
             .responseBody
     }
 
+    Integer getUserPoints(String email)
+    {
+        client
+            .method(GET)
+            .uri("/users/$email/bonus")
+            .exchange()
+            .expectStatus()
+            .isOk()
+            .expectBody(Integer)
+            .returnResult()
+            .responseBody
+    }
+
     ErrorMessage createUserWithError(NewUserDTO newUserDTO)
     {
         client
