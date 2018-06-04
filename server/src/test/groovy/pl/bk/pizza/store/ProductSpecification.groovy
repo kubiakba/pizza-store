@@ -1,7 +1,6 @@
 package pl.bk.pizza.store
 
 import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
-import pl.bk.pizza.store.application.dto.product.output.PizzaToppingDTO
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO
 import pl.bk.pizza.store.domain.product.ProductStatus
 import pl.bk.pizza.store.helpers.CommonSpecification
@@ -142,8 +141,6 @@ class ProductSpecification extends CommonSpecification
         def products = getAllAvailableProducts()
 
         then:
-        assertThat(products.size()).isEqualTo(2)
+gi         assertThat(products.size()).isEqualTo(2)
     }
-
-
 }

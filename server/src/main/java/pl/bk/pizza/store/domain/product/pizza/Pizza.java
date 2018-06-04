@@ -2,11 +2,11 @@ package pl.bk.pizza.store.domain.product.pizza;
 
 import lombok.Getter;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
-import pl.bk.pizza.store.domain.validator.product.PizzaValidator;
 
 import java.math.BigDecimal;
 
-import static pl.bk.pizza.store.domain.validator.product.PizzaValidator.*;
+import static pl.bk.pizza.store.domain.validator.product.PizzaValidator.validateDough;
+import static pl.bk.pizza.store.domain.validator.product.PizzaValidator.validateSize;
 
 @Getter
 public class Pizza extends BaseProductInfo

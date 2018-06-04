@@ -57,15 +57,15 @@ bootJar {
     version = '1.0'
 }
 
-task buildDocker(type: Docker, dependsOn:build) {
+task buildDocker(type: Docker, dependsOn: build) {
     baseImage = 'frolvlad/alpine-oraclejdk8:slim'
     applicationName = jar.baseName
     addFile {
         from bootJar
-        rename {'app.jar'}
+        rename { 'app.jar' }
     }
     exposePort(8081)
-    entryPoint(['java','-Dspring.profiles.active=docker', '-jar', '/app.jar'])
+    entryPoint(['java', '-Dspring.profiles.active=docker', '-jar', '/app.jar'])
 }
 
 sourceCompatibility = 1.8

@@ -24,7 +24,8 @@ class OrderSpecification extends CommonSpecification
         }
     }
 
-    def "should get order"(){
+    def "should get order"()
+    {
         given:
         def order = createOrder()
 
