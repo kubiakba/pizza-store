@@ -141,6 +141,6 @@ class ProductSpecification extends CommonSpecification
         def products = getAllAvailableProducts()
 
         then:
-gi         assertThat(products.size()).isEqualTo(2)
+        assertThat(products.size()).isEqualTo(2)
     }
 }
