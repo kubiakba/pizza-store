@@ -23,7 +23,7 @@ public class UserHandler
 {
     private final UserService userService;
     
-    public Mono<ServerResponse> addUser(ServerRequest request)
+    Mono<ServerResponse> addUser(ServerRequest request)
     {
         return request
             .bodyToMono(NewUserDTO.class)
@@ -33,7 +33,7 @@ public class UserHandler
             .onErrorResume(ErrorHandler::handleException);
     }
     
-    public Mono<ServerResponse> getUser(ServerRequest request)
+    Mono<ServerResponse> getUser(ServerRequest request)
     {
         final String email = request.pathVariable("email");
         
@@ -42,7 +42,7 @@ public class UserHandler
                           .onErrorResume(ErrorHandler::handleException);
     }
     
-    public Mono<ServerResponse> getBonusPoints(ServerRequest request)
+    Mono<ServerResponse> getBonusPoints(ServerRequest request)
     {
         final String email = request.pathVariable("email");
         
@@ -51,7 +51,7 @@ public class UserHandler
                           .onErrorResume(ErrorHandler::handleException);
     }
     
-    public Mono<ServerResponse> deactivate(ServerRequest request)
+    Mono<ServerResponse> deactivate(ServerRequest request)
     {
         final String email = request.pathVariable("email");
         

@@ -18,7 +18,7 @@ public class OrderHandler
 {
     private final OrderService orderService;
     
-    public Mono<ServerResponse> createOrder(ServerRequest request)
+    Mono<ServerResponse> createOrder(ServerRequest request)
     {
         return Mono.from(request.bodyToMono(NewOrderDTO.class))
                    .flatMap(orderService::createOrder)
@@ -27,7 +27,7 @@ public class OrderHandler
                    .onErrorResume(ErrorHandler::handleException);
     }
     
-    public Mono<ServerResponse> getOrder(ServerRequest request)
+    Mono<ServerResponse> getOrder(ServerRequest request)
     {
         final String orderId = request.pathVariable("orderId");
         
@@ -38,7 +38,7 @@ public class OrderHandler
                    .onErrorResume(ErrorHandler::handleException);
     }
     
-    public Mono<ServerResponse> addProductToOrder(ServerRequest request)
+    Mono<ServerResponse> addProductToOrder(ServerRequest request)
     {
         final String orderId = request.pathVariable("orderId");
         final String productId = request.pathVariable("productId");
@@ -49,7 +49,7 @@ public class OrderHandler
             .onErrorResume(ErrorHandler::handleException);
     }
     
-    public Mono<ServerResponse> setToRealization(ServerRequest request)
+    Mono<ServerResponse> setToRealization(ServerRequest request)
     {
         final String orderId = request.pathVariable("orderId");
         
@@ -59,7 +59,7 @@ public class OrderHandler
                    .onErrorResume(ErrorHandler::handleException);
     }
     
-    public Mono<ServerResponse> setToDelivered(ServerRequest request)
+    Mono<ServerResponse> setToDelivered(ServerRequest request)
     {
         final String orderId = request.pathVariable("orderId");
         
