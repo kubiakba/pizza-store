@@ -6,6 +6,7 @@ import pl.bk.pizza.store.application.dto.product.input.NewProductDTO
 import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
 import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO
+import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import reactor.core.publisher.Mono
 
 import static org.springframework.http.HttpMethod.GET
@@ -24,6 +25,18 @@ trait ProductHelper
             .expectStatus()
             .isCreated()
             .expectBody(ProductDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    ErrorMessage createProductWithError(NewProductDTO product)
+    {
+        client
+            .post()
+            .uri("/products")
+            .body(Mono.just(product), NewProductDTO.class)
+            .exchange()
+            .expectBody(ErrorMessage)
             .returnResult()
             .responseBody
     }

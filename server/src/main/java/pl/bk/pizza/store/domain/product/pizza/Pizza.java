@@ -6,6 +6,8 @@ import pl.bk.pizza.store.domain.validator.product.PizzaValidator;
 
 import java.math.BigDecimal;
 
+import static pl.bk.pizza.store.domain.validator.product.PizzaValidator.*;
+
 @Getter
 public class Pizza extends BaseProductInfo
 {
@@ -15,8 +17,8 @@ public class Pizza extends BaseProductInfo
     public Pizza(PizzaSize size, Dough dough, BigDecimal price)
     {
         super(price);
-        PizzaValidator.validateSize(size);
-        PizzaValidator.validateDough(dough);
+        validateSize(size);
+        validateDough(dough);
         this.size = size;
         this.dough = dough;
     }
