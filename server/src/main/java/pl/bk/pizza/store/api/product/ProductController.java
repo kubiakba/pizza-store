@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.api;
+package pl.bk.pizza.store.api.product;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,48 +28,6 @@ import static org.springframework.http.HttpStatus.OK;
 class ProductController
 {
     private final ProductService productService;
-    
-    @ResponseStatus(CREATED)
-    @PostMapping
-    public Mono<ProductDTO> createProduct(@RequestBody NewProductDTO newProduct)
-    {
-        return productService.createProduct(newProduct);
-    }
-    
-    @ResponseStatus(OK)
-    @GetMapping("/{productId}")
-    public Mono<ProductDTO> getProduct(@PathVariable String productId)
-    {
-        return productService.getProduct(productId);
-    }
-    
-    @ResponseStatus(OK)
-    @GetMapping
-    public Flux<ProductDTO> getAllProducts()
-    {
-        return productService.getAllProducts();
-    }
-    
-    @ResponseStatus(OK)
-    @GetMapping("/pizzas")
-    public Flux<ProductDTO> getAllPizzas()
-    {
-        return productService.getAllProducts(Pizza.class);
-    }
-    
-    @ResponseStatus(OK)
-    @GetMapping("/kebabs")
-    public Flux<ProductDTO> getAllKebabs()
-    {
-        return productService.getAllProducts(Kebab.class);
-    }
-    
-    @ResponseStatus(OK)
-    @GetMapping("/pizzaToppings")
-    public Flux<ProductDTO> getAllPizzaToppings()
-    {
-        return productService.getAllProducts(PizzaTopping.class);
-    }
     
     @ResponseStatus(OK)
     @GetMapping("/available")

@@ -4,6 +4,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import pl.bk.pizza.store.application.dto.order.OrderDTO
 import pl.bk.pizza.store.application.dto.product.input.NewProductDTO
 import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
+import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO
 import reactor.core.publisher.Mono
 
@@ -80,17 +81,14 @@ trait ProductHelper
             .responseBody
     }
 
-    List<ProductDTO> getPizzas()
+    List<PizzaDTO> getPizzas()
     {
         client
             .method(GET)
             .uri("/products/pizzas")
             .exchange()
-            .expectStatus()
-            .isOk()
-            .returnResult(ProductDTO)
-            .getResponseBody()
-            .collectList()
-            .block()
+            .expectBodyList(PizzaDTO)
+            .returnResult()
+            .responseBody
     }
 }
