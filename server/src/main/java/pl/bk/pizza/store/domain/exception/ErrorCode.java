@@ -24,5 +24,5 @@ public enum ErrorCode
     MISSING_USER,
     USER_EXISTS,
     EMPTY_PRODUCT_PRICE,
-    INTERNAL_ERROR;
+    INTERNAL_ERROR
 }
