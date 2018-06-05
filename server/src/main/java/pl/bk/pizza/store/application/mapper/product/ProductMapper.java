@@ -6,10 +6,13 @@ import pl.bk.pizza.store.application.dto.product.output.PizzaDTO;
 import pl.bk.pizza.store.application.dto.product.output.PizzaToppingDTO;
 import pl.bk.pizza.store.application.dto.product.output.ProductDTO;
 import pl.bk.pizza.store.application.mapper.ObjectToDtoMapper;
+import pl.bk.pizza.store.domain.exception.UnsupportedTypeException;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.kebab.Kebab;
 import pl.bk.pizza.store.domain.product.pizza.Pizza;
 import pl.bk.pizza.store.domain.product.pizza.PizzaTopping;
+
+import static pl.bk.pizza.store.domain.exception.ErrorCode.UNPROCESSABLE_TYPE;
 
 @Component
 public class ProductMapper implements ObjectToDtoMapper<BaseProductInfo, ProductDTO>
@@ -34,8 +37,8 @@ public class ProductMapper implements ObjectToDtoMapper<BaseProductInfo, Product
             Kebab kebab = (Kebab) productInfo;
             return new KebabDTO(kebab.getId(), kebab.getPrice(), kebab.getProductStatus(), kebab.getName(), kebab.getDescription());
         }
-        
-        throw new IllegalArgumentException("Passed argument is null or cannot be parsed: " + productInfo);
+    
+        throw new UnsupportedTypeException("Passed argument is null or cannot be parsed: " + productInfo, UNPROCESSABLE_TYPE);
         
     }
 }

@@ -2,9 +2,7 @@ package pl.bk.pizza.store.domain.exception;
 
 public enum ErrorCode
 {
-    UNPROCESSABLE_PRODUCT_DTO_TYPE,
-    UNPROCESSABLE_PRODUCT_TYPE,
-    EMPTY_PRODUCT_INFO,
+    UNPROCESSABLE_TYPE,
     EMPTY_PIZZA_SIZE,
     EMPTY_DOUGH,
     EMPTY_KEBAB_DESCRIPTION,
