@@ -17,6 +17,7 @@ public class OrderRouter
     public RouterFunction<ServerResponse> routeOrders(OrderHandler orderHandler)
     {
         return route(POST("/orders"), orderHandler::createOrder)
+            .andRoute(PUT("/orders/report/{timeInMinutes}"), orderHandler::generateLastOrdersReport)
             .andRoute(GET("/orders/{orderId}"), orderHandler::getOrder)
             .andRoute(PUT("/orders/{orderId}/to-realization"), orderHandler::setToRealization)
             .andRoute(PUT("/orders/{orderId}/delivered"), orderHandler::setToDelivered)

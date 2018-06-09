@@ -1,19 +1,34 @@
 package pl.bk.pizza.store.domain.report;
 
+import com.google.common.io.CharSink;
 import com.google.common.io.Files;
 import io.reactivex.Flowable;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import pl.bk.pizza.store.domain.exception.AppException;
 import pl.bk.pizza.store.domain.order.Order;
 import pl.bk.pizza.store.domain.order.OrderRepository;
+import pl.bk.pizza.store.domain.order.OrderStatus;
 import pl.bk.pizza.store.domain.service.NowProvider;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.math.BigDecimal;
 import java.time.Duration;
+
+import static com.google.common.io.FileWriteMode.APPEND;
+import static com.google.common.io.Files.*;
+import static io.reactivex.Flowable.*;
+import static java.lang.Integer.*;
+import static java.lang.System.*;
+import static java.nio.charset.Charset.defaultCharset;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static pl.bk.pizza.store.domain.exception.ErrorCode.INTERNAL_ERROR;
+import static pl.bk.pizza.store.domain.service.NowProvider.*;
+import static reactor.core.publisher.Mono.*;
 
 @Service
 @Slf4j
@@ -22,31 +37,83 @@ public class OrderReport
 {
     private final OrderRepository orderRepository;
     
-    //TODO change findAll to use time
-    //TODO change Files.append implementation
-    public void generateLastOrdersReport(Duration time) throws IOException
+    public Mono<String> generateLastOrdersReport(Duration time)
     {
         final Flux<Order> orders = orderRepository.findAll();
-        final String homeDir = System.getProperty("user.home");
-        final String now = NowProvider.now().toString();
-        final File file = new File(homeDir + "/Download/last-order-report-" + now + ".txt");
-        file.getParentFile().mkdirs();
-        file.createNewFile();
         
-        Flowable
-            .fromIterable(orders.toIterable())
+        final String homeDir = getProperty("user.home");
+        final String now = now().toString();
+        
+        final File file = createFile(homeDir, now);
+        
+        CharSink sink = asCharSink(file, defaultCharset(), APPEND);
+        
+        return from(fromIterable(orders.toIterable())
             .zipWith(
-                Flowable.range(1, Integer.MAX_VALUE),
+                range(1, MAX_VALUE),
                 (order, counter) -> counter + "." + "\n"
-                                    + ("Id: " + order.getId() + "\n")
-                                    + ("ProductStatus: " + order.getOrderStatus() + "\n")
-                                    + ("User email: " + order.getUserEmail() + "\n")
-                                    + ("Total price: " + order.getTotalPrice() + "\n" + "\n")
+                                    + appendId(order.getId())
+                                    + appendStatus(order.getOrderStatus())
+                                    + appendUserEmail(order.getUserEmail())
+                                    + appendTotalPrice(order.getTotalPrice())
                     )
-            .subscribe(
-                str -> Files.append(str, file, Charset.defaultCharset()),
-                exception -> log.info("Error while generating order report: " + exception.getMessage()),
-                () -> Files.append("-----------END--------------", file, Charset.defaultCharset())
-                      );
+            .doOnNext(str -> writeToFile(str, sink))
+            .doOnComplete(() -> writeToFile("-----------END--------------", sink))
+            .doOnError(exception -> log.info("Error while generating order report: ", exception)));
+    }
+    
+    private File createFile(String homeDir, String now)
+    {
+        final File file = new File(homeDir + "/Download/last-order-report-" + now + ".txt");
+        
+        try
+        {
+            createParentDirs(file);
+            touch(file);
+        }
+        catch(IOException e)
+        {
+            log.info("Error while generating order report: ", e);
+            throw new AppException("Error while generating order report.", INTERNAL_SERVER_ERROR, INTERNAL_ERROR);
+        }
+        return file;
+    }
+    
+    private String appendUserEmail(String email)
+    {
+        return "User email: " + email + "\n";
+    }
+    
+    private String appendStatus(OrderStatus status)
+    {
+        return "ProductStatus: " + status + "\n";
+    }
+    
+    private String appendId(String id)
+    {
+        return "Id: " + id + "\n";
+    }
+    
+    private String appendTotalPrice(BigDecimal price)
+    {
+        return "Total price: " + price + "\n\n";
+    }
+    
+    private void writeToFile(String str, CharSink sink)
+    {
+        try
+        {
+            sink.write(str);
+        }
+        catch(IOException e)
+        {
+            log.debug("Error occurred during creating of report", e);
+            
+            throw new AppException(
+                "Error occurred during creating of report",
+                INTERNAL_SERVER_ERROR,
+                INTERNAL_ERROR
+            );
+        }
     }
 }
