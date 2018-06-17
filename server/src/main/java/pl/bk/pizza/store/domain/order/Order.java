@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
+import static pl.bk.pizza.store.domain.validator.order.OrderValidator.*;
 
 @Getter
 @Document(collection = "order")
@@ -58,9 +59,9 @@ public class Order
             .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
     
-    //TODO validate if status is TO_REALIZATION
     public Order setToDelivered()
     {
+        realizationShouldBeStarted(orderStatus);
         orderStatus = OrderStatus.DELIVERED;
         return this;
     }

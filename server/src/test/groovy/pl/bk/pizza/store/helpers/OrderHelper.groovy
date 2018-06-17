@@ -77,6 +77,17 @@ trait OrderHelper
             .responseBody
     }
 
+    ErrorMessage deliverOrderWithError(String id)
+    {
+        client
+            .put()
+            .uri("/orders/$id/delivered")
+            .exchange()
+            .expectBody(ErrorMessage)
+            .returnResult()
+            .responseBody
+    }
+
     void generateReport(Integer timeInMinutes)
     {
         client
