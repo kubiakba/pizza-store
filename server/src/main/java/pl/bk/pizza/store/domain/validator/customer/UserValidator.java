@@ -33,7 +33,7 @@ public class UserValidator
         ));
     }
     
-    public Mono<Error> userShouldNotExists(String email)
+    public static Mono<Error> userShouldNotExists(String email)
     {
         return Mono.error(new DuplicateEntityException(
             "User with email: " + email + " already exists.",

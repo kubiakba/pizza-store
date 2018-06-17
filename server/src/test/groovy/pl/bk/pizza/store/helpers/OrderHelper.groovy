@@ -86,4 +86,17 @@ trait OrderHelper
             .expectStatus()
             .isAccepted()
     }
+
+    OrderDTO addEmailToOrder(String orderId, String email)
+    {
+        client
+            .put()
+            .uri("/orders/$orderId/users/$email")
+            .exchange()
+            .expectStatus()
+            .isOk()
+            .expectBody(OrderDTO)
+            .returnResult()
+            .responseBody
+    }
 }

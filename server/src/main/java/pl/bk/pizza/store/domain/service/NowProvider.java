@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Component
 public final class NowProvider
@@ -14,8 +15,9 @@ public final class NowProvider
     {
     }
     
-    public static LocalDateTime now()
+    public static ZonedDateTime now()
     {
-        return LocalDateTime.now(ZoneId.of(DEFAULT_ZONE_NAME));
+        final ZoneId zoneId = ZoneId.of(DEFAULT_ZONE_NAME);
+        return LocalDateTime.now().atZone(zoneId);
     }
 }

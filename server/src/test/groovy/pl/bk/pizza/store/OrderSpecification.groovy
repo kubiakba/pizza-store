@@ -156,6 +156,27 @@ class OrderSpecification extends CommonSpecification
         deliverOrder(order.id)
 
         expect:
-        generateReport(10)
+        generateReport(1)
+    }
+
+    def "should add email to order"()
+    {
+        given: "create product"
+        def productDto = getNewPizzaDTOStub()
+        def product = createProduct(productDto)
+
+        and: "add product to order"
+        def order = createOrder()
+        addProductToOrder(order.id, product.id)
+
+        and: "create user"
+        def email = "aa@wp.pl"
+        def user = createUser(getNewUserDTOStub(email))
+
+        when:
+        def orderWithEmail = addEmailToOrder(order.id, user.email)
+
+        then:
+        assertThat(orderWithEmail.userEmail).contains(email)
     }
 }

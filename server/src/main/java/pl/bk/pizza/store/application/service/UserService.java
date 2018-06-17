@@ -8,10 +8,11 @@ import pl.bk.pizza.store.application.mapper.customer.NewUserMapper;
 import pl.bk.pizza.store.application.mapper.customer.UserMapper;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.customer.user.UserRepository;
-import pl.bk.pizza.store.domain.validator.customer.UserValidator;
 import reactor.core.publisher.Mono;
 
 import static pl.bk.pizza.store.domain.validator.customer.UserValidator.userShouldExists;
+import static pl.bk.pizza.store.domain.validator.customer.UserValidator.userShouldNotExists;
+import static reactor.core.publisher.Mono.just;
 
 @Service
 @AllArgsConstructor
@@ -23,14 +24,10 @@ public class UserService
     
     public Mono<UserDTO> createUser(NewUserDTO userDTO)
     {
-        final Mono<NewUserDTO> userDto = Mono.just(userDTO);
-        
-        final Mono<Error> duplicateUser = userDto
+        return just(userDTO)
             .flatMap(it -> userRepository.findById(it.getEmail()))
-            .flatMap(it -> new UserValidator().userShouldNotExists(userDTO.getEmail()));
-        
-        return duplicateUser
-            .then(userDto)
+            .flatMap(it -> userShouldNotExists(userDTO.getEmail()))
+            .then(just(userDTO))
             .map(newUserMapper::mapFromDTO)
             .flatMap(userRepository::save)
             .map(userMapper::mapToDTO);
