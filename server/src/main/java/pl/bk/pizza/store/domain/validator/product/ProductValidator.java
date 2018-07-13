@@ -1,5 +1,6 @@
 package pl.bk.pizza.store.domain.validator.product;
 
+import lombok.NoArgsConstructor;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
 import pl.bk.pizza.store.domain.exception.MissingEntityException;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
@@ -7,10 +8,12 @@ import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
 
+import static lombok.AccessLevel.PRIVATE;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_PRODUCT_PRICE;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_PRODUCT;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
 
+@NoArgsConstructor(access = PRIVATE)
 public class ProductValidator
 {
     public static void validatePrice(BigDecimal price)

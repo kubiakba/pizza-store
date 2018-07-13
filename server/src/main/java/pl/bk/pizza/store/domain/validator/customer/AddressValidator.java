@@ -1,8 +1,11 @@
 package pl.bk.pizza.store.domain.validator.customer;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import pl.bk.pizza.store.domain.customer.Address;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
 
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_ADDRESS;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_CITY;
@@ -11,6 +14,7 @@ import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_STREET;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_STREET_NUMBER;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
 
+@NoArgsConstructor(access = PRIVATE)
 public class AddressValidator
 {
     public static void validateAddress(Address address)

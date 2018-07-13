@@ -1,12 +1,15 @@
 package pl.bk.pizza.store.domain.validator.product;
 
+import lombok.NoArgsConstructor;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
 
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_KEBAB_DESCRIPTION;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_KEBAB_NAME;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
 
+@NoArgsConstructor(access = PRIVATE)
 public class KebabValidator
 {
     public static void validateDescription(String description)

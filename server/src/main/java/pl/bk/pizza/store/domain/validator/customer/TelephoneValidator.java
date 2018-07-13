@@ -1,13 +1,16 @@
 package pl.bk.pizza.store.domain.validator.customer;
 
+import lombok.NoArgsConstructor;
 import pl.bk.pizza.store.domain.customer.Telephone;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;
 
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_NUMBER;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.EMPTY_TELEPHONE_NUMBER;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
 
+@NoArgsConstructor(access = PRIVATE)
 public class TelephoneValidator
 {
     public static void validateTelephone(Telephone telephone)
