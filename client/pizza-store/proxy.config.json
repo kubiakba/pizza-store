@@ -1,0 +1,10 @@
+{
+  "/users/*": {
+    "target": "http://localhost:8081/users",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/users": ""
+    }
+  }
+}

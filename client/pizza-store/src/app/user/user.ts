@@ -1,5 +1,5 @@
-import {Telephone} from "./telephone";
 import {Address} from "./address";
+import {Telephone} from "./telephone";
 
 export class User {
 
