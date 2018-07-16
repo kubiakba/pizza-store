@@ -11,6 +11,7 @@ import {PizzaViewComponent} from "./product-view/pizza-view.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {KebabViewComponent} from "./product-view/kebab-view.component";
 import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.component";
+import {UserTableComponent} from "./user-view/user-table.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.compon
     ProductViewComponent,
     PizzaViewComponent,
     KebabViewComponent,
-    PizzaToppingViewComponent
+    PizzaToppingViewComponent,
+    UserTableComponent
   ],
   imports: [
     BrowserModule,
