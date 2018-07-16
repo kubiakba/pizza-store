@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/users-view">user</a>
+        <a class="nav-link" routerLink="/view-users">user</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/products-view">products</a>
+        <a class="nav-link" routerLink="/view-products">products</a>
       </li>
     </ul>
   </div>

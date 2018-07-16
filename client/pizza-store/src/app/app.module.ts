@@ -7,23 +7,31 @@ import {RouterModule} from "@angular/router";
 import {NavbarComponent} from "./navbar/navbar.component";
 import { ProductViewComponent } from './product-view/product-view.component';
 import {FormsModule} from "@angular/forms";
+import {PizzaViewComponent} from "./product-view/pizza-view.component";
+import {ReactiveFormsModule} from "@angular/forms";
+import {KebabViewComponent} from "./product-view/kebab-view.component";
+import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     UserViewComponent,
     NavbarComponent,
-    ProductViewComponent
+    ProductViewComponent,
+    PizzaViewComponent,
+    KebabViewComponent,
+    PizzaToppingViewComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([{
-      path: 'users-view',
+      path: 'view-users',
       component: UserViewComponent
     },{
-      path: 'products-view',
+      path: 'view-products',
       component: ProductViewComponent
     }
     ])
