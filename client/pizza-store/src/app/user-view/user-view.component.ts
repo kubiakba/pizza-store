@@ -14,32 +14,7 @@ import {User} from "../user/user";
         </div>
       </form>
       <div *ngIf="user">
-        <table class="table">
-          <thead>
-          <tr>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>City</th>
-            <th>Street</th>
-            <th>Street number</th>
-            <th>Post code</th>
-            <th>Telephone</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>{{user.email}}</td>
-            <td>{{user.name}}</td>
-            <td>{{user.surname}}</td>
-            <td>{{user.address.city}}</td>
-            <td>{{user.address.street}}</td>
-            <td>{{user.address.streetNumber}}</td>
-            <td>{{user.address.postCode}}</td>
-            <td>{{user.telephone.number}}</td>
-          </tr>
-          </tbody>
-        </table>
+        <app-user-table [user]="user"></app-user-table>
       </div>
     </div>
   `
