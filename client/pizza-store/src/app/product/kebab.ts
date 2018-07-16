@@ -4,9 +4,9 @@ export class Kebab {
   description: String;
   name: String;
 
-  constructor(price: String, description: String, name: String) {
-    this.price = price;
-    this.description = description;
-    this.name = name;
+  constructor(data:any) {
+    this.price = data.price;
+    this.description = data.description;
+    this.name = data.name;
   }
 }
