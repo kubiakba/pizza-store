@@ -13,11 +13,7 @@ export class UserService {
   constructor(private http: HttpClient) {
   }
 
-  public getUser(id: String): Observable<User> {
-    return this.http.get<User>(this.url + id);
-  }
-
-  public createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.url, user);
+  public getUser(id: String): Observable<any> {
+    return this.http.get(this.url + id);
   }
 }
