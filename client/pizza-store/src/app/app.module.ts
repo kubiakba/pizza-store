@@ -5,22 +5,26 @@ import {AppComponent} from './app.component';
 import {UserViewComponent} from './user-view/user-view.component';
 import {RouterModule} from "@angular/router";
 import {NavbarComponent} from "./navbar/navbar.component";
+import { ProductViewComponent } from './product-view/product-view.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
     UserViewComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProductViewComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     RouterModule.forRoot([{
-      path: 'user',
+      path: 'users-view',
       component: UserViewComponent
     },{
-      path: 'products',
-      component: UserViewComponent
+      path: 'products-view',
+      component: ProductViewComponent
     }
     ])
   ],
