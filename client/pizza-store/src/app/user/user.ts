@@ -9,4 +9,13 @@ export class User {
   surname :String;
   address :Address;
   telephone :Telephone;
+
+  constructor(data:any) {
+    this.email = data.email;
+    this.name = data.name;
+    this.password = data.password;
+    this.surname = data.surname;
+    this.address = data.address;
+    this.telephone = data.telephone;
+  }
 }

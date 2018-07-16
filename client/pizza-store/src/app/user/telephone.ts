@@ -1,7 +1,7 @@
 export class Telephone {
-  number: String
+  number: String;
 
-  constructor(number: String) {
-    this.number = number
+  constructor(data:any) {
+    this.number = data.number
   }
 }
