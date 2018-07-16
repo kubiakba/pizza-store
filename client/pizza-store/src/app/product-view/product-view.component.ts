@@ -7,7 +7,7 @@ import {Kebab} from "../product/kebab";
 @Component({
   selector: 'app-product-view',
   template: `
-    <div style="background-color: #93B874;">
+    <div class="view">
       <div *ngIf="pizzas.length > 0">
         <h3 align="center">Pizza</h3>
         <app-pizza-view [pizzas]="pizzas"></app-pizza-view>
@@ -22,7 +22,6 @@ import {Kebab} from "../product/kebab";
         <h3 align="center">Kebab</h3>
         <app-kebab-view [kebabs]="kebabs"></app-kebab-view>
       </div>
-
     </div>`,
   styleUrls: ['./product-view.css']
 })
