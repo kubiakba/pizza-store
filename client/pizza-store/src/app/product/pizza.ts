@@ -9,7 +9,9 @@ export class Pizza {
   constructor(data:any) {
     this.id = data.id;
     this.size = data.size;
+    this.size = this.size.toLowerCase();
     this.dough = data.dough;
+    this.dough = this.dough.toLowerCase();
     this.price = data.price;
     this.productStatus = data.productStatus;
   }
