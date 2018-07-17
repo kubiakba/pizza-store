@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {KebabViewComponent} from "./product-view/kebab-view.component";
 import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.component";
 import {UserTableComponent} from "./user-view/user-table.component";
+import {ContactComponent} from "./contact/contact.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {UserTableComponent} from "./user-view/user-table.component";
     PizzaViewComponent,
     KebabViewComponent,
     PizzaToppingViewComponent,
-    UserTableComponent
+    UserTableComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,
@@ -30,11 +32,14 @@ import {UserTableComponent} from "./user-view/user-table.component";
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([{
-      path: 'view-users',
+      path: 'admin/view-users',
       component: UserViewComponent
     },{
       path: 'view-products',
       component: ProductViewComponent
+    },{
+      path: 'view-contact',
+      component: ContactComponent
     }
     ])
   ],
