@@ -4,8 +4,8 @@ import {Pizza} from "../product/pizza";
 @Component({
   selector: 'app-pizza-view',
   template: `
-        <table class="table">
-          <thead>
+        <table class="spacing-table" align="center">
+          <thead >
           <tr>
             <th>Size</th>
             <th>Dough</th>

@@ -4,7 +4,7 @@ import {Kebab} from "../product/kebab";
 @Component({
   selector: 'app-kebab-view',
   template: `
-        <table class="table">
+        <table class="spacing-table" align="center">
           <thead>
           <tr>
             <th>Name</th>
