@@ -4,7 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.config.json",
-    "build": "ng build",
+    "build": "ng build --prod",
+    "postbuild": "npm run deploy",
+    "predeploy": "rimraf ../../server/src/main/resources/static && mkdirp ../../server/src/main/resources/static",
+    "deploy": "copyfiles -f dist/pizza-store/** ../../server/src/main/resources/static",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,9 +24,12 @@
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
     "bootstrap": "^4.1.2",
+    "copyfiles": "^2.0.0",
     "core-js": "^2.5.4",
     "jquery": "^3.3.1",
+    "mkdirp": "^0.5.1",
     "popper.js": "^1.14.3",
+    "rimraf": "^2.6.2",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
