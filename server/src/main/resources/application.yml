@@ -16,3 +16,11 @@ spring:
     mongodb:
       database: pizza-store
       uri: mongodb://mongodb:27017
+
+---
+spring:
+  profiles: heroku
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+

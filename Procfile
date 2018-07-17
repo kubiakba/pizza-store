@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar server/build/libs/pizza-store-1.0.jar -Dserver.port=$PORT
+web: java -Dspring.profiles.active=heroku $JAVA_OPTS -jar server/build/libs/pizza-store-1.0.jar -Dserver.port=$PORT
