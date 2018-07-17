@@ -1,1 +1,1 @@
-web java -jar server/build/libs/pizza-store-1.0.jar
+web: java $JAVA_OPTS -jar server/build/libs/pizza-store-1.0.jar -Dserver.port=$PORT
