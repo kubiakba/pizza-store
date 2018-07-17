@@ -1,0 +1,1 @@
+web java -jar server/build/libs/pizza-store-1.0.jar
