@@ -15,7 +15,6 @@ class UserStub
             "Kot",
             getNewAddressDTOStub(),
             getNewTelephoneDTOStub(),
-            "USER"
         )
     }
 
@@ -28,7 +27,6 @@ class UserStub
             "Kot",
             getNewAddressDTOStub(),
             getNewTelephoneDTOStub(),
-            "USER"
         )
     }
 
@@ -66,7 +64,6 @@ class UserStub
             map.get('surname', "Kot"),
             map.get('address', getNewAddressDTOStub()),
             map.get('telephone', getNewTelephoneDTOStub()),
-            map.get('role', "USER")
         )
     }
 }
