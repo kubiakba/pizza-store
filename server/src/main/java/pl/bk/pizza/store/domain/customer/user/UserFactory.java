@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.domain.customer.user;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.bk.pizza.store.domain.customer.Address;
 import pl.bk.pizza.store.domain.customer.Telephone;
@@ -28,13 +29,11 @@ public class UserFactory
         {
             role = "USER";
         }
-        //TODO add security module and encode password with BCRPYT
-        
         return new User(
             email,
             name,
             surname,
-            password,
+            "{bcrypt}" + new BCryptPasswordEncoder().encode(password),
             address,
             telephone,
             UserStatus.ACTIVE,
