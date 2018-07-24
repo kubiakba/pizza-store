@@ -27,8 +27,8 @@ dependencies {
     // spring
     compile "org.springframework.boot:spring-boot-starter-webflux:${spring}"
     compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${spring}"
-    //TODO add security
-    /*compile "org.springframework.boot:spring-boot-starter-security:${spring}"*/
+    compile "org.springframework.boot:spring-boot-starter-security:${spring}"
+    testCompile "org.springframework.security:spring-security-test:${springSecurityTest}"
     testCompile "org.springframework.boot:spring-boot-starter-test:${spring}"
 
     // utils
