@@ -13,6 +13,7 @@ import {KebabViewComponent} from "./product-view/kebab-view.component";
 import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.component";
 import {UserTableComponent} from "./user-view/user-table.component";
 import {ContactComponent} from "./contact/contact.component";
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {ContactComponent} from "./contact/contact.component";
     KebabViewComponent,
     PizzaToppingViewComponent,
     UserTableComponent,
-    ContactComponent
+    ContactComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
