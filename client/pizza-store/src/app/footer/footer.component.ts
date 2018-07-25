@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
   selector: 'app-footer',
   template: `<footer class="footer">
     <div class="container">
-      <span  style="float: right" class="text-muted">bkubiak&copy;2018 All right reserved</span>
+      <span  style="float: right" class="text-muted">bkubiak&copy;2018 All Rights Reserved</span>
     </div>
   </footer>
   `,
