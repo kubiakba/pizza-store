@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {Kebab} from "../product/kebab";
 
 @Component({
@@ -10,6 +10,7 @@ import {Kebab} from "../product/kebab";
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
+            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -17,6 +18,7 @@ import {Kebab} from "../product/kebab";
             <td>{{kebab.name}}</td>
             <td>{{kebab.description}}</td>
             <td>{{kebab.price}}</td>
+            <td><button class="btn light" (click)="addKebabToOrder(kebab.id)">add</button></td>
           </tr>
           </tbody>
         </table>
@@ -26,4 +28,9 @@ import {Kebab} from "../product/kebab";
 export class KebabViewComponent{
 
   @Input() kebabs:Kebab[];
+  @Output() order = new EventEmitter<String>();
+
+  addKebabToOrder(id:String){
+    this.order.emit(id);
+  }
 }
