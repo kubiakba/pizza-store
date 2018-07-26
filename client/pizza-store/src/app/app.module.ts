@@ -5,15 +5,17 @@ import {AppComponent} from './app.component';
 import {UserViewComponent} from './user-view/user-view.component';
 import {RouterModule} from "@angular/router";
 import {NavbarComponent} from "./navbar/navbar.component";
-import { ProductViewComponent } from './product-view/product-view.component';
-import {FormsModule} from "@angular/forms";
+import {ProductViewComponent} from './product-view/product-view.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PizzaViewComponent} from "./product-view/pizza-view.component";
-import {ReactiveFormsModule} from "@angular/forms";
 import {KebabViewComponent} from "./product-view/kebab-view.component";
 import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.component";
 import {UserTableComponent} from "./user-view/user-table.component";
 import {ContactComponent} from "./contact/contact.component";
-import { FooterComponent } from './footer/footer.component';
+import {FooterComponent} from './footer/footer.component';
+import {RegisterUserViewComponent} from './register-user-view/register-user-view.component';
+import {LoginUserViewComponent} from './login-user-view/login-user-view.component';
+import {OrderUserViewComponent} from './order-user-view/order-user-view.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,10 @@ import { FooterComponent } from './footer/footer.component';
     PizzaToppingViewComponent,
     UserTableComponent,
     ContactComponent,
-    FooterComponent
+    FooterComponent,
+    RegisterUserViewComponent,
+    LoginUserViewComponent,
+    OrderUserViewComponent
   ],
   imports: [
     BrowserModule,
