@@ -5,6 +5,11 @@ import org.springframework.security.config.annotation.web.reactive.EnableWebFlux
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PATCH;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
+
 @EnableWebFluxSecurity
 public class SecurityConfig
 {
@@ -12,8 +17,23 @@ public class SecurityConfig
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http)
     {
         return http
-            .authorizeExchange()
-            .anyExchange().hasRole("USER")
+            .authorizeExchange().pathMatchers("/*").permitAll()
+                                .pathMatchers(GET, "/orders/*").permitAll()
+                                .pathMatchers(PUT, "/orders/*/to-realization").permitAll()
+                                .pathMatchers(PUT, "/orders/*/users/*").permitAll()
+                                .pathMatchers(PUT, "/orders/*/*").permitAll()
+                                .pathMatchers(GET, "/products/kebabs").permitAll()
+                                .pathMatchers(GET, "/products/available").permitAll()
+                                .pathMatchers(GET, "/products").permitAll()
+                                .pathMatchers(GET, "/products/pizzas").permitAll()
+                                .pathMatchers(GET, "/products/pizzaToppings").permitAll()
+                                .pathMatchers(GET, "/products/*").permitAll()
+                                .pathMatchers(POST, "/users").permitAll()
+                                .pathMatchers(GET, "/users/*").permitAll()
+                                .pathMatchers(GET, "/users/*/bonus").permitAll()
+                                .pathMatchers(POST, "/orders").permitAll()
+                                .pathMatchers(PATCH, "/users/*/deactivate").permitAll()
+            .anyExchange().hasRole("ADMIN")
             .and()
             .httpBasic().and()
             .build();

@@ -68,7 +68,7 @@ trait OrderHelper
     {
         client
             .put()
-            .uri("/orders/$id/delivered")
+            .uri("/admin/orders/$id/delivered")
             .exchange()
             .expectStatus()
             .isOk()
@@ -81,7 +81,7 @@ trait OrderHelper
     {
         client
             .put()
-            .uri("/orders/$id/delivered")
+            .uri("/admin/orders/$id/delivered")
             .exchange()
             .expectBody(ErrorMessage)
             .returnResult()
@@ -92,7 +92,7 @@ trait OrderHelper
     {
         client
             .put()
-            .uri("/orders/report/$timeInMinutes")
+            .uri("/admin/orders/report/$timeInMinutes")
             .exchange()
             .expectStatus()
             .isAccepted()

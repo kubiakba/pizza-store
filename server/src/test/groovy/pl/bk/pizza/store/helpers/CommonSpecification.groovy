@@ -13,7 +13,7 @@ import static org.springframework.security.test.web.reactive.server.SecurityMock
 
 @AutoConfigureWebTestClient(timeout = "300000")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-@WithMockUser(username = "admin", roles = "USER")
+@WithMockUser(roles = "ADMIN")
 class CommonSpecification extends Specification implements OrderHelper, ProductHelper, UserHelper
 {
     @Autowired

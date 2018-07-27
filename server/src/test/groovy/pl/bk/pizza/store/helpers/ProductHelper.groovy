@@ -21,7 +21,7 @@ trait ProductHelper
     {
         client
             .post()
-            .uri("/products")
+            .uri("/admin/products")
             .body(Mono.just(product), NewProductDTO.class)
             .exchange()
             .expectStatus()
@@ -35,7 +35,7 @@ trait ProductHelper
     {
         client
             .post()
-            .uri("/products")
+            .uri("/admin/products")
             .body(Mono.just(product), NewProductDTO.class)
             .exchange()
             .expectBody(ErrorMessage)

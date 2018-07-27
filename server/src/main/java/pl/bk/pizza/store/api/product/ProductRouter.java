@@ -16,7 +16,7 @@ public class ProductRouter
     @Bean
     public RouterFunction<ServerResponse> routeProducts(ProductHandler productHandler)
     {
-        return route(POST("/products"), productHandler::createProduct)
+        return route(POST("/admin/products"), productHandler::createProduct)
             .andRoute(GET("/products"), productHandler::getAllProducts)
             .andRoute(GET("/products/available"), productHandler::getAllAvailableProducts)
             .andRoute(PUT("/products/{productId}/non-available"), productHandler::makeProductNonAvailable)
