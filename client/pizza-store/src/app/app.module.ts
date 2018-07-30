@@ -15,6 +15,7 @@ import {ContactComponent} from "./contact/contact.component";
 import {RegisterUserViewComponent} from './register-user-view/register-user-view.component';
 import {LoginUserViewComponent} from './login-user-view/login-user-view.component';
 import {OrderUserViewComponent} from './order-user-view/order-user-view.component';
+import { AddUserViewComponent } from './add-user-view/add-user-view.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {OrderUserViewComponent} from './order-user-view/order-user-view.componen
     ContactComponent,
     RegisterUserViewComponent,
     LoginUserViewComponent,
-    OrderUserViewComponent
+    OrderUserViewComponent,
+    AddUserViewComponent
   ],
   imports: [
     BrowserModule,
