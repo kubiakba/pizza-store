@@ -12,7 +12,6 @@ import {KebabViewComponent} from "./product-view/kebab-view.component";
 import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.component";
 import {UserTableComponent} from "./user-view/user-table.component";
 import {ContactComponent} from "./contact/contact.component";
-import {FooterComponent} from './footer/footer.component';
 import {RegisterUserViewComponent} from './register-user-view/register-user-view.component';
 import {LoginUserViewComponent} from './login-user-view/login-user-view.component';
 import {OrderUserViewComponent} from './order-user-view/order-user-view.component';
@@ -28,7 +27,6 @@ import {OrderUserViewComponent} from './order-user-view/order-user-view.componen
     PizzaToppingViewComponent,
     UserTableComponent,
     ContactComponent,
-    FooterComponent,
     RegisterUserViewComponent,
     LoginUserViewComponent,
     OrderUserViewComponent
