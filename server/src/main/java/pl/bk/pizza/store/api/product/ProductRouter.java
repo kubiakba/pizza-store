@@ -24,7 +24,6 @@ public class ProductRouter
             .andRoute(GET("/products/pizzaToppings"), productHandler::getAllPizzaToppings)
             .andRoute(GET("/products/kebabs"), productHandler::getAllKebabs)
             .andRoute(GET("/products/{productId}"), productHandler::getProduct)
-            .andRoute(PUT("/products/{productId}/changePrice"), productHandler::changeProductPrice)
-            .andRoute(GET("/products"), productHandler::getAllProducts);
+            .andRoute(PUT("/products/{productId}/changePrice"), productHandler::changeProductPrice);
     }
 }
