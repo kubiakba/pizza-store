@@ -35,6 +35,8 @@ public class SecurityConfig
                                 .pathMatchers(PATCH, "/users/*/deactivate").permitAll()
             .anyExchange().hasRole("ADMIN")
             .and()
+            .formLogin()
+            .and()
             .httpBasic().and()
             .build();
     }
