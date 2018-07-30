@@ -37,7 +37,7 @@ import {OrderUserViewComponent} from './order-user-view/order-user-view.componen
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([{
-      path: 'admin/view-users',
+      path: 'adm-view-users',
       component: UserViewComponent
     },{
       path: 'view-products',
