@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {OrderService} from "../order/order.service";
 
 @Component({
   selector: 'app-add-user-view',
@@ -47,11 +48,19 @@ import {Component} from '@angular/core';
         </div>
       </div>
     </form>
-    <button type="button" class="btn btn-primary">Confirm</button>
+    <button type="button" (click)="createOrder()" class="btn btn-primary">Confirm</button>
   `
 })
 export class AddUserViewComponent {
 
-  constructor() {
+  orderId: String;
+
+  constructor(private orderService: OrderService) {
+  }
+
+  createOrder() {
+    this.orderService.startOrder().subscribe(value => {
+      this.orderId = value.id;
+    });
   }
 }
