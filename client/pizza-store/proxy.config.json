@@ -14,5 +14,13 @@
     "pathRewrite": {
       "^/products": ""
     }
+  },
+  "/orders/*": {
+    "target": "http://localhost:8081/orders",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/orders": ""
+    }
   }
 }
