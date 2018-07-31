@@ -30,7 +30,7 @@ import {NewOrder} from "../order/newOrder";
       </div>
     </div>
     <div *ngIf="orderView">
-      <app-order-user-view></app-order-user-view>
+      <app-order-user-view [order]="order"></app-order-user-view>
     </div>
   `,
   styleUrls: ['./product-view.css']

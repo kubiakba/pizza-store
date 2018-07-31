@@ -8,7 +8,7 @@ import {Observable} from "rxjs/index";
 export class OrderService {
 
   order_url = "/orders";
-  empty_body: any ={};
+  empty_body: any = {};
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,5 +21,9 @@ export class OrderService {
 
   public startOrder(): Observable<any> {
     return this.http.post<any>(this.order_url, this.empty_body, this.httpOptions);
+  }
+
+  public addProductToOrder(orderId: String, productId: String): Observable<any> {
+    return this.http.put<any>(this.order_url + `/${orderId}/${productId}`, this.empty_body, this.httpOptions);
   }
 }

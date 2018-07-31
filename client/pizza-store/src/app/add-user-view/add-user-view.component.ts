@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {OrderService} from "../order/order.service";
+import {NewOrder} from "../order/newOrder";
 
 @Component({
   selector: 'app-add-user-view',
@@ -54,6 +55,7 @@ import {OrderService} from "../order/order.service";
 export class AddUserViewComponent {
 
   orderId: String;
+  @Input() order: NewOrder;
 
   constructor(private orderService: OrderService) {
   }
@@ -61,6 +63,10 @@ export class AddUserViewComponent {
   createOrder() {
     this.orderService.startOrder().subscribe(value => {
       this.orderId = value.id;
+
+      this.order.productsId.forEach(productId => {
+        this.orderService.addProductToOrder(this.orderId, productId).subscribe();
+      });
     });
   }
 }
