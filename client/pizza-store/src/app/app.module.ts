@@ -16,6 +16,7 @@ import {RegisterUserViewComponent} from './register-user-view/register-user-view
 import {LoginUserViewComponent} from './login-user-view/login-user-view.component';
 import {OrderUserViewComponent} from './order-user-view/order-user-view.component';
 import { AddUserViewComponent } from './add-user-view/add-user-view.component';
+import { OrderConfirmationViewComponent } from './order-confirmation-view/order-confirmation-view.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AddUserViewComponent } from './add-user-view/add-user-view.component';
     RegisterUserViewComponent,
     LoginUserViewComponent,
     OrderUserViewComponent,
-    AddUserViewComponent
+    AddUserViewComponent,
+    OrderConfirmationViewComponent
   ],
   imports: [
     BrowserModule,
