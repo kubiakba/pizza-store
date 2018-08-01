@@ -16,8 +16,10 @@ import static pl.bk.pizza.store.domain.validator.customer.UserValidator.validate
 @AllArgsConstructor
 public class UserFactory
 {
+    private static final String USER = "USER";
+    
     public User create(String email, String name, String surname, String password,
-        Address address, Telephone telephone, String role)
+        Address address, Telephone telephone)
     {
         validateEmail(email);
         validateName(name);
@@ -25,10 +27,6 @@ public class UserFactory
         validateAddress(address);
         validateTelephone(telephone);
         
-        if(role == null)
-        {
-            role = "USER";
-        }
         return new User(
             email,
             name,
@@ -38,7 +36,7 @@ public class UserFactory
             telephone,
             UserStatus.ACTIVE,
             0,
-            role
+            USER
         );
     }
 }

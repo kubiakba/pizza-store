@@ -29,8 +29,7 @@ public class NewUserMapper implements DtoToObjectMapper<NewUserDTO, User>
             newUserDto.getSurname(),
             newUserDto.getPassword(),
             address,
-            telephone,
-            "USER"
+            telephone
                              );
     }
 }
