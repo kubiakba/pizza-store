@@ -3,7 +3,13 @@ package pl.bk.pizza.store.infrastructure.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.PATCH;
@@ -18,21 +24,21 @@ public class SecurityConfig
     {
         return http
             .authorizeExchange().pathMatchers("/*").permitAll()
-                                .pathMatchers(GET, "/orders/*").permitAll()
-                                .pathMatchers(PUT, "/orders/*/to-realization").permitAll()
-                                .pathMatchers(PUT, "/orders/*/users/*").permitAll()
-                                .pathMatchers(PUT, "/orders/*/*").permitAll()
-                                .pathMatchers(GET, "/products/kebabs").permitAll()
-                                .pathMatchers(GET, "/products/available").permitAll()
-                                .pathMatchers(GET, "/products").permitAll()
-                                .pathMatchers(GET, "/products/pizzas").permitAll()
-                                .pathMatchers(GET, "/products/pizzaToppings").permitAll()
-                                .pathMatchers(GET, "/products/*").permitAll()
-                                .pathMatchers(POST, "/users").permitAll()
-                                .pathMatchers(GET, "/users/*").permitAll()
-                                .pathMatchers(GET, "/users/*/bonus").permitAll()
-                                .pathMatchers(POST, "/orders").permitAll()
-                                .pathMatchers(PATCH, "/users/*/deactivate").permitAll()
+            .pathMatchers(GET, "/orders/*").permitAll()
+            .pathMatchers(PUT, "/orders/*/to-realization").permitAll()
+            .pathMatchers(PUT, "/orders/*/users/*").permitAll()
+            .pathMatchers(PUT, "/orders/*/*").permitAll()
+            .pathMatchers(GET, "/products/kebabs").permitAll()
+            .pathMatchers(GET, "/products/available").permitAll()
+            .pathMatchers(GET, "/products").permitAll()
+            .pathMatchers(GET, "/products/pizzas").permitAll()
+            .pathMatchers(GET, "/products/pizzaToppings").permitAll()
+            .pathMatchers(GET, "/products/*").permitAll()
+            .pathMatchers(POST, "/users").permitAll()
+            .pathMatchers(GET, "/users/*").permitAll()
+            .pathMatchers(GET, "/users/*/bonus").permitAll()
+            .pathMatchers(POST, "/orders").permitAll()
+            .pathMatchers(PATCH, "/users/*/deactivate").permitAll()
             .anyExchange().hasRole("ADMIN")
             .and()
             .formLogin()
@@ -40,5 +46,13 @@ public class SecurityConfig
             .csrf().disable()
             .httpBasic().and()
             .build();
+    }
+    
+    @Bean
+    PasswordEncoder delegatingPasswordEncoder()
+    {
+        Map<String, PasswordEncoder> encoders = new HashMap<>();
+        encoders.put("bcrypt", new BCryptPasswordEncoder());
+        return new DelegatingPasswordEncoder("bcrypt", encoders);
     }
 }
