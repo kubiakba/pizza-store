@@ -31,13 +31,13 @@ public class UserFactory
         validateAddress(address);
         validateTelephone(telephone);
         
-        if(password == null)
+        if(password.isEmpty())
         {
             return new User(
                 email,
                 name,
                 surname,
-                EMPTY,
+                password,
                 address,
                 telephone,
                 NOT_REGISTERED,
