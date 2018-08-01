@@ -13,7 +13,7 @@ export class User {
     this.email = data.email;
     this.name = data.name;
     this.surname = data.surname;
-    this.address = data.address;
-    this.telephone = data.telephone;
+    this.address = new Address(data.address);
+    this.telephone = new Telephone(data.telephone);
   }
 }
