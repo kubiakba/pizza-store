@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import pl.bk.pizza.store.domain.customer.Address;
 import pl.bk.pizza.store.domain.customer.Telephone;
 
+import static org.apache.commons.lang.StringUtils.EMPTY;
+import static pl.bk.pizza.store.domain.customer.user.UserStatus.ACTIVE;
+import static pl.bk.pizza.store.domain.customer.user.UserStatus.NOT_REGISTERED;
 import static pl.bk.pizza.store.domain.validator.EmailValidator.validateEmail;
 import static pl.bk.pizza.store.domain.validator.customer.AddressValidator.validateAddress;
 import static pl.bk.pizza.store.domain.validator.customer.TelephoneValidator.validateTelephone;
@@ -28,16 +31,33 @@ public class UserFactory
         validateAddress(address);
         validateTelephone(telephone);
         
-        return new User(
-            email,
-            name,
-            surname,
-            encoder.encode(password),
-            address,
-            telephone,
-            UserStatus.ACTIVE,
-            0,
-            USER
-        );
+        if(password == null)
+        {
+            return new User(
+                email,
+                name,
+                surname,
+                EMPTY,
+                address,
+                telephone,
+                NOT_REGISTERED,
+                0,
+                USER
+            );
+        }
+        else
+        {
+            return new User(
+                email,
+                name,
+                surname,
+                encoder.encode(password),
+                address,
+                telephone,
+                ACTIVE,
+                0,
+                USER
+            );
+        }
     }
 }

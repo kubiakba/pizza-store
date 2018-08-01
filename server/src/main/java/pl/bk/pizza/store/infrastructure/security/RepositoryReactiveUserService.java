@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import pl.bk.pizza.store.domain.customer.user.UserRepository;
 import reactor.core.publisher.Mono;
 
+import static pl.bk.pizza.store.domain.customer.user.UserStatus.ACTIVE;
+
 @AllArgsConstructor
 @Component
 public class RepositoryReactiveUserService implements ReactiveUserDetailsService
@@ -16,10 +18,11 @@ public class RepositoryReactiveUserService implements ReactiveUserDetailsService
     public Mono<UserDetails> findByUsername(String username)
     {
         return repository.findById(username).
-            map(user ->
-                    org.springframework.security.core.userdetails.User
-                        .withUsername(user.getEmail())
-                        .roles(user.getRole())
-                        .password(user.getPassword()).build());
+            filter(user -> user.getStatus().equals(ACTIVE))
+                         .map(user ->
+                                  org.springframework.security.core.userdetails.User
+                                      .withUsername(user.getEmail())
+                                      .roles(user.getRole())
+                                      .password(user.getPassword()).build());
     }
 }
