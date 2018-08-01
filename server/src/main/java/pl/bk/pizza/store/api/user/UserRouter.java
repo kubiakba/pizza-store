@@ -17,6 +17,7 @@ public class UserRouter
     public RouterFunction<ServerResponse> routeUsers(UserHandler userHandler)
     {
         return route(POST("/users"), userHandler::addUser)
+            .andRoute(POST("/users/notRegistered"), userHandler::addNotRegisteredUser)
             .andRoute(GET("/users/{email:.+}"), userHandler::getUser)
             .andRoute(GET("/users/{email}/bonus"), userHandler::getBonusPoints)
             .andRoute(PATCH("/users/{email}/deactivate"), userHandler::deactivate);

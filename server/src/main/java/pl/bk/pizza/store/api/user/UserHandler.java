@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import pl.bk.pizza.store.api.ErrorHandler;
 import pl.bk.pizza.store.application.dto.user.NewUserDTO;
+import pl.bk.pizza.store.application.dto.user.NewNotRegisteredUserDTO;
 import pl.bk.pizza.store.application.service.UserService;
 import reactor.core.publisher.Mono;
 
@@ -24,6 +25,16 @@ public class UserHandler
         return request
             .bodyToMono(NewUserDTO.class)
             .flatMap(userService::createUser)
+            .flatMap(it -> ServerResponse.created(URI.create("/users/" + it.getEmail()))
+                                         .body(fromObject(it)))
+            .onErrorResume(ErrorHandler::handleException);
+    }
+    
+    Mono<ServerResponse> addNotRegisteredUser(ServerRequest request)
+    {
+        return request
+            .bodyToMono(NewNotRegisteredUserDTO.class)
+            .flatMap(userService::createNotRegisteredUser)
             .flatMap(it -> ServerResponse.created(URI.create("/users/" + it.getEmail()))
                                          .body(fromObject(it)))
             .onErrorResume(ErrorHandler::handleException);

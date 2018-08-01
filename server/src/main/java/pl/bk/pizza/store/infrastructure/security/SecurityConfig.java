@@ -35,6 +35,7 @@ public class SecurityConfig
             .pathMatchers(GET, "/products/pizzaToppings").permitAll()
             .pathMatchers(GET, "/products/*").permitAll()
             .pathMatchers(POST, "/users").permitAll()
+            .pathMatchers(POST, "/users/*").permitAll()
             .pathMatchers(GET, "/users/*").permitAll()
             .pathMatchers(GET, "/users/*/bonus").permitAll()
             .pathMatchers(POST, "/orders").permitAll()
