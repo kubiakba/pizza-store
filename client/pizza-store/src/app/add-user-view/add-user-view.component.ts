@@ -58,7 +58,12 @@ import {User} from "../user/user";
           </div>
         </div>
       </form>
-      <button type="button" (click)="createOrder()" class="btn btn-primary">Confirm</button>
+      <div *ngIf="errorMessage.length > 0">
+        <div *ngFor="let message of errorMessage">
+          {{message}}
+        </div>
+      </div>
+      <button [disabled]="!allInputsAreFilled()" type="button" (click)="createOrder()" class="btn btn-primary">Confirm</button>
     </div>
     <div *ngIf="orderFinished">
       <app-order-confirmation-view></app-order-confirmation-view>
@@ -74,6 +79,7 @@ export class AddUserViewComponent {
   telephone: any = {};
   createdUser: User;
   orderFinished = false;
+  errorMessage: Array<String> = [];
 
   constructor(private orderService: OrderService, private userService: UserService) {
   }
@@ -82,7 +88,6 @@ export class AddUserViewComponent {
     this.addFieldsToUser();
     this.createUser();
     this.addProductsToOrder();
-    this.orderFinished = true;
   }
 
   private addFieldsToUser() {
@@ -93,15 +98,25 @@ export class AddUserViewComponent {
   private createUser() {
     this.userService.createNotRegisteredUser(new User(this.user)).subscribe(user => {
       this.createdUser = new User(user);
-    });
+    }, error => this.errorMessage.push(error.error.errorCode));
   }
 
   private addProductsToOrder() {
-    this.orderService.startOrder().subscribe(order => {
+    this.orderService.startOrderWithEmail(this.user.email).subscribe(order => {
       this.orderId = order.id;
       this.order.productsId.forEach(productId => {
-        this.orderService.addProductToOrder(this.orderId, productId).subscribe();
+        this.orderService.addProductToOrder(this.orderId, productId).subscribe(next => {
+        }, error => this.errorMessage.push(error.error.errorCode));
       });
-    });
+    }, error => this.errorMessage.push(error.error.errorCode));
+  }
+
+  allInputsAreFilled() {
+    if (this.user.email != null && this.user.name != null
+      && this.user.surname != null && this.telephone.number != null
+      && this.address.street != null && this.address.streetNumber != null
+      && this.address.city != null && this.address.postCode != null) {
+      return true;
+    }
   }
 }
