@@ -66,7 +66,7 @@ import {User} from "../user/user";
       <button [disabled]="!allInputsAreFilled()" type="button" (click)="createOrder()" class="btn btn-primary">Confirm</button>
     </div>
     <div *ngIf="orderFinished">
-      <app-order-confirmation-view></app-order-confirmation-view>
+      <app-order-confirmation-view [orderId]="orderId" ></app-order-confirmation-view>
     </div>
   `
 })
@@ -108,7 +108,9 @@ export class AddUserViewComponent {
         this.orderService.addProductToOrder(this.orderId, productId).subscribe(next => {
         }, error => this.errorMessage.add(error.error.errorCode));
       });
-    }, error => this.errorMessage.add(error.error.errorCode));
+    }, error => this.errorMessage.add(error.error.errorCode),() => {
+      this.orderFinished = true;
+    });
   }
 
   allInputsAreFilled() {
