@@ -58,7 +58,7 @@ import {User} from "../user/user";
           </div>
         </div>
       </form>
-      <div *ngIf="errorMessage.length > 0">
+      <div *ngIf="errorMessage.size > 0">
         <div *ngFor="let message of errorMessage">
           {{message}}
         </div>
@@ -79,7 +79,7 @@ export class AddUserViewComponent {
   telephone: any = {};
   createdUser: User;
   orderFinished = false;
-  errorMessage: Array<String> = [];
+  errorMessage: Set<String> = new Set<String>();
 
   constructor(private orderService: OrderService, private userService: UserService) {
   }
@@ -98,7 +98,7 @@ export class AddUserViewComponent {
   private createUser() {
     this.userService.createNotRegisteredUser(new User(this.user)).subscribe(user => {
       this.createdUser = new User(user);
-    }, error => this.errorMessage.push(error.error.errorCode));
+    }, error => this.errorMessage.add(error.error.errorCode));
   }
 
   private addProductsToOrder() {
@@ -106,9 +106,9 @@ export class AddUserViewComponent {
       this.orderId = order.id;
       this.order.productsId.forEach(productId => {
         this.orderService.addProductToOrder(this.orderId, productId).subscribe(next => {
-        }, error => this.errorMessage.push(error.error.errorCode));
+        }, error => this.errorMessage.add(error.error.errorCode));
       });
-    }, error => this.errorMessage.push(error.error.errorCode));
+    }, error => this.errorMessage.add(error.error.errorCode));
   }
 
   allInputsAreFilled() {
