@@ -12,12 +12,14 @@ import {KebabViewComponent} from "./product-view/kebab-view.component";
 import {PizzaToppingViewComponent} from "./product-view/pizzaTopping-view.component";
 import {UserTableComponent} from "./user-view/user-table.component";
 import {ContactComponent} from "./contact/contact.component";
-import {RegisterUserViewComponent} from './register-user-view/register-user-view.component';
-import {LoginUserViewComponent} from './login-user-view/login-user-view.component';
+import {RegisterButtonComponent} from './register-view/register-button.component';
+import {LoginButtonComponent} from './login-view/login-button.component';
 import {OrderUserViewComponent} from './order-user-view/order-user-view.component';
 import {AddUserViewComponent} from './add-user-view/add-user-view.component';
 import {OrderConfirmationViewComponent} from './order-confirmation-view/order-confirmation-view.component';
 import {setAppInjector} from "./utils/injector";
+import { RegisterViewComponent } from './register-view/register-view.component';
+import { LoginViewComponent } from './login-view/login-view.component';
 
 @NgModule({
   declarations: [
@@ -30,11 +32,13 @@ import {setAppInjector} from "./utils/injector";
     PizzaToppingViewComponent,
     UserTableComponent,
     ContactComponent,
-    RegisterUserViewComponent,
-    LoginUserViewComponent,
+    RegisterButtonComponent,
+    LoginButtonComponent,
     OrderUserViewComponent,
     AddUserViewComponent,
-    OrderConfirmationViewComponent
+    OrderConfirmationViewComponent,
+    RegisterViewComponent,
+    LoginViewComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +54,12 @@ import {setAppInjector} from "./utils/injector";
     }, {
       path: 'view-contact',
       component: ContactComponent
+    }, {
+      path: 'register',
+      component: RegisterViewComponent
+    }, {
+      path: 'login',
+      component: LoginViewComponent
     }
     ], {onSameUrlNavigation: 'reload'})
   ],

@@ -42,8 +42,6 @@ public class SecurityConfig
             .pathMatchers(PATCH, "/users/*/deactivate").permitAll()
             .anyExchange().hasRole("ADMIN")
             .and()
-            .formLogin()
-            .and()
             .csrf().disable()
             .httpBasic().and()
             .build();

@@ -1,4 +1,12 @@
-html{
+html
+{
   background-color: #93B874;
 }
 
+.register
+{
+  background-color: #117a8b;
+  text-align: center;
+  font-size: 30px;
+  color: #b1dfbb;
+}

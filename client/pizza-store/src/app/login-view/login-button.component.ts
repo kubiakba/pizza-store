@@ -4,11 +4,10 @@ import {Component} from '@angular/core';
   selector: 'app-login-user-view',
   template: `
     <div class="float-sm-right">
-      <button type="button" class="btn btn-primary">Login</button>
+      <a routerLink="/login">
+        <button class="btn btn-primary"> Login</button>
+      </a>
     </div>`
 })
-export class LoginUserViewComponent {
-
-  constructor() {
-  }
+export class LoginButtonComponent {
 }
