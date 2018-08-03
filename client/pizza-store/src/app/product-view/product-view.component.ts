@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ProductService} from "../product/product.service";
 import {Pizza} from "../product/pizza";
 import {PizzaTopping} from "../product/pizzaTopping";
 import {Kebab} from "../product/kebab";
 import {NewOrder} from "../order/newOrder";
+import {AutoRefreshingComponent} from "../utils/auto-refreshing-component";
 
 @Component({
   selector: 'app-product-view',
@@ -35,7 +36,7 @@ import {NewOrder} from "../order/newOrder";
   `,
   styleUrls: ['./product-view.css']
 })
-export class ProductViewComponent implements OnInit {
+export class ProductViewComponent extends AutoRefreshingComponent{
 
   pizzas: Pizza[] = [];
   pizzaToppings: PizzaTopping[] = [];
@@ -44,9 +45,16 @@ export class ProductViewComponent implements OnInit {
   orderView = false;
 
   constructor(private productService: ProductService) {
+    super()
   }
 
-  ngOnInit() {
+  initialize() {
+    this.pizzas = [];
+    this.pizzaToppings = [];
+    this.kebabs = [];
+    this.order = new NewOrder();
+    this.orderView = false;
+
     this.productService.getPizzas().subscribe(pizzaArray => {
       pizzaArray.forEach(pizza => this.pizzas.push(new Pizza(pizza)))
     });

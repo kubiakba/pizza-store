@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Injector, NgModule} from '@angular/core';
 import {HttpClientModule} from "@angular/common/http";
 import {AppComponent} from './app.component';
 import {UserViewComponent} from './user-view/user-view.component';
@@ -15,8 +15,9 @@ import {ContactComponent} from "./contact/contact.component";
 import {RegisterUserViewComponent} from './register-user-view/register-user-view.component';
 import {LoginUserViewComponent} from './login-user-view/login-user-view.component';
 import {OrderUserViewComponent} from './order-user-view/order-user-view.component';
-import { AddUserViewComponent } from './add-user-view/add-user-view.component';
-import { OrderConfirmationViewComponent } from './order-confirmation-view/order-confirmation-view.component';
+import {AddUserViewComponent} from './add-user-view/add-user-view.component';
+import {OrderConfirmationViewComponent} from './order-confirmation-view/order-confirmation-view.component';
+import {setAppInjector} from "./utils/injector";
 
 @NgModule({
   declarations: [
@@ -43,17 +44,20 @@ import { OrderConfirmationViewComponent } from './order-confirmation-view/order-
     RouterModule.forRoot([{
       path: 'adm-view-users',
       component: UserViewComponent
-    },{
+    }, {
       path: 'view-products',
       component: ProductViewComponent
-    },{
+    }, {
       path: 'view-contact',
       component: ContactComponent
     }
-    ])
+    ], {onSameUrlNavigation: 'reload'})
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(private injector: Injector) {
+    setAppInjector(injector);
+  }
 }
