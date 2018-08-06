@@ -25,9 +25,6 @@ public class JwtAuthenticationWebFilter extends AuthenticationWebFilter
     
     private static class JWTHeadersExchangeMatcher implements ServerWebExchangeMatcher
     {
-        @Value("${jwt.header}")
-        private String tokenHeader;
-        
         @Override
         public Mono<MatchResult> matches(final ServerWebExchange exchange)
         {
