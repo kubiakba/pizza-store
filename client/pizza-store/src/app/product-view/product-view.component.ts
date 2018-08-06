@@ -3,7 +3,6 @@ import {ProductService} from "../product/product.service";
 import {Pizza} from "../product/pizza";
 import {PizzaTopping} from "../product/pizzaTopping";
 import {Kebab} from "../product/kebab";
-import {NewOrder} from "../order/newOrder";
 import {AutoRefreshingComponent} from "../utils/auto-refreshing-component";
 
 @Component({
@@ -24,14 +23,14 @@ import {AutoRefreshingComponent} from "../utils/auto-refreshing-component";
         <h3 align="center">Kebab</h3>
         <app-kebab-view [kebabs]="kebabs" (order)="addKebabToOrder($event)"></app-kebab-view>
       </div>
-      <div *ngIf="order.productsId.length >0" class="form-row text-center">
+      <div *ngIf="productIds.length>0" class="form-row text-center">
         <div class="col-12">
           <button type="submit" (click)="createOrder()" class="btn btn-primary">Order</button>
         </div>
       </div>
     </div>
     <div *ngIf="orderView">
-      <app-order-user-view [order]="order"></app-order-user-view>
+      <app-order-user-view [productIds]="productIds"></app-order-user-view>
     </div>
   `,
   styleUrls: ['./product-view.css']
@@ -41,7 +40,7 @@ export class ProductViewComponent extends AutoRefreshingComponent{
   pizzas: Pizza[] = [];
   pizzaToppings: PizzaTopping[] = [];
   kebabs: Kebab[] = [];
-  order: NewOrder = new NewOrder();
+  productIds: String[] = [];
   orderView = false;
 
   constructor(private productService: ProductService) {
@@ -52,7 +51,7 @@ export class ProductViewComponent extends AutoRefreshingComponent{
     this.pizzas = [];
     this.pizzaToppings = [];
     this.kebabs = [];
-    this.order = new NewOrder();
+    this.productIds = [];
     this.orderView = false;
 
     this.productService.getPizzas().subscribe(pizzaArray => {
@@ -69,15 +68,15 @@ export class ProductViewComponent extends AutoRefreshingComponent{
   }
 
   addPizzaToOrder(id: String) {
-    this.order.productsId.push(id)
+    this.productIds.push(id)
   }
 
   addPizzaToppingToOrder(id: String) {
-    this.order.productsId.push(id)
+    this.productIds.push(id)
   }
 
   addKebabToOrder(id: String) {
-    this.order.productsId.push(id)
+    this.productIds.push(id)
   }
 
   createOrder() {

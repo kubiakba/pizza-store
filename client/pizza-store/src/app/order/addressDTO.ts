@@ -1,4 +1,4 @@
-export class Address {
+export class AddressDTO {
   city: String;
   street: String;
   streetNumber: String;

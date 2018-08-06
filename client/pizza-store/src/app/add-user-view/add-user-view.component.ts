@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {OrderService} from "../order/order.service";
-import {NewOrder} from "../order/newOrder";
 import {UserService} from "../user/user.service";
-import {User} from "../user/user";
+import {NewOrderDTO} from "../order/newOrderDTO";
 
 @Component({
   selector: 'app-add-user-view',
@@ -12,19 +11,19 @@ import {User} from "../user/user";
         <div class="form-group row">
           <label for="name" class="col-sm-1 col-form-label">Email</label>
           <div class="col-xm-4">
-            <input type="text" [(ngModel)]="user.email" name="email" class="form-control" id="email">
+            <input type="text" [(ngModel)]="data.email" name="email" class="form-control" id="email">
           </div>
         </div>
         <div class="form-group row">
           <label for="name" class="col-sm-1 col-form-label">Name</label>
           <div class="col-xm-4">
-            <input type="text" [(ngModel)]="user.name" name="name" class="form-control" id="Name">
+            <input type="text" [(ngModel)]="deliveryInfo.name" name="name" class="form-control" id="Name">
           </div>
         </div>
         <div class="form-group row">
           <label for="surname" class="col-sm-1 col-form-label">Surname</label>
           <div class="col-xm-4">
-            <input type="text" [(ngModel)]="user.surname" name="surname" class="form-control" id="surname">
+            <input type="text" [(ngModel)]="deliveryInfo.surname" name="surname" class="form-control" id="surname">
           </div>
         </div>
         <div class="form-group row">
@@ -73,11 +72,12 @@ import {User} from "../user/user";
 export class AddUserViewComponent {
 
   orderId: String;
-  @Input() order: NewOrder;
-  user: any = {};
+  @Input() productIds: String[];
+  data: any = {};
+  deliveryInfo :any = {};
   address: any = {};
   telephone: any = {};
-  createdUser: User;
+  createdOrder: NewOrderDTO;
   orderFinished = false;
   errorMessage: Set<String> = new Set<String>();
 
@@ -86,25 +86,20 @@ export class AddUserViewComponent {
 
   createOrder() {
     this.addFieldsToUser();
-    this.createUser();
     this.addProductsToOrder();
   }
 
   private addFieldsToUser() {
-    this.user.address = this.address;
-    this.user.telephone = this.telephone;
-  }
-
-  private createUser() {
-    this.userService.createNotRegisteredUser(new User(this.user)).subscribe(user => {
-      this.createdUser = new User(user);
-    }, error => this.errorMessage.add(error.error.errorCode));
+    this.deliveryInfo.address = this.address;
+    this.deliveryInfo.telephone = this.telephone;
+    this.data.deliveryInfo = this.deliveryInfo;
+    this.createdOrder = new NewOrderDTO(this.data);
   }
 
   private addProductsToOrder() {
-    this.orderService.startOrderWithEmail(this.user.email).subscribe(order => {
+    this.orderService.startOrder(this.createdOrder).subscribe(order => {
       this.orderId = order.id;
-      this.order.productsId.forEach(productId => {
+      this.productIds.forEach(productId => {
         this.orderService.addProductToOrder(this.orderId, productId).subscribe(next => {
         }, error => this.errorMessage.add(error.error.errorCode));
       });
@@ -114,8 +109,8 @@ export class AddUserViewComponent {
   }
 
   allInputsAreFilled() {
-    if (this.user.email != null && this.user.name != null
-      && this.user.surname != null && this.telephone.number != null
+    if (this.data.email != null && this.deliveryInfo.name != null
+      && this.deliveryInfo.surname != null && this.telephone.number != null
       && this.address.street != null && this.address.streetNumber != null
       && this.address.city != null && this.address.postCode != null) {
       return true;

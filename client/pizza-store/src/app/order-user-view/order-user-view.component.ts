@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {NewOrder} from "../order/newOrder";
 
 @Component({
   selector: 'app-order-user-view',
@@ -7,13 +6,13 @@ import {NewOrder} from "../order/newOrder";
     <div style="background-color: #93B874">
       <br>
       <br>
-      <app-add-user-view [order]="order"></app-add-user-view>
+      <app-add-user-view [productIds]="productIds"></app-add-user-view>
     </div>`
 
 })
 export class OrderUserViewComponent {
 
-  @Input() order: NewOrder;
+  @Input() productIds: String[];
 
   constructor() {
   }

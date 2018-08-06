@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/index";
+import {DeliveryInfoDTO} from "./deliveryInfoDTO";
+import {NewOrderDTO} from "./newOrderDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +20,8 @@ export class OrderService {
 
   constructor(private http: HttpClient) {
   }
-
-  public startOrder(): Observable<any> {
-    return this.http.post<any>(this.order_url, this.empty_body, this.httpOptions);
-  }
-
-  public startOrderWithEmail(email: String): Observable<any> {
-    return this.http.post<any>(this.order_url, JSON.stringify({email: email}), this.httpOptions);
+  public startOrder(order: NewOrderDTO): Observable<any> {
+    return this.http.post<any>(this.order_url, order, this.httpOptions);
   }
 
   public addProductToOrder(orderId: String, productId: String): Observable<any> {

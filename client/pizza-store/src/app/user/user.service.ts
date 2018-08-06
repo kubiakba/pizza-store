@@ -21,8 +21,4 @@ export class UserService {
   public getUser(id: String): Observable<any> {
     return this.http.get(this.url + "/" + id);
   }
-
-  public createNotRegisteredUser(user: User): Observable<any> {
-    return this.http.post(this.url+"/notRegistered", user, this.httpOptions);
-  }
 }

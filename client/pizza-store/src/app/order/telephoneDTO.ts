@@ -1,4 +1,4 @@
-export class Telephone {
+export class TelephoneDTO {
   number: String;
 
   constructor(data:any) {
