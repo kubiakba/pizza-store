@@ -55,6 +55,7 @@ public class JwtServerExchangeConverter implements Function<ServerWebExchange, M
                 username = jwtTokenUtil.getUsernameFromToken(token);
                 roles = Arrays.stream(jwtTokenUtil.getAuthoritiesFromToken(token)
                                                   .split(","))
+                              .map(role -> "ROLE_" + role)
                               .map(SimpleGrantedAuthority::new)
                               .collect(toList());
             }
