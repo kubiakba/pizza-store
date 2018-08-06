@@ -21,7 +21,6 @@ public class OrderRouter
             .andRoute(GET("/orders/{orderId}"), orderHandler::getOrder)
             .andRoute(PUT("/orders/{orderId}/to-realization"), orderHandler::setToRealization)
             .andRoute(PUT("/admin/orders/{orderId}/delivered"), orderHandler::setToDelivered)
-            .andRoute(PUT("/orders/{orderId}/users/{email}"), orderHandler::addEmailToOrder)
             .andRoute(PUT("/orders/{orderId}/{productId}"), orderHandler::addProductToOrder);
     }
 }

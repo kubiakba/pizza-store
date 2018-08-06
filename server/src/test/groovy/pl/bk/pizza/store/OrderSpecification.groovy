@@ -1,9 +1,11 @@
 package pl.bk.pizza.store
 
 import pl.bk.pizza.store.helpers.CommonSpecification
+import pl.bk.pizza.store.helpers.stubs.OrderStub
 
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.order.OrderStatus.*
+import static pl.bk.pizza.store.helpers.stubs.OrderStub.*
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 
@@ -12,12 +14,12 @@ class OrderSpecification extends CommonSpecification
     def "should create order"()
     {
         when:
-        def body = createOrder()
+        def body = createOrder("1@gmail.com", getNewDeliveryInfoStub())
 
         then:
         with(body) {
-            assertThat(id).isNotEmpty()
-            assertThat(userEmail).isEqualTo(null)
+            assertThat(id).isNotNull()
+            assertThat(userEmail).isEqualTo("1@gmail.com")
             assertThat(products).isEmpty()
             assertThat(orderStatus).isEqualTo(STARTED)
             assertThat(totalPrice).isEqualTo(BigDecimal.ZERO)
@@ -27,7 +29,7 @@ class OrderSpecification extends CommonSpecification
     def "should get order"()
     {
         given:
-        def order = createOrder()
+        def order = createOrder("1@gmail.com", getNewDeliveryInfoStub())
 
         when:
         def response = getOrder(order.id)
@@ -39,7 +41,7 @@ class OrderSpecification extends CommonSpecification
     def "should create order and add product to order"()
     {
         when:
-        def order = createOrder()
+        def order = createOrder("1@gmail.com", getNewDeliveryInfoStub())
 
         def product = createProduct(getNewPizzaDTOStub())
 
@@ -56,7 +58,7 @@ class OrderSpecification extends CommonSpecification
         createUser(getNewUserDTOStub(email))
 
         and:
-        def order = createOrder(email)
+        def order = createOrder("1@gmail.com", getNewDeliveryInfoStub())
 
         def product = createProduct(getNewPizzaDTOStub())
 
@@ -74,7 +76,7 @@ class OrderSpecification extends CommonSpecification
         given:
         def productDto = getNewPizzaDTOStub()
 
-        def order = createOrder()
+        def order = createOrder("1@gmail.com", getNewDeliveryInfoStub())
 
         def product = createProduct(productDto)
 
@@ -97,7 +99,7 @@ class OrderSpecification extends CommonSpecification
         def product = createProduct(getNewPizzaDTOStub())
 
         and: "create order"
-        def order = createOrder(email)
+        def order = createOrder(email, getNewDeliveryInfoStub())
 
         and: "add product to order"
         addProductToOrder(order.id, product.id)
@@ -123,7 +125,7 @@ class OrderSpecification extends CommonSpecification
         def product = createProduct(productDto)
 
         and: "add product to order"
-        def order = createOrder(email)
+        def order = createOrder(email, getNewDeliveryInfoStub())
         addProductToOrder(order.id, product.id)
 
         and: "start order"
@@ -148,7 +150,7 @@ class OrderSpecification extends CommonSpecification
         def product = createProduct(productDto)
 
         and: "add product to order"
-        def order = createOrder(email)
+        def order = createOrder(email, getNewDeliveryInfoStub())
         addProductToOrder(order.id, product.id)
 
         and: "start and deliver order"
@@ -157,26 +159,5 @@ class OrderSpecification extends CommonSpecification
 
         expect:
         generateReport(1)
-    }
-
-    def "should add email to order"()
-    {
-        given: "create product"
-        def productDto = getNewPizzaDTOStub()
-        def product = createProduct(productDto)
-
-        and: "add product to order"
-        def order = createOrder()
-        addProductToOrder(order.id, product.id)
-
-        and: "create user"
-        def email = "aa@wp.pl"
-        def user = createUser(getNewUserDTOStub(email))
-
-        when:
-        def orderWithEmail = addEmailToOrder(order.id, user.email)
-
-        then:
-        assertThat(orderWithEmail.userEmail).contains(email)
     }
 }

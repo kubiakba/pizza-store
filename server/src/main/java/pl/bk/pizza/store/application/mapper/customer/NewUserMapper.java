@@ -14,22 +14,13 @@ import pl.bk.pizza.store.domain.customer.user.UserFactory;
 public class NewUserMapper implements DtoToObjectMapper<NewUserDTO, User>
 {
     private final UserFactory factory;
-    private final AddressMapper addressMapper;
-    private final TelephoneMapper telephoneMapper;
     
     @Override
     public User mapFromDTO(NewUserDTO newUserDto)
     {
-        final Address address = addressMapper.mapFromDTO(newUserDto.getAddress());
-        final Telephone telephone = telephoneMapper.mapFromDTO(newUserDto.getTelephone());
-        
         return factory.create(
             newUserDto.getEmail(),
-            newUserDto.getName(),
-            newUserDto.getSurname(),
-            newUserDto.getPassword(),
-            address,
-            telephone
+            newUserDto.getPassword()
                              );
     }
 }

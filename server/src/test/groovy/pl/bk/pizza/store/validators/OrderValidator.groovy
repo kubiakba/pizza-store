@@ -4,6 +4,8 @@ import pl.bk.pizza.store.helpers.CommonSpecification
 import spock.lang.Unroll
 
 import static pl.bk.pizza.store.domain.exception.ErrorCode.*
+import static pl.bk.pizza.store.helpers.stubs.OrderStub.getNewDeliveryInfoDTOStubParam
+import static pl.bk.pizza.store.helpers.stubs.OrderStub.newDeliveryInfoStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 
@@ -13,7 +15,7 @@ class OrderValidator extends CommonSpecification
     def "should throw exception when creating order with invalid #email"()
     {
         when:
-        def error = createOrderWithError(email)
+        def error = createOrderWithError(email, getNewDeliveryInfoStub())
 
         then:
         error.errorCode == errorMessage
@@ -35,7 +37,7 @@ class OrderValidator extends CommonSpecification
         def product = createProduct(getNewPizzaDTOStub())
 
         and: "create order"
-        def order = createOrder(email)
+        def order = createOrder(email, getNewDeliveryInfoStub())
 
         and: "add product to order"
         addProductToOrder(order.id, product.id)
@@ -45,5 +47,25 @@ class OrderValidator extends CommonSpecification
 
         then:
         errorMessage.getErrorCode() == INVALID_ORDER_STATUS
+    }
+
+    @Unroll
+    def "should throw exception when creating order with #errorMessage"()
+    {
+        when:
+        def error = createOrderWithError("1@gmail.com", delivery)
+
+        then:
+        error.errorCode == errorMessage
+
+        where:
+        delivery                                         | errorMessage
+        getNewDeliveryInfoDTOStubParam(name: '')         | EMPTY_USER_NAME
+        getNewDeliveryInfoDTOStubParam(surname: '')      | EMPTY_USER_SURNAME
+        getNewDeliveryInfoDTOStubParam(telephone: '')    | EMPTY_NUMBER
+        getNewDeliveryInfoDTOStubParam(city: '')         | EMPTY_CITY
+        getNewDeliveryInfoDTOStubParam(street: '')       | EMPTY_STREET
+        getNewDeliveryInfoDTOStubParam(streetNumber: '') | EMPTY_STREET_NUMBER
+        getNewDeliveryInfoDTOStubParam(postCode: '')     | EMPTY_POSTCODE
     }
 }

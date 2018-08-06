@@ -15,11 +15,7 @@ public class User
 {
     @Id
     private final String email;
-    private String name;
-    private String surname;
     private String password;
-    private Address address;
-    private Telephone telephone;
     private UserStatus status;
     private Integer points;
     private String role;

@@ -22,14 +22,16 @@ public class Order
     private OrderStatus orderStatus;
     private Long orderDateTime;
     private BigDecimal totalPrice;
+    private DeliveryInfo deliveryInfo;
     
-    Order(String id, String userEmail, Set<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice)
+    Order(String id, String userEmail, Set<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo)
     {
         this.id = id;
         this.userEmail = userEmail;
         this.products = products;
         this.orderStatus = orderStatus;
         this.totalPrice = totalPrice;
+        this.deliveryInfo = deliveryInfo;
     }
     
     public Order addProduct(BaseProductInfo product)

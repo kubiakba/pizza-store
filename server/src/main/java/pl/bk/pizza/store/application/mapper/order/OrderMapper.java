@@ -17,6 +17,7 @@ import static java.util.stream.Collectors.toSet;
 public class OrderMapper implements ObjectToDtoMapper<Order, OrderDTO>
 {
     private final ProductMapper productMapper;
+    private final DeliveryInfoMapper deliveryInfoMapper;
     
     @Override
     public OrderDTO mapToDTO(Order order)
@@ -31,7 +32,8 @@ public class OrderMapper implements ObjectToDtoMapper<Order, OrderDTO>
             order.getUserEmail(),
             productDtos,
             order.getOrderStatus(),
-            order.getTotalPrice()
+            order.getTotalPrice(),
+            deliveryInfoMapper.mapToDTO(order.getDeliveryInfo())
         );
     }
 }

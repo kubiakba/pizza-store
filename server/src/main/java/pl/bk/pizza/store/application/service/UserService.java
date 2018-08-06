@@ -3,10 +3,8 @@ package pl.bk.pizza.store.application.service;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.bk.pizza.store.application.dto.user.NewNotRegisteredUserDTO;
 import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.dto.user.UserDTO;
-import pl.bk.pizza.store.application.mapper.customer.NewNotRegisteredUserMapper;
 import pl.bk.pizza.store.application.mapper.customer.NewUserMapper;
 import pl.bk.pizza.store.application.mapper.customer.UserMapper;
 import pl.bk.pizza.store.domain.customer.user.User;
@@ -27,7 +25,6 @@ public class UserService
     private final UserRepository userRepository;
     private final NewUserMapper newUserMapper;
     private final UserMapper userMapper;
-    private final NewNotRegisteredUserMapper notRegisteredUserMapper;
     private final JwtTokenUtil jwtTokenUtil;
     private final PasswordEncoder encoder;
     
@@ -38,14 +35,6 @@ public class UserService
             .flatMap(it -> userShouldNotExists(userDTO.getEmail()))
             .then(just(userDTO))
             .map(newUserMapper::mapFromDTO)
-            .flatMap(userRepository::save)
-            .map(userMapper::mapToDTO);
-    }
-    
-    public Mono<UserDTO> createNotRegisteredUser(NewNotRegisteredUserDTO userDTO)
-    {
-        return just(userDTO)
-            .map(notRegisteredUserMapper::mapFromDTO)
             .flatMap(userRepository::save)
             .map(userMapper::mapToDTO);
     }

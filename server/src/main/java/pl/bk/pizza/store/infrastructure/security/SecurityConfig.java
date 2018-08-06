@@ -23,7 +23,6 @@ import static org.springframework.http.HttpMethod.PUT;
 @EnableWebFluxSecurity
 public class SecurityConfig
 {
-    
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, UnauthorizedEntryPoint entryPoint, JwtAuthenticationWebFilter webFilter)
     {

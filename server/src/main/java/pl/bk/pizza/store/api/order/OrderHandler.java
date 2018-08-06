@@ -63,16 +63,6 @@ public class OrderHandler
                    .onErrorResume(ErrorHandler::handleException);
     }
     
-    Mono<ServerResponse> addEmailToOrder(ServerRequest request)
-    {
-        final String orderId = request.pathVariable("orderId");
-        final String email = request.pathVariable("email");
-        
-        return orderService.addEmailToOrder(orderId, email)
-                           .flatMap(order -> ServerResponse.ok().body(fromObject(order)))
-                           .onErrorResume(ErrorHandler::handleException);
-    }
-    
     Mono<ServerResponse> setToDelivered(ServerRequest request)
     {
         final String orderId = request.pathVariable("orderId");

@@ -12,17 +12,14 @@ import pl.bk.pizza.store.domain.order.OrderFactory;
 public class NewOrderMapper implements DtoToObjectMapper<NewOrderDTO, Order>
 {
     private final OrderFactory factory;
+    private final DeliveryInfoMapper mapper;
     
     @Override
     public Order mapFromDTO(NewOrderDTO newOrderDTO)
     {
-        if(newOrderDTO.getEmail() != null)
-        {
-            return factory.create(newOrderDTO.getEmail());
-        }
-        else
-        {
-            return factory.create();
-        }
+        return factory.create(
+            newOrderDTO.getEmail(),
+            mapper.mapFromDTO(newOrderDTO.getDeliveryInfoDTO())
+                             );
     }
 }

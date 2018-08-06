@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.helpers
 
 import org.springframework.test.web.reactive.server.WebTestClient
+import pl.bk.pizza.store.application.dto.order.DeliveryInfoDTO
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO
 import pl.bk.pizza.store.application.dto.order.OrderDTO
 import pl.bk.pizza.store.infrastructure.error.ErrorMessage
@@ -12,12 +13,12 @@ trait OrderHelper
 {
     abstract WebTestClient getClient()
 
-    OrderDTO createOrder(String email)
+    OrderDTO createOrder(String email, DeliveryInfoDTO deliveryInfoDTO)
     {
         client
             .post()
             .uri("/orders")
-            .body(Mono.just(new NewOrderDTO(email)), NewOrderDTO.class)
+            .body(Mono.just(new NewOrderDTO(email, deliveryInfoDTO)), NewOrderDTO.class)
             .exchange()
             .expectStatus()
             .isCreated()
@@ -26,12 +27,12 @@ trait OrderHelper
             .responseBody
     }
 
-    ErrorMessage createOrderWithError(String email)
+    ErrorMessage createOrderWithError(String email, DeliveryInfoDTO deliveryInfoDTO)
     {
         client
             .post()
             .uri("/orders")
-            .body(Mono.just(new NewOrderDTO(email)), NewOrderDTO.class)
+            .body(Mono.just(new NewOrderDTO(email,deliveryInfoDTO)), NewOrderDTO.class)
             .exchange()
             .expectBody(ErrorMessage)
             .returnResult()
@@ -98,16 +99,4 @@ trait OrderHelper
             .isAccepted()
     }
 
-    OrderDTO addEmailToOrder(String orderId, String email)
-    {
-        client
-            .put()
-            .uri("/orders/$orderId/users/$email")
-            .exchange()
-            .expectStatus()
-            .isOk()
-            .expectBody(OrderDTO)
-            .returnResult()
-            .responseBody
-    }
 }

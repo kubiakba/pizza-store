@@ -9,8 +9,4 @@ public class NewUserDTO
 {
     private String email;
     private String password;
-    private String name;
-    private String surname;
-    private AddressDTO address;
-    private TelephoneDTO telephone;
 }

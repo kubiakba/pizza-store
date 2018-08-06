@@ -1,7 +1,7 @@
 package pl.bk.pizza.store.application.mapper.customer;
 
 import org.springframework.stereotype.Component;
-import pl.bk.pizza.store.application.dto.user.AddressDTO;
+import pl.bk.pizza.store.application.dto.order.AddressDTO;
 import pl.bk.pizza.store.application.mapper.GenericMapper;
 import pl.bk.pizza.store.domain.customer.Address;
 

@@ -17,4 +17,5 @@ public class OrderDTO
     private Set<ProductDTO> products;
     private OrderStatus orderStatus;
     private BigDecimal totalPrice;
+    private DeliveryInfoDTO deliveryInfoDTO;
 }

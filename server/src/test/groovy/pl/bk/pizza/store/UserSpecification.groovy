@@ -1,9 +1,12 @@
 package pl.bk.pizza.store
 
+import pl.bk.pizza.store.domain.customer.user.UserStatus
 import pl.bk.pizza.store.helpers.CommonSpecification
+import pl.bk.pizza.store.helpers.stubs.OrderStub
 
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.customer.user.UserStatus.INACTIVE
+import static pl.bk.pizza.store.helpers.stubs.OrderStub.*
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 
@@ -20,17 +23,10 @@ class UserSpecification extends CommonSpecification
         then:
         with(user) {
             assertThat(email).isEqualTo(userDto.email)
-            assertThat(name).isEqualTo(userDto.name)
-            assertThat(surname).isEqualTo(userDto.surname)
-            assertThat(telephone.number).isEqualTo(userDto.telephone.number)
+            assertThat(status).isEqualTo(UserStatus.ACTIVE)
             assertThat(points).isEqualTo(0)
         }
-        with(user.address) {
-            assertThat(city).isEqualTo(userDto.address.city)
-            assertThat(postCode).isEqualTo(userDto.address.postCode)
-            assertThat(street).isEqualTo(userDto.address.street)
-            assertThat(streetNumber).isEqualTo(userDto.address.streetNumber)
-        }
+
     }
 
     def "should get user"()
@@ -65,7 +61,7 @@ class UserSpecification extends CommonSpecification
         given:
         def user = createUser(getNewUserDTOStub())
         def product = createProduct(getNewPizzaDTOStub())
-        def order = createOrder(user.email)
+        def order = createOrder(user.email, getNewDeliveryInfoStub())
 
         addProductToOrder(order.id,product.id)
         startOrderRealization(order.id)
