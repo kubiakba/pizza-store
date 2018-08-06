@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.application.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.bk.pizza.store.application.dto.user.NewNotRegisteredUserDTO;
 import pl.bk.pizza.store.application.dto.user.NewUserDTO;
@@ -10,6 +11,9 @@ import pl.bk.pizza.store.application.mapper.customer.NewUserMapper;
 import pl.bk.pizza.store.application.mapper.customer.UserMapper;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.customer.user.UserRepository;
+import pl.bk.pizza.store.infrastructure.security.jwt.JwtAuthenticationRequest;
+import pl.bk.pizza.store.infrastructure.security.jwt.JwtAuthenticationResponse;
+import pl.bk.pizza.store.infrastructure.security.jwt.JwtTokenUtil;
 import reactor.core.publisher.Mono;
 
 import static pl.bk.pizza.store.domain.validator.customer.UserValidator.userShouldExists;
@@ -24,6 +28,8 @@ public class UserService
     private final NewUserMapper newUserMapper;
     private final UserMapper userMapper;
     private final NewNotRegisteredUserMapper notRegisteredUserMapper;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final PasswordEncoder encoder;
     
     public Mono<UserDTO> createUser(NewUserDTO userDTO)
     {
@@ -77,5 +83,12 @@ public class UserService
             .switchIfEmpty(userShouldExists(email))
             .map(user -> user.addPoints(points))
             .flatMap(userRepository::save);
+    }
+    
+    public Mono<JwtAuthenticationResponse> generateToken(JwtAuthenticationRequest request)
+    {
+        return userRepository.findById(request.getUsername())
+                             .filter(user -> encoder.matches(request.getPassword(), user.getPassword()))
+                             .map(user -> new JwtAuthenticationResponse(request.getUsername(), jwtTokenUtil.generateToken(user)));
     }
 }

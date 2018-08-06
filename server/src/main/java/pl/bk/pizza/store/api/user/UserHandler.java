@@ -5,9 +5,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import pl.bk.pizza.store.api.ErrorHandler;
-import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.dto.user.NewNotRegisteredUserDTO;
+import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.service.UserService;
+import pl.bk.pizza.store.infrastructure.security.jwt.JwtAuthenticationRequest;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
@@ -67,4 +68,11 @@ public class UserHandler
                           .onErrorResume(ErrorHandler::handleException);
     }
     
+    Mono<ServerResponse> generateToken(ServerRequest request)
+    {
+        return request.bodyToMono(JwtAuthenticationRequest.class)
+                      .flatMap(userService::generateToken)
+                      .flatMap(it -> ServerResponse.ok().body(fromObject(it)))
+                      .onErrorResume(ErrorHandler::handleException);
+    }
 }

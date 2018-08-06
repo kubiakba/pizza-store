@@ -1,6 +1,11 @@
 server:
  port: ${PORT:8081}
 
+jwt:
+  header: Authorization
+  secret: m6sXDUKZSY154e9N
+  prefix: Bearer
+
 spring:
     data:
       mongodb:
