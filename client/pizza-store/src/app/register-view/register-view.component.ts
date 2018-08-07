@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {UserService} from "../user/user.service";
+import {NewUserDTO} from "../user/newUserDTO";
 
 @Component({
   selector: 'app-register-view',
@@ -11,19 +13,28 @@ import {Component} from '@angular/core';
       <form>
         <div class="form-group">
           <label for="emailId">Email address</label>
-          <input type="email" class="form-control" id="emailId" placeholder="Enter email">
+          <input type="email" [(ngModel)]="email" name="email" class="form-control" id="emailId" placeholder="Enter email">
         </div>
         <div class="form-group">
           <label for="passId">Password</label>
-          <input type="password" class="form-control" id="passId" placeholder="Password">
+          <input type="password" [(ngModel)]="password" name="password" class="form-control" id="passId" placeholder="Password">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button (click)="registerUser()" class="btn btn-primary">Submit</button>
       </form>
     </div>`
 })
 export class RegisterViewComponent {
 
-  constructor() {
+  email: String = '';
+  password: String = '';
+
+  constructor(private userService: UserService) {
+  }
+
+  registerUser() {
+    let user = new NewUserDTO(this.email, this.password);
+    console.log(this.email, this.password);
+    this.userService.register(user).subscribe();
   }
 
 }
