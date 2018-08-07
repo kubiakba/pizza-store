@@ -47,7 +47,6 @@ export class RegisterViewComponent extends AutoRefreshingComponent {
 
   registerUser() {
     let user = new NewUserDTO(this.email, this.password);
-    console.log(this.email, this.password);
     this.userService.register(user).subscribe(user => {
       this.userHasBeenCreatedSuccessfully = true
     }, error => this.errorMessage.add(error.error.errorCode));

@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {Injector, NgModule} from '@angular/core';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AppComponent} from './app.component';
 import {UserViewComponent} from './user-view/user-view.component';
 import {RouterModule} from "@angular/router";
@@ -21,6 +21,7 @@ import {setAppInjector} from "./utils/injector";
 import { RegisterViewComponent } from './register-view/register-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
 import { RegistrationConfirmedViewComponent } from './registration-confirmed-view/registration-confirmed-view.component';
+import {JwtInterceptor} from "./authentication/jwt-interceptor";
 
 @NgModule({
   declarations: [
@@ -65,7 +66,11 @@ import { RegistrationConfirmedViewComponent } from './registration-confirmed-vie
     }
     ], {onSameUrlNavigation: 'reload'})
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: JwtInterceptor,
+    multi :true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

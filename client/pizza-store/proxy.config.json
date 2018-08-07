@@ -23,4 +23,13 @@
       "^/orders": ""
     }
   }
+,
+  "/auth/*": {
+    "target": "http://localhost:8081/auth",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/auth": ""
+    }
+  }
 }
