@@ -21,12 +21,12 @@ import {AutoRefreshingComponent} from "../utils/auto-refreshing-component";
             <label for="passId">Password</label>
             <input type="password" [(ngModel)]="password" name="password" class="form-control" id="passId" placeholder="Password">
           </div>
-          <button (click)="registerUser()" class="btn btn-primary">Submit</button>
           <div *ngIf="errorMessage.size > 0">
             <div *ngFor="let message of errorMessage">
               {{message}}
             </div>
           </div>
+          <button (click)="registerUser()" class="btn btn-primary">Submit</button>
         </form>
       </div>
       <div *ngIf="userHasBeenCreatedSuccessfully">
