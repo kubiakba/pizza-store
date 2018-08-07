@@ -20,6 +20,7 @@ import {OrderConfirmationViewComponent} from './order-confirmation-view/order-co
 import {setAppInjector} from "./utils/injector";
 import { RegisterViewComponent } from './register-view/register-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
+import { RegistrationConfirmedViewComponent } from './registration-confirmed-view/registration-confirmed-view.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LoginViewComponent } from './login-view/login-view.component';
     AddUserViewComponent,
     OrderConfirmationViewComponent,
     RegisterViewComponent,
-    LoginViewComponent
+    LoginViewComponent,
+    RegistrationConfirmedViewComponent
   ],
   imports: [
     BrowserModule,
