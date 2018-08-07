@@ -77,6 +77,7 @@ public class UserService
     public Mono<JwtAuthenticationResponse> generateToken(JwtAuthenticationRequest request)
     {
         return userRepository.findById(request.getUsername())
+                             .switchIfEmpty(userShouldExists(request.getUsername()))
                              .filter(user -> encoder.matches(request.getPassword(), user.getPassword()))
                              .map(user -> new JwtAuthenticationResponse(request.getUsername(), jwtTokenUtil.generateToken(user)));
     }
