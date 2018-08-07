@@ -39,6 +39,8 @@ public class OrderReport
 {
     private final ReactiveMongoOperations operations;
     
+    //TODO toIterable is blocking and throws error
+    
     public Mono<String> generateLastOrdersReport(Duration time)
     {
         final Flux<Order> orders = getAllLastOrders(time);
