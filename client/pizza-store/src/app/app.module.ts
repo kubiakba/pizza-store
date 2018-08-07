@@ -22,6 +22,7 @@ import { RegisterViewComponent } from './register-view/register-view.component';
 import { LoginViewComponent } from './login-view/login-view.component';
 import { RegistrationConfirmedViewComponent } from './registration-confirmed-view/registration-confirmed-view.component';
 import {JwtInterceptor} from "./authentication/jwt-interceptor";
+import { LoginConfirmedViewComponent } from './login-confirmed-view/login-confirmed-view.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {JwtInterceptor} from "./authentication/jwt-interceptor";
     OrderConfirmationViewComponent,
     RegisterViewComponent,
     LoginViewComponent,
-    RegistrationConfirmedViewComponent
+    RegistrationConfirmedViewComponent,
+    LoginConfirmedViewComponent
   ],
   imports: [
     BrowserModule,
