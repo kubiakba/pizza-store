@@ -32,7 +32,7 @@ trait OrderHelper
         client
             .post()
             .uri("/orders")
-            .body(Mono.just(new NewOrderDTO(email,deliveryInfoDTO)), NewOrderDTO.class)
+            .body(Mono.just(new NewOrderDTO(email, deliveryInfoDTO)), NewOrderDTO.class)
             .exchange()
             .expectBody(ErrorMessage)
             .returnResult()
@@ -98,5 +98,4 @@ trait OrderHelper
             .expectStatus()
             .isAccepted()
     }
-
 }

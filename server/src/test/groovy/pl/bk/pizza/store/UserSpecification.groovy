@@ -2,11 +2,10 @@ package pl.bk.pizza.store
 
 import pl.bk.pizza.store.domain.customer.user.UserStatus
 import pl.bk.pizza.store.helpers.CommonSpecification
-import pl.bk.pizza.store.helpers.stubs.OrderStub
 
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.customer.user.UserStatus.INACTIVE
-import static pl.bk.pizza.store.helpers.stubs.OrderStub.*
+import static pl.bk.pizza.store.helpers.stubs.OrderStub.getNewDeliveryInfoStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 
@@ -26,7 +25,6 @@ class UserSpecification extends CommonSpecification
             assertThat(status).isEqualTo(UserStatus.ACTIVE)
             assertThat(points).isEqualTo(0)
         }
-
     }
 
     def "should get user"()
@@ -63,7 +61,7 @@ class UserSpecification extends CommonSpecification
         def product = createProduct(getNewPizzaDTOStub())
         def order = createOrder(user.email, getNewDeliveryInfoStub())
 
-        addProductToOrder(order.id,product.id)
+        addProductToOrder(order.id, product.id)
         startOrderRealization(order.id)
         deliverOrder(order.id)
 

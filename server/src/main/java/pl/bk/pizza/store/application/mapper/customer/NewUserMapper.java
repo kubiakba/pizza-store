@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import pl.bk.pizza.store.application.dto.user.NewUserDTO;
 import pl.bk.pizza.store.application.mapper.DtoToObjectMapper;
-import pl.bk.pizza.store.domain.customer.Address;
-import pl.bk.pizza.store.domain.customer.Telephone;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.customer.user.UserFactory;
 

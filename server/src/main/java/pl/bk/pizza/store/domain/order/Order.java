@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
-import static pl.bk.pizza.store.domain.validator.order.OrderValidator.*;
+import static pl.bk.pizza.store.domain.validator.order.OrderValidator.realizationShouldBeStarted;
 
 @Getter
 @Document(collection = "order")
@@ -17,8 +17,8 @@ public class Order
 {
     @Id
     private final String id;
-    private String userEmail;
     private final Set<BaseProductInfo> products;
+    private String userEmail;
     private OrderStatus orderStatus;
     private Long orderDateTime;
     private BigDecimal totalPrice;
@@ -40,7 +40,8 @@ public class Order
         return this;
     }
     
-    public Order setUserEmail(String email){
+    public Order setUserEmail(String email)
+    {
         this.userEmail = email;
         return this;
     }

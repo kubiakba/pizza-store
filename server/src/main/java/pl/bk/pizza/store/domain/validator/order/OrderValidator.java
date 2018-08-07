@@ -12,7 +12,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.INVALID_ORDER_STATUS;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.MISSING_ORDER;
 import static pl.bk.pizza.store.domain.exception.Preconditions.check;
-import static pl.bk.pizza.store.domain.order.OrderStatus.*;
+import static pl.bk.pizza.store.domain.order.OrderStatus.TO_REALIZATION;
 
 @NoArgsConstructor(access = PRIVATE)
 public class OrderValidator

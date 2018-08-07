@@ -37,8 +37,7 @@ public class ProductMapper implements ObjectToDtoMapper<BaseProductInfo, Product
             Kebab kebab = (Kebab) productInfo;
             return new KebabDTO(kebab.getId(), kebab.getPrice(), kebab.getProductStatus(), kebab.getName(), kebab.getDescription());
         }
-    
-        throw new UnsupportedTypeException("Passed argument is null or cannot be parsed: " + productInfo, UNPROCESSABLE_TYPE);
         
+        throw new UnsupportedTypeException("Passed argument is null or cannot be parsed: " + productInfo, UNPROCESSABLE_TYPE);
     }
 }

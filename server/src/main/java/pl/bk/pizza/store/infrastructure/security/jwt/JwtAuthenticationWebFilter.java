@@ -1,6 +1,5 @@
 package pl.bk.pizza.store.infrastructure.security.jwt;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.web.server.authentication.AuthenticationWebFilter;

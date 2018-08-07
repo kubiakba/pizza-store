@@ -1,6 +1,5 @@
 package pl.bk.pizza.store.domain.validator.customer;
 
-import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import pl.bk.pizza.store.domain.customer.Address;
 import pl.bk.pizza.store.domain.exception.InvalidEntityException;

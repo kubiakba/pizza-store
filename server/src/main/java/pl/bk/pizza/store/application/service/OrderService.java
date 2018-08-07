@@ -60,16 +60,6 @@ public class OrderService
             .map(orderMapper::mapToDTO);
     }
     
-    public Mono<OrderDTO> addEmailToOrder(String orderId, String email)
-    {
-        return orderRepository
-            .findById(orderId)
-            .switchIfEmpty(orderShouldExists(orderId))
-            .map(order -> order.setUserEmail(email))
-            .flatMap(orderRepository::save)
-            .map(orderMapper::mapToDTO);
-    }
-    
     public Mono<OrderDTO> getOrderById(String orderId)
     {
         return orderRepository

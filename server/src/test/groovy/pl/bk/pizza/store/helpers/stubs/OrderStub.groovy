@@ -2,7 +2,6 @@ package pl.bk.pizza.store.helpers.stubs
 
 import pl.bk.pizza.store.application.dto.order.AddressDTO
 import pl.bk.pizza.store.application.dto.order.DeliveryInfoDTO
-import pl.bk.pizza.store.application.dto.order.NewOrderDTO
 import pl.bk.pizza.store.application.dto.order.TelephoneDTO
 
 class OrderStub
@@ -38,9 +37,9 @@ class OrderStub
         def telephone = map.get('telephone', "332333222")
 
         new DeliveryInfoDTO(
-                name, surname,
-                new AddressDTO(city, street, streetNumber, postCode),
-                new TelephoneDTO(telephone)
-            )
+            name, surname,
+            new AddressDTO(city, street, streetNumber, postCode),
+            new TelephoneDTO(telephone)
+        )
     }
 }

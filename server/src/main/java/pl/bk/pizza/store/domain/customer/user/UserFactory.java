@@ -11,8 +11,8 @@ import static pl.bk.pizza.store.domain.validator.EmailValidator.validateEmail;
 @AllArgsConstructor
 public class UserFactory
 {
-    private PasswordEncoder encoder;
     private static final String USER = "USER";
+    private PasswordEncoder encoder;
     
     public User create(String email, String password)
     {

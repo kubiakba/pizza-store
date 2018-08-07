@@ -1,11 +1,10 @@
 package pl.bk.pizza.store
 
 import pl.bk.pizza.store.helpers.CommonSpecification
-import pl.bk.pizza.store.helpers.stubs.OrderStub
 
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.pizza.store.domain.order.OrderStatus.*
-import static pl.bk.pizza.store.helpers.stubs.OrderStub.*
+import static pl.bk.pizza.store.helpers.stubs.OrderStub.getNewDeliveryInfoStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
 

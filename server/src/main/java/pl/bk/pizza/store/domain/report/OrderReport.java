@@ -94,9 +94,9 @@ public class OrderReport
         return file;
     }
     
-    private String appendUserEmail(String email)
+    private String appendId(String id)
     {
-        return "User email: " + email + "\n";
+        return "Id: " + id + "\n";
     }
     
     private String appendStatus(OrderStatus status)
@@ -104,9 +104,9 @@ public class OrderReport
         return "ProductStatus: " + status + "\n";
     }
     
-    private String appendId(String id)
+    private String appendUserEmail(String email)
     {
-        return "Id: " + id + "\n";
+        return "User email: " + email + "\n";
     }
     
     private String appendTotalPrice(BigDecimal price)
