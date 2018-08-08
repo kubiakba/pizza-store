@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {UserService} from "../user/user.service";
 import {JwtAuthenticationRequest} from "../authentication/jwt-authentication-request";
 import {JwtConsts} from "../authentication/jwt-consts";
+import {AutoRefreshingComponent} from "../utils/auto-refreshing-component";
 
 @Component({
   selector: 'app-login-view',
@@ -34,7 +35,7 @@ import {JwtConsts} from "../authentication/jwt-consts";
       </div>
     </div>`
 })
-export class LoginViewComponent {
+export class LoginViewComponent extends AutoRefreshingComponent {
 
   email: String = '';
   password: String = '';
@@ -42,6 +43,7 @@ export class LoginViewComponent {
   userHasBeenLoggedSuccessfully = false;
 
   constructor(private userService: UserService) {
+    super()
   }
 
   login() {
@@ -50,6 +52,13 @@ export class LoginViewComponent {
         this.userHasBeenLoggedSuccessfully = true;
       }
       , error => this.errorMessage.add(error.error.errorCode));
+  }
+
+  initialize(): void {
+    this.email = '';
+    this.password = '';
+    this.errorMessage = new Set<String>();
+    this.userHasBeenLoggedSuccessfully = false;
   }
 
 }
