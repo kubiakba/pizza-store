@@ -13,9 +13,14 @@ import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import pl.bk.pizza.store.domain.product.ProductRepository;
 import pl.bk.pizza.store.domain.service.PointsService;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuples;
+
+import java.util.Arrays;
 
 import static pl.bk.pizza.store.domain.validator.order.OrderValidator.orderShouldExists;
 import static pl.bk.pizza.store.domain.validator.product.ProductValidator.productShouldExists;
+import static reactor.core.publisher.Flux.combineLatest;
+import static reactor.core.publisher.Flux.fromIterable;
 
 @Service
 @AllArgsConstructor
@@ -46,6 +51,23 @@ public class OrderService
         return order
             .zipWith(product)
             .map(objects -> objects.getT1().addProduct(objects.getT2()))
+            .flatMap(orderRepository::save)
+            .map(orderMapper::mapToDTO);
+    }
+    
+    public Mono<OrderDTO> addProductsToOrder(String orderId, String[] productIds)
+    {
+        return combineLatest(
+            orderRepository.findById(orderId)
+                           .switchIfEmpty(orderShouldExists(orderId)),
+            fromIterable(Arrays.asList(productIds))
+                .flatMap(productId -> productRepository.findById(productId)
+                                                       .switchIfEmpty(productShouldExists(productId))),
+            Tuples::of
+                            )
+            .map(zip -> zip.getT1().addProduct(zip.getT2()))
+            .take(productIds.length)
+            .last()
             .flatMap(orderRepository::save)
             .map(orderMapper::mapToDTO);
     }

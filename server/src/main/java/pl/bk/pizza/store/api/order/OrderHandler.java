@@ -6,6 +6,7 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import pl.bk.pizza.store.api.ErrorHandler;
 import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
+import pl.bk.pizza.store.application.dto.order.OrderProductsDTO;
 import pl.bk.pizza.store.application.service.OrderService;
 import pl.bk.pizza.store.domain.report.OrderReport;
 import reactor.core.publisher.Mono;
@@ -51,6 +52,14 @@ public class OrderHandler
             .addProductToOrder(orderId, productId)
             .flatMap(order -> ServerResponse.ok().body(fromObject(order)))
             .onErrorResume(ErrorHandler::handleException);
+    }
+    
+    Mono<ServerResponse> addProductsToOrder(ServerRequest request)
+    {
+        return request.bodyToMono(OrderProductsDTO.class)
+               .flatMap(x -> orderService.addProductsToOrder(x.getOrderId(), x.getProductsIds()))
+               .flatMap(order -> ServerResponse.ok().body(fromObject(order)))
+               .onErrorResume(ErrorHandler::handleException);
     }
     
     Mono<ServerResponse> setToRealization(ServerRequest request)

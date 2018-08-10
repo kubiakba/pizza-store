@@ -2,6 +2,8 @@ import {Component, Input} from '@angular/core';
 import {OrderService} from "../order/order.service";
 import {UserService} from "../user/user.service";
 import {NewOrderDTO} from "../order/newOrderDTO";
+import {map} from "rxjs/internal/operators";
+import {OrderProductsDTO} from "../order/order-products-dto";
 
 @Component({
   selector: 'app-add-user-view',
@@ -65,7 +67,7 @@ import {NewOrderDTO} from "../order/newOrderDTO";
       <button [disabled]="!allInputsAreFilled()" type="button" (click)="createOrder()" class="btn btn-primary">Confirm</button>
     </div>
     <div *ngIf="orderFinished">
-      <app-order-confirmation-view [orderId]="orderId" ></app-order-confirmation-view>
+      <app-order-confirmation-view [orderId]="orderId"></app-order-confirmation-view>
     </div>
   `
 })
@@ -74,7 +76,7 @@ export class AddUserViewComponent {
   orderId: String;
   @Input() productIds: String[];
   data: any = {};
-  deliveryInfo :any = {};
+  deliveryInfo: any = {};
   address: any = {};
   telephone: any = {};
   createdOrder: NewOrderDTO;
@@ -86,7 +88,20 @@ export class AddUserViewComponent {
 
   createOrder() {
     this.addFieldsToUser();
-    this.addProductsToOrder();
+
+    this.orderService.startOrder(this.createdOrder).pipe(map(order => {
+      this.orderId = order.id;
+      return order.id
+    }))
+      .subscribe(orderId => {
+          this.orderService.addProductsToOrder(new OrderProductsDTO(orderId, this.productIds))
+            .subscribe();
+        },
+        error => {
+          this.errorMessage.add(error.error.errorCode)
+        }, () => {
+          this.orderFinished = true;
+        });
   }
 
   private addFieldsToUser() {
@@ -94,18 +109,6 @@ export class AddUserViewComponent {
     this.deliveryInfo.telephone = this.telephone;
     this.data.deliveryInfo = this.deliveryInfo;
     this.createdOrder = new NewOrderDTO(this.data);
-  }
-
-  private addProductsToOrder() {
-    this.orderService.startOrder(this.createdOrder).subscribe(order => {
-      this.orderId = order.id;
-      this.productIds.forEach(productId => {
-        this.orderService.addProductToOrder(this.orderId, productId).subscribe(next => {
-        }, error => this.errorMessage.add(error.error.errorCode));
-      });
-    }, error => this.errorMessage.add(error.error.errorCode),() => {
-      this.orderFinished = true;
-    });
   }
 
   allInputsAreFilled() {
