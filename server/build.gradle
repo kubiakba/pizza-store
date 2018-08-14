@@ -21,15 +21,16 @@ apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
 apply plugin: 'jacoco'
+apply plugin: 'io.spring.dependency-management'
 
 dependencies {
 
     // spring
-    compile "org.springframework.boot:spring-boot-starter-webflux:${spring}"
-    compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${spring}"
-    compile "org.springframework.boot:spring-boot-starter-security:${spring}"
-    testCompile "org.springframework.security:spring-security-test:${springSecurityTest}"
-    testCompile "org.springframework.boot:spring-boot-starter-test:${spring}"
+    compile "org.springframework.boot:spring-boot-starter-webflux"
+    compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive"
+    compile "org.springframework.boot:spring-boot-starter-security"
+    testCompile "org.springframework.security:spring-security-test"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
 
     // utils
     testCompile "org.assertj:assertj-core:${assertJ}"
