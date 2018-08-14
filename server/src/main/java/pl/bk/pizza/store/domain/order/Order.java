@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
 import static pl.bk.pizza.store.domain.validator.order.OrderValidator.realizationShouldBeStarted;
@@ -17,14 +17,14 @@ public class Order
 {
     @Id
     private final String id;
-    private final Set<BaseProductInfo> products;
+    private final List<BaseProductInfo> products;
     private String userEmail;
     private OrderStatus orderStatus;
     private Long orderDateTime;
     private BigDecimal totalPrice;
     private DeliveryInfo deliveryInfo;
     
-    Order(String id, String userEmail, Set<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo)
+    Order(String id, String userEmail, List<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo)
     {
         this.id = id;
         this.userEmail = userEmail;

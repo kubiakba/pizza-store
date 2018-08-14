@@ -6,7 +6,7 @@ import pl.bk.pizza.store.application.dto.product.output.ProductDTO;
 import pl.bk.pizza.store.domain.order.OrderStatus;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -14,7 +14,7 @@ public class OrderDTO
 {
     private String id;
     private String userEmail;
-    private Set<ProductDTO> products;
+    private List<ProductDTO> products;
     private OrderStatus orderStatus;
     private BigDecimal totalPrice;
     private DeliveryInfoDTO deliveryInfoDTO;

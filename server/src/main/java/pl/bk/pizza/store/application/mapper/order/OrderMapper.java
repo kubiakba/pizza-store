@@ -8,9 +8,9 @@ import pl.bk.pizza.store.application.mapper.ObjectToDtoMapper;
 import pl.bk.pizza.store.application.mapper.product.ProductMapper;
 import pl.bk.pizza.store.domain.order.Order;
 
-import java.util.Set;
+import java.util.List;
 
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.toList;
 
 @AllArgsConstructor
 @Component
@@ -22,10 +22,10 @@ public class OrderMapper implements ObjectToDtoMapper<Order, OrderDTO>
     @Override
     public OrderDTO mapToDTO(Order order)
     {
-        final Set<ProductDTO> productDtos = order.getProducts()
-                                                 .stream()
-                                                 .map(productMapper::mapToDTO)
-                                                 .collect(toSet());
+        final List<ProductDTO> productDtos = order.getProducts()
+                                                  .stream()
+                                                  .map(productMapper::mapToDTO)
+                                                  .collect(toList());
         
         return new OrderDTO(
             order.getId(),

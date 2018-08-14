@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-import static java.util.Collections.emptySet;
+import static java.util.Collections.emptyList;
 import static pl.bk.pizza.store.domain.service.IdGenerator.generateID;
 import static pl.bk.pizza.store.domain.validator.EmailValidator.validateEmail;
 import static pl.bk.pizza.store.domain.validator.customer.AddressValidator.validateAddress;
@@ -26,7 +26,7 @@ public class OrderFactory
         return new Order(
             generateID(),
             email,
-            emptySet(),
+            emptyList(),
             OrderStatus.STARTED,
             BigDecimal.ZERO,
             deliveryInfo
