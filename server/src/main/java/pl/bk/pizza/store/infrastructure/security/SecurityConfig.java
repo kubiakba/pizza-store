@@ -28,6 +28,7 @@ public class SecurityConfig
         return http
             .authorizeExchange().pathMatchers("/*").permitAll()
             .pathMatchers(GET, "/orders/*").permitAll()
+            .pathMatchers(PUT, "/orders/add").permitAll()
             .pathMatchers(PUT, "/orders/*/to-realization").permitAll()
             .pathMatchers(PUT, "/orders/*/users/*").permitAll()
             .pathMatchers(PUT, "/orders/*/*").permitAll()
