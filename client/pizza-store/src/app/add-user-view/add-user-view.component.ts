@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {OrderService} from "../order/order.service";
 import {UserService} from "../user/user.service";
 import {NewOrderDTO} from "../order/newOrderDTO";
-import {map} from "rxjs/internal/operators";
+import {map, mergeMap} from "rxjs/internal/operators";
 import {OrderProductsDTO} from "../order/order-products-dto";
 
 @Component({
@@ -90,12 +90,13 @@ export class AddUserViewComponent {
     this.addFieldsToUser();
 
     this.orderService.startOrder(this.createdOrder).pipe(map(order => {
-      this.orderId = order.id;
-      return order.id
-    }))
-      .subscribe(orderId => {
-          this.orderService.addProductsToOrder(new OrderProductsDTO(orderId, this.productIds))
-            .subscribe();
+        this.orderId = order.id;
+        return order.id
+      }),
+      mergeMap(orderId => {
+        return this.orderService.addProductsToOrder(new OrderProductsDTO(orderId, this.productIds))
+      }))
+      .subscribe(x => {
         },
         error => {
           this.errorMessage.add(error.error.errorCode)
