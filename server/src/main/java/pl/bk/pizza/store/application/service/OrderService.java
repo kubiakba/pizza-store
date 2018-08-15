@@ -76,8 +76,8 @@ public class OrderService
             .map(Order::setToRealization)
             .switchIfEmpty(orderShouldExists(orderId))
             .flatMap(orderRepository::save)
-            .doOnNext(queue::send)
-            .map(orderMapper::mapToDTO);
+            .map(orderMapper::mapToDTO)
+            .doOnNext(queue::send);
     }
     
     public Mono<OrderDTO> getOrderById(String orderId)

@@ -1,9 +1,11 @@
 package pl.bk.pizza.store.domain.broker;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-import pl.bk.pizza.store.domain.order.Order;
+import pl.bk.pizza.store.application.dto.order.OrderDTO;
 
 @Component
 public class OrderQueue
@@ -18,8 +20,9 @@ public class OrderQueue
         this.template = template;
     }
     
-    public void send(Order order)
+    @SneakyThrows
+    public void send(OrderDTO order)
     {
-        template.send(topic, order.toString());
+        template.send(topic, new ObjectMapper().writeValueAsString(order));
     }
 }
