@@ -6,6 +6,7 @@ import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
 import pl.bk.pizza.store.application.dto.order.OrderDTO;
 import pl.bk.pizza.store.application.mapper.order.NewOrderMapper;
 import pl.bk.pizza.store.application.mapper.order.OrderMapper;
+import pl.bk.pizza.store.domain.broker.OrderQueue;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.order.Order;
 import pl.bk.pizza.store.domain.order.OrderRepository;
@@ -28,6 +29,7 @@ public class OrderService
     private final NewOrderMapper newOrderMapper;
     private final UserService userService;
     private final PointsService pointsService;
+    private final OrderQueue queue;
     
     public Mono<OrderDTO> createOrder(NewOrderDTO orderDTO)
     {
@@ -74,6 +76,7 @@ public class OrderService
             .map(Order::setToRealization)
             .switchIfEmpty(orderShouldExists(orderId))
             .flatMap(orderRepository::save)
+            .doOnNext(queue::send)
             .map(orderMapper::mapToDTO);
     }
     
