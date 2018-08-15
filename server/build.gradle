@@ -42,6 +42,8 @@ dependencies {
     compile "commons-validator:commons-validator:${commonsLangValidator}"
     compileOnly "org.projectlombok:lombok:${lombok}"
 
+    compile "org.springframework.kafka:spring-kafka:2.1.8.RELEASE"
+
     // embedded mongo for tests
     testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongo}"
 
