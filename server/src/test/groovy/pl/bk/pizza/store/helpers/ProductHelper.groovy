@@ -31,6 +31,21 @@ trait ProductHelper
             .responseBody
     }
 
+    ProductDTO createProductWithAuthorizationToken(NewProductDTO product, String token)
+    {
+        client
+            .post()
+            .uri("/admin/products")
+            .header("Authorization", "Bearer $token")
+            .body(Mono.just(product), NewProductDTO.class)
+            .exchange()
+            .expectStatus()
+            .isCreated()
+            .expectBody(ProductDTO)
+            .returnResult()
+            .responseBody
+    }
+
     ErrorMessage createProductWithError(NewProductDTO product)
     {
         client
@@ -41,6 +56,15 @@ trait ProductHelper
             .expectBody(ErrorMessage)
             .returnResult()
             .responseBody
+    }
+
+    WebTestClient.ResponseSpec createProductWithSecurityError(NewProductDTO product)
+    {
+        client
+            .post()
+            .uri("/admin/products")
+            .body(Mono.just(product), NewProductDTO.class)
+            .exchange()
     }
 
     ProductDTO getProduct(String id)
