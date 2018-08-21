@@ -14,7 +14,7 @@ public class UserFactory
     private static final String USER = "USER";
     private PasswordEncoder encoder;
     
-    public User create(String email, String password)
+    public User createWithRole(String email, String password, String role)
     {
         validateEmail(email);
         
@@ -23,7 +23,13 @@ public class UserFactory
             encoder.encode(password),
             ACTIVE,
             0,
-            USER
+            role
         );
     }
+    
+    public User create(String email, String password)
+    {
+        return createWithRole(email, password, USER);
+    }
+    
 }
