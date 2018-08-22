@@ -44,10 +44,9 @@ class UserSpecification extends CommonSpecification
     {
         given:
         def userDto = getNewUserDTOStub()
-
-        when:
         def user = createUser(userDto)
 
+        when:
         def deactivatedUser = deactivateUser(user.email)
 
         then:
