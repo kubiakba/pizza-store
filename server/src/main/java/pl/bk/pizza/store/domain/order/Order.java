@@ -8,6 +8,7 @@ import pl.bk.pizza.store.domain.product.BaseProductInfo;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static pl.bk.pizza.store.domain.order.OrderStatus.*;
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
 import static pl.bk.pizza.store.domain.validator.order.OrderValidator.realizationShouldBeStarted;
 
@@ -22,7 +23,7 @@ public class Order
     private OrderStatus orderStatus;
     private Long orderDateTime;
     private BigDecimal totalPrice;
-    private DeliveryInfo deliveryInfo;
+    private final DeliveryInfo deliveryInfo;
     
     Order(String id, String userEmail, List<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo)
     {
@@ -40,15 +41,9 @@ public class Order
         return this;
     }
     
-    public Order setUserEmail(String email)
-    {
-        this.userEmail = email;
-        return this;
-    }
-    
     public Order setToRealization()
     {
-        orderStatus = OrderStatus.TO_REALIZATION;
+        orderStatus = TO_REALIZATION;
         orderDateTime = now().toEpochSecond();
         totalPrice = calculateTotalPrice();
         return this;
@@ -65,7 +60,7 @@ public class Order
     public Order setToDelivered()
     {
         realizationShouldBeStarted(orderStatus);
-        orderStatus = OrderStatus.DELIVERED;
+        orderStatus = DELIVERED;
         return this;
     }
 }

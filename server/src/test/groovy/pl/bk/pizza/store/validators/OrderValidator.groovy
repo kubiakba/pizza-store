@@ -43,10 +43,10 @@ class OrderValidator extends CommonSpecification
         addProductToOrder(order.id, product.id)
 
         when:
-        def errorMessage = deliverOrderWithError(order.id)
+        def error = deliverOrderWithError(order.id)
 
         then:
-        errorMessage.getErrorCode() == INVALID_ORDER_STATUS
+        error.errorCode == INVALID_ORDER_STATUS
     }
 
     @Unroll
