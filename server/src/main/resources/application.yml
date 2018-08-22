@@ -12,11 +12,6 @@ spring:
         consumer:
             auto-offset-reset: latest
             group-id: 9wc1061t-consumers
-            properties:
-                spring:
-                    json:
-                        trusted:
-                            packages: sample.kafka
             value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
         producer:
             value-serializer: org.apache.kafka.common.serialization.StringSerializer
