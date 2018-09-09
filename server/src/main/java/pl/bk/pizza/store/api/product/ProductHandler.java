@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.api.product;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -22,6 +23,7 @@ import static org.springframework.web.reactive.function.server.ServerResponse.cr
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class ProductHandler
 {
     private final ProductService productService;
@@ -30,6 +32,7 @@ public class ProductHandler
     {
         return request.bodyToMono(NewProductDTO.class)
                       .flatMap(productService::createProduct)
+                      .doOnNext(product -> log.info("New product with id:[{}] have been created.", product.getId()))
                       .flatMap(it -> created(URI.create("/products/" + it.getId())).body(fromObject(it)))
                       .onErrorResume(ErrorHandler::handleException);
     }
@@ -99,6 +102,7 @@ public class ProductHandler
         
         return productService
             .makeProductNonAvailable(productId)
+            .doOnNext(product -> log.info("Product with id:[{}] is non available now.", product.getId()))
             .flatMap(it -> ServerResponse.ok().body(fromObject(it)))
             .onErrorResume(ErrorHandler::handleException);
     }
