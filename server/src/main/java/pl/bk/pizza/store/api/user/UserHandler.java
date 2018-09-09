@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.api.user;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -16,6 +17,7 @@ import static org.springframework.web.reactive.function.BodyInserters.fromObject
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class UserHandler
 {
     private final UserService userService;
@@ -25,6 +27,7 @@ public class UserHandler
         return request
             .bodyToMono(NewUserDTO.class)
             .flatMap(userService::createUser)
+            .doOnNext(user -> log.info("New user with email:[{}] have been created.", user.getEmail()))
             .flatMap(it -> ServerResponse.created(URI.create("/users/" + it.getEmail()))
                                          .body(fromObject(it)))
             .onErrorResume(ErrorHandler::handleException);
@@ -53,6 +56,7 @@ public class UserHandler
         final String email = request.pathVariable("email");
         
         return userService.deactivateUser(email)
+                          .doOnNext(user -> log.info("User with email:[{}] has been deactivated.", user.getEmail()))
                           .flatMap(it -> ServerResponse.ok().body(fromObject(it)))
                           .onErrorResume(ErrorHandler::handleException);
     }
