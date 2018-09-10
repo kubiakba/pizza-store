@@ -1,8 +1,13 @@
 package pl.bk.pizza.store
 
+import pl.bk.common.dto.order.OrderStatusDTO
 import pl.bk.pizza.store.helpers.CommonSpecification
 
+import static java.math.BigDecimal.*
 import static org.assertj.core.api.Assertions.assertThat
+import static pl.bk.common.dto.order.OrderStatusDTO.*
+import static pl.bk.common.dto.order.OrderStatusDTO.*
+import static pl.bk.common.dto.order.OrderStatusDTO.TO_REALIZATION
 import static pl.bk.pizza.store.domain.order.OrderStatus.*
 import static pl.bk.pizza.store.helpers.stubs.OrderStub.getNewDeliveryInfoStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
@@ -21,7 +26,7 @@ class OrderSpecification extends CommonSpecification
             assertThat(userEmail).isEqualTo("1@gmail.com")
             assertThat(products).isEmpty()
             assertThat(orderStatus).isEqualTo(STARTED)
-            assertThat(totalPrice).isEqualTo(BigDecimal.ZERO)
+            assertThat(totalPrice).isEqualTo(ZERO)
         }
     }
 

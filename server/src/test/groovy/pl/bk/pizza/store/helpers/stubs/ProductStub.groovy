@@ -1,11 +1,11 @@
 package pl.bk.pizza.store.helpers.stubs
 
+import pl.bk.common.dto.product.DoughDTO
+import pl.bk.common.dto.product.PizzaSizeDTO
 import pl.bk.common.dto.product.input.NewKebabDTO
 import pl.bk.common.dto.product.input.NewPizzaDTO
 import pl.bk.common.dto.product.input.NewPizzaToppingDTO
 import pl.bk.common.dto.product.input.NewProductPriceDTO
-import pl.bk.pizza.store.domain.product.pizza.Dough
-import pl.bk.pizza.store.domain.product.pizza.PizzaSize
 
 import static java.math.BigDecimal.ONE
 
@@ -13,7 +13,7 @@ class ProductStub
 {
     static NewPizzaDTO getNewPizzaDTOStub()
     {
-        return new NewPizzaDTO(new BigDecimal("30.0"), PizzaSize.BIG, Dough.THICK)
+        return new NewPizzaDTO(new BigDecimal("30.0"), PizzaSizeDTO.BIG, DoughDTO.THICK)
     }
 
     static NewKebabDTO getNewKebabDTOStub()
