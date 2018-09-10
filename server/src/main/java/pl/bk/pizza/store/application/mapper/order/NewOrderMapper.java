@@ -2,7 +2,7 @@ package pl.bk.pizza.store.application.mapper.order;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
+import pl.bk.common.dto.order.NewOrderDTO;
 import pl.bk.pizza.store.application.mapper.DtoToObjectMapper;
 import pl.bk.pizza.store.domain.order.Order;
 import pl.bk.pizza.store.domain.order.OrderFactory;

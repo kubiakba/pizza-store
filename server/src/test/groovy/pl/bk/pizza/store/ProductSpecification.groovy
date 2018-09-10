@@ -1,12 +1,12 @@
 package pl.bk.pizza.store
 
-import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
-import pl.bk.pizza.store.application.dto.product.output.ProductDTO
-import pl.bk.pizza.store.domain.product.ProductStatus
+import pl.bk.common.dto.product.ProductStatusDTO
+import pl.bk.common.dto.product.output.PizzaDTO
+import pl.bk.common.dto.product.output.ProductDTO
 import pl.bk.pizza.store.helpers.CommonSpecification
 
 import static org.assertj.core.api.Assertions.assertThat
-import static pl.bk.pizza.store.domain.product.ProductStatus.AVAILABLE
+import static pl.bk.common.dto.product.ProductStatusDTO.NONAVAILABLE
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.*
 
 class ProductSpecification extends CommonSpecification
@@ -23,7 +23,7 @@ class ProductSpecification extends CommonSpecification
         with(product) {
             assertThat(id).isNotEmpty()
             assertThat(price).isEqualTo(productDto.price)
-            assertThat(productStatus).isEqualTo(AVAILABLE)
+            assertThat(productStatus).isEqualTo(ProductStatusDTO.AVAILABLE)
             assertThat(size).isEqualTo(productDto.size)
             assertThat(dough).isEqualTo(productDto.dough)
         }
@@ -40,7 +40,7 @@ class ProductSpecification extends CommonSpecification
         def nonAvailableProduct = makeProductNonAvailable(product.id)
 
         then:
-        assertThat(nonAvailableProduct.productStatus).isEqualTo(ProductStatus.NONAVAILABLE)
+        assertThat(nonAvailableProduct.productStatus).isEqualTo(NONAVAILABLE)
     }
 
     def "should change product price"()

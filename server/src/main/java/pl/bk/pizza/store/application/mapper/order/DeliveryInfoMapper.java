@@ -1,9 +1,9 @@
 package pl.bk.pizza.store.application.mapper.order;
 
 import org.springframework.stereotype.Component;
-import pl.bk.pizza.store.application.dto.order.AddressDTO;
-import pl.bk.pizza.store.application.dto.order.DeliveryInfoDTO;
-import pl.bk.pizza.store.application.dto.order.TelephoneDTO;
+import pl.bk.common.dto.order.AddressDTO;
+import pl.bk.common.dto.order.DeliveryInfoDTO;
+import pl.bk.common.dto.order.TelephoneDTO;
 import pl.bk.pizza.store.application.mapper.GenericMapper;
 import pl.bk.pizza.store.domain.customer.Address;
 import pl.bk.pizza.store.domain.customer.Telephone;

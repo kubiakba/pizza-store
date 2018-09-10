@@ -2,8 +2,8 @@ package pl.bk.pizza.store.application.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.bk.pizza.store.application.dto.order.NewOrderDTO;
-import pl.bk.pizza.store.application.dto.order.OrderDTO;
+import pl.bk.common.dto.order.NewOrderDTO;
+import pl.bk.common.dto.order.OrderDTO;
 import pl.bk.pizza.store.application.mapper.order.NewOrderMapper;
 import pl.bk.pizza.store.application.mapper.order.OrderMapper;
 import pl.bk.pizza.store.domain.broker.OrderQueue;

@@ -1,13 +1,13 @@
 package pl.bk.pizza.store.helpers
 
 import org.springframework.test.web.reactive.server.WebTestClient
-import pl.bk.pizza.store.application.dto.order.OrderDTO
-import pl.bk.pizza.store.application.dto.product.input.NewProductDTO
-import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
-import pl.bk.pizza.store.application.dto.product.output.KebabDTO
-import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
-import pl.bk.pizza.store.application.dto.product.output.PizzaToppingDTO
-import pl.bk.pizza.store.application.dto.product.output.ProductDTO
+import pl.bk.common.dto.order.OrderDTO
+import pl.bk.common.dto.product.input.NewProductDTO
+import pl.bk.common.dto.product.input.NewProductPriceDTO
+import pl.bk.common.dto.product.output.KebabDTO
+import pl.bk.common.dto.product.output.PizzaDTO
+import pl.bk.common.dto.product.output.PizzaToppingDTO
+import pl.bk.common.dto.product.output.ProductDTO
 import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import reactor.core.publisher.Mono
 

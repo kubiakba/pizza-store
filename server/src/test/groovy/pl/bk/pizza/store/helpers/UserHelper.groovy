@@ -1,8 +1,8 @@
 package pl.bk.pizza.store.helpers
 
 import org.springframework.test.web.reactive.server.WebTestClient
-import pl.bk.pizza.store.application.dto.user.NewUserDTO
-import pl.bk.pizza.store.application.dto.user.UserDTO
+import pl.bk.common.dto.user.NewUserDTO
+import pl.bk.common.dto.user.UserDTO
 import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import pl.bk.pizza.store.infrastructure.security.jwt.JwtAuthenticationRequest
 import pl.bk.pizza.store.infrastructure.security.jwt.JwtAuthenticationResponse

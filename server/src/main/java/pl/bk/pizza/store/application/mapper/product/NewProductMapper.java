@@ -1,10 +1,11 @@
 package pl.bk.pizza.store.application.mapper.product;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.bk.pizza.store.application.dto.product.input.NewKebabDTO;
-import pl.bk.pizza.store.application.dto.product.input.NewPizzaDTO;
-import pl.bk.pizza.store.application.dto.product.input.NewPizzaToppingDTO;
-import pl.bk.pizza.store.application.dto.product.input.NewProductDTO;
+import pl.bk.common.dto.product.input.NewKebabDTO;
+import pl.bk.common.dto.product.input.NewPizzaDTO;
+import pl.bk.common.dto.product.input.NewPizzaToppingDTO;
+import pl.bk.common.dto.product.input.NewProductDTO;
 import pl.bk.pizza.store.application.mapper.DtoToObjectMapper;
 import pl.bk.pizza.store.domain.exception.UnsupportedTypeException;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
@@ -15,15 +16,19 @@ import pl.bk.pizza.store.domain.product.pizza.PizzaTopping;
 import static pl.bk.pizza.store.domain.exception.ErrorCode.UNPROCESSABLE_TYPE;
 
 @Component
+@AllArgsConstructor
 public class NewProductMapper implements DtoToObjectMapper<NewProductDTO, BaseProductInfo>
 {
+    private final DoughMapper doughMapper;
+    private final PizzaSizeMapper pizzaSizeMapper;
+    
     @Override
     public BaseProductInfo mapFromDTO(NewProductDTO newProductDTO)
     {
         if(newProductDTO instanceof NewPizzaDTO)
         {
             NewPizzaDTO pizzaDto = (NewPizzaDTO) newProductDTO;
-            return new Pizza(pizzaDto.getSize(), pizzaDto.getDough(), pizzaDto.getPrice());
+            return new Pizza(pizzaSizeMapper.mapFromDTO(pizzaDto.getSize()), doughMapper.mapFromDTO(pizzaDto.getDough()), pizzaDto.getPrice());
         }
         
         if(newProductDTO instanceof NewPizzaToppingDTO)
