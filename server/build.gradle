@@ -25,6 +25,9 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies {
 
+    compile project(':textSearch')
+    compile project(':common')
+
     // spring
     compile "org.springframework.boot:spring-boot-starter-webflux"
     compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive"
