@@ -1,7 +1,7 @@
 package pl.bk.pizza.store
 
-import pl.bk.pizza.store.application.dto.product.output.PizzaDTO
-import pl.bk.pizza.store.application.dto.product.output.ProductDTO
+import pl.bk.common.dto.product.output.PizzaDTO
+import pl.bk.common.dto.product.output.ProductDTO
 import pl.bk.pizza.store.domain.product.ProductStatus
 import pl.bk.pizza.store.helpers.CommonSpecification
 

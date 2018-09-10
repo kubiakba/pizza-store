@@ -1,9 +1,9 @@
 package pl.bk.pizza.store.helpers.stubs
 
-import pl.bk.pizza.store.application.dto.product.input.NewKebabDTO
-import pl.bk.pizza.store.application.dto.product.input.NewPizzaDTO
-import pl.bk.pizza.store.application.dto.product.input.NewPizzaToppingDTO
-import pl.bk.pizza.store.application.dto.product.input.NewProductPriceDTO
+import pl.bk.common.dto.product.input.NewKebabDTO
+import pl.bk.common.dto.product.input.NewPizzaDTO
+import pl.bk.common.dto.product.input.NewPizzaToppingDTO
+import pl.bk.common.dto.product.input.NewProductPriceDTO
 import pl.bk.pizza.store.domain.product.pizza.Dough
 import pl.bk.pizza.store.domain.product.pizza.PizzaSize
 

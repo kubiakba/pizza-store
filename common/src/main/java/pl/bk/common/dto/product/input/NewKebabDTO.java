@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.application.dto.product.input;
+package pl.bk.common.dto.product.input;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

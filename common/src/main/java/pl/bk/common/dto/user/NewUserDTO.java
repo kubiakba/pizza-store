@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.application.dto.user;
+package pl.bk.common.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

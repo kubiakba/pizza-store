@@ -1,9 +1,9 @@
 package pl.bk.pizza.store.helpers
 
 import org.springframework.test.web.reactive.server.WebTestClient
-import pl.bk.pizza.store.application.dto.order.DeliveryInfoDTO
-import pl.bk.pizza.store.application.dto.order.NewOrderDTO
-import pl.bk.pizza.store.application.dto.order.OrderDTO
+import pl.bk.common.dto.order.DeliveryInfoDTO
+import pl.bk.common.dto.order.NewOrderDTO
+import pl.bk.common.dto.order.OrderDTO
 import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import reactor.core.publisher.Mono
 

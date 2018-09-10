@@ -1,7 +1,7 @@
 package pl.bk.pizza.store
 
 import org.springframework.beans.factory.annotation.Autowired
-import pl.bk.pizza.store.application.dto.user.NewUserDTO
+import pl.bk.common.dto.user.NewUserDTO
 import pl.bk.pizza.store.domain.customer.user.UserFactory
 import pl.bk.pizza.store.domain.exception.ErrorCode
 import pl.bk.pizza.store.helpers.SecurityCommonSpecification

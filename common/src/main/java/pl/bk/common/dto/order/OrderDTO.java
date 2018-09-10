@@ -1,9 +1,8 @@
-package pl.bk.pizza.store.application.dto.order;
+package pl.bk.common.dto.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import pl.bk.pizza.store.application.dto.product.output.ProductDTO;
-import pl.bk.pizza.store.domain.order.OrderStatus;
+import pl.bk.common.dto.product.output.ProductDTO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,7 +14,7 @@ public class OrderDTO
     private String id;
     private String userEmail;
     private List<ProductDTO> products;
-    private OrderStatus orderStatus;
+    private OrderStatusDTO orderStatus;
     private BigDecimal totalPrice;
     private DeliveryInfoDTO deliveryInfoDTO;
 }

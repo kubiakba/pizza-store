@@ -1,4 +1,4 @@
-package pl.bk.pizza.store.application.dto.order;
+package pl.bk.common.dto.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
