@@ -1,6 +1,6 @@
 package pl.bk.pizza.store.helpers.stubs
 
-import pl.bk.pizza.store.application.dto.user.NewUserDTO
+import pl.bk.common.dto.user.NewUserDTO
 
 class UserStub
 {

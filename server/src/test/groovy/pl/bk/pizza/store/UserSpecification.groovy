@@ -1,10 +1,10 @@
 package pl.bk.pizza.store
 
-import pl.bk.pizza.store.domain.customer.user.UserStatus
+import pl.bk.common.dto.user.UserStatusDTO
 import pl.bk.pizza.store.helpers.CommonSpecification
 
 import static org.assertj.core.api.Assertions.assertThat
-import static pl.bk.pizza.store.domain.customer.user.UserStatus.INACTIVE
+import static pl.bk.common.dto.user.UserStatusDTO.ACTIVE
 import static pl.bk.pizza.store.helpers.stubs.OrderStub.getNewDeliveryInfoStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
@@ -22,7 +22,7 @@ class UserSpecification extends CommonSpecification
         then:
         with(user) {
             assertThat(email).isEqualTo(userDto.email)
-            assertThat(status).isEqualTo(UserStatus.ACTIVE)
+            assertThat(status).isEqualTo(ACTIVE)
             assertThat(points).isEqualTo(0)
         }
     }
@@ -50,7 +50,7 @@ class UserSpecification extends CommonSpecification
         def deactivatedUser = deactivateUser(user.email)
 
         then:
-        assertThat(deactivatedUser.getStatus()).isEqualTo(INACTIVE)
+        assertThat(deactivatedUser.getStatus()).isEqualTo(UserStatusDTO.INACTIVE)
     }
 
     def "should get user points"()

@@ -1,8 +1,8 @@
 package pl.bk.pizza.store.helpers.stubs
 
-import pl.bk.pizza.store.application.dto.order.AddressDTO
-import pl.bk.pizza.store.application.dto.order.DeliveryInfoDTO
-import pl.bk.pizza.store.application.dto.order.TelephoneDTO
+import pl.bk.common.dto.order.AddressDTO
+import pl.bk.common.dto.order.DeliveryInfoDTO
+import pl.bk.common.dto.order.TelephoneDTO
 
 class OrderStub
 {
