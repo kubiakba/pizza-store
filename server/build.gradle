@@ -15,13 +15,12 @@ plugins {
     id "org.sonarqube" version "2.6.2"
 }
 
-apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
 apply plugin: 'jacoco'
-apply plugin: 'io.spring.dependency-management'
 
 dependencies {
 
@@ -56,11 +55,6 @@ dependencies {
     testCompile "org.spockframework:spock-spring:${spockSpring}"
 }
 
-repositories {
-    mavenCentral()
-    jcenter()
-}
-
 mainClassName = 'pl.bk.pizza.store.Initializer'
 
 bootJar {
@@ -78,8 +72,6 @@ task buildDocker(type: Docker, dependsOn: build) {
     exposePort(8081)
     entryPoint(['java', '-Dspring.profiles.active=docker', '-jar', '/app.jar'])
 }
-
-sourceCompatibility = 1.8
 
 jacocoTestReport {
     reports {
