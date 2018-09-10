@@ -1,12 +1,6 @@
-apply plugin: 'java'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile project (":common")
-    compile group: 'org.springframework', name: 'spring-context', version: '5.0.9.RELEASE'
-    compile group: 'io.searchbox', name: 'jest', version: '6.3.1'
+    compile "org.springframework:spring-context:${springContext}"
+    compile "io.searchbox:jest:${jest}"
     compileOnly "org.projectlombok:lombok:${lombok}"
 }

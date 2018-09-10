@@ -3,6 +3,9 @@ subprojects {
     repositories {
         mavenCentral()
     }
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.8
 
     ext {
         guava = '25.0-jre'
@@ -11,12 +14,15 @@ subprojects {
         commonsLang = "2.6"
         commonsLangValidator = "1.4.0"
         lombok = "1.16.18"
+        jest = "6.3.1"
+        jackson = "2.9.6"
         embeddedMongo = "2.0.0"
         groovy = "2.4.12"
-        spockCore ="1.1-groovy-2.4"
+        spockCore = "1.1-groovy-2.4"
         spockSpring = "1.1-groovy-2.4-rc-4"
         assertJ = "3.10.0"
-        springSecurityTest ="5.0.6.RELEASE"
+        springContext="5.0.9.RELEASE"
+        springSecurityTest = "5.0.6.RELEASE"
     }
 }
 
