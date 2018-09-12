@@ -16,13 +16,13 @@ public class OrderListener
 {
     private final SearchlyService searchlyService;
     private final JestClient client;
+    private final ObjectMapper mapper;
     
     @SneakyThrows
     @KafkaListener(topics = "${order.queue.topic}")
     public void listen(ConsumerRecord<String, String> record)
     {
-        final ObjectMapper mapper = new ObjectMapper();
         OrderDTO order = mapper.readValue(record.value(), OrderDTO.class);
-        searchlyService.addOrderDocument(client, order);
+        searchlyService.addOrder(client, order);
     }
 }
