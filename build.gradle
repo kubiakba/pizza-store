@@ -21,6 +21,7 @@ subprojects {
         spockCore = "1.1-groovy-2.4"
         spockSpring = "1.1-groovy-2.4-rc-4"
         assertJ = "3.10.0"
+        elasticsearch = "6.4.0"
         springContext="5.0.9.RELEASE"
         springSecurityTest = "5.0.6.RELEASE"
     }
