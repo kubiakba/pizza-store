@@ -21,6 +21,23 @@ The goal of project is to create pizza store where you can order
 
 ##
 
-App is deployed to Heroku and is connected to mongo instance on mLab.
+App is deployed to Heroku and is connected to Mongo instance on mLab, Kafka brokers on CloudKarafka and Elasticsearch instance on Searchly.
 
 <url>https://best-pizzas.herokuapp.com/</url>
+
+## How to run it locally
+
+You need to clone repository via
+ 
+> git clone https://github.com/kubiakba/pizza-store.git
+
+enter project catalog 
+
+>cd pizza-store
+
+run command
+>./gradlew bootRun
+
+and open your browser on 
+
+> http://localhost:8081
