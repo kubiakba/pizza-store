@@ -2,11 +2,14 @@ package pl.bk.search;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.searchbox.client.JestClient;
+import io.searchbox.client.JestResultHandler;
+import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.stereotype.Component;
 import pl.bk.common.dto.order.OrderDTO;
@@ -18,6 +21,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 @Component
 @AllArgsConstructor
+@Slf4j
 public class SearchlyService
 {
     private final ObjectMapper mapper;
@@ -30,7 +34,20 @@ public class SearchlyService
             .type("realized")
             .build();
         
-        client.execute(doc);
+        client.executeAsync(doc, new JestResultHandler<DocumentResult>()
+        {
+            @Override
+            public void completed(DocumentResult result)
+            {
+                log.info("Order with id:[{}] has been added to searchly database.", result.getId());
+            }
+            
+            @Override
+            public void failed(Exception ex)
+            {
+                log.error("Adding order to searchly database failed with with error:{}", ex);
+            }
+        });
     }
     
     @SneakyThrows
