@@ -24,8 +24,7 @@ spring:
                 protocol: SASL_SSL
     data:
       mongodb:
-        database: pizza-store
-        uri: mongodb://localhost:27017
+        uri: mongodb://admin1234:admin1234@ds020168.mlab.com:20168/pizza-store
 
 order:
   queue:
