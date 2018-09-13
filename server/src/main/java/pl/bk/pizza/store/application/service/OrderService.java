@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.application.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.bk.common.dto.order.NewOrderDTO;
 import pl.bk.common.dto.order.OrderDTO;
@@ -21,6 +22,7 @@ import static pl.bk.pizza.store.domain.validator.product.ProductValidator.produc
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class OrderService
 {
     private final OrderRepository orderRepository;
@@ -35,6 +37,7 @@ public class OrderService
     {
         return Mono.just(newOrderMapper.mapFromDTO(orderDTO))
                    .flatMap(orderRepository::save)
+                   .doOnNext(order -> log.info("Order with id:[{}] has been created.", order.getId()))
                    .map(orderMapper::mapToDTO);
     }
     
@@ -76,6 +79,7 @@ public class OrderService
             .map(Order::setToRealization)
             .switchIfEmpty(orderShouldExists(orderId))
             .flatMap(orderRepository::save)
+            .doOnNext(order -> log.info("Order with id:[{}] has been set to realization.", order.getId()))
             .map(orderMapper::mapToDTO)
             .doOnNext(queue::send);
     }
@@ -98,6 +102,7 @@ public class OrderService
             .flatMap(this::applyPointsToUser)
             .then(order)
             .flatMap(orderRepository::save)
+            .doOnNext(ord -> log.info("Order with id:[{}] has been delivered.", ord.getId()))
             .map(orderMapper::mapToDTO);
     }
     

@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.application.service;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import static pl.bk.pizza.store.domain.validator.product.ProductValidator.produc
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class ProductService
 {
     private final ProductRepository productRepository;
@@ -29,6 +31,7 @@ public class ProductService
     {
         return Mono.just(newProductMapper.mapFromDTO(newProduct))
                    .flatMap(productRepository::save)
+                   .doOnNext(product -> log.info("Product with id:[{}] has been added.", product.getId()))
                    .map(productMapper::mapToDTO);
     }
     
