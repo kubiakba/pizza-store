@@ -3,10 +3,12 @@ package pl.bk.pizza.store.domain.order;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import pl.bk.pizza.store.domain.discount.Discount;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import static pl.bk.pizza.store.domain.order.OrderStatus.*;
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
@@ -23,9 +25,11 @@ public class Order
     private OrderStatus orderStatus;
     private Long orderDateTime;
     private BigDecimal totalPrice;
+    private BigDecimal totalPriceWithDiscounts;
     private final DeliveryInfo deliveryInfo;
+    private final Set<Discount> discounts;
     
-    Order(String id, String userEmail, List<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo)
+    Order(String id, String userEmail, List<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo, Set<Discount> discounts)
     {
         this.id = id;
         this.userEmail = userEmail;
@@ -33,11 +37,17 @@ public class Order
         this.orderStatus = orderStatus;
         this.totalPrice = totalPrice;
         this.deliveryInfo = deliveryInfo;
+        this.discounts = discounts;
     }
     
     public Order addProduct(BaseProductInfo product)
     {
         products.add(product);
+        return this;
+    }
+    
+    public Order addDiscount(Discount discount){
+        discounts.add(discount);
         return this;
     }
     
@@ -61,6 +71,11 @@ public class Order
     {
         realizationShouldBeStarted(orderStatus);
         orderStatus = DELIVERED;
+        return this;
+    }
+    
+    public Order setPriceAfterDiscount(BigDecimal newPrice){
+        totalPriceWithDiscounts = newPrice;
         return this;
     }
 }
