@@ -3,8 +3,9 @@ package pl.bk.pizza.store.domain.order;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 
-import static java.util.Collections.emptyList;
 import static pl.bk.pizza.store.domain.service.IdGenerator.generateID;
 import static pl.bk.pizza.store.domain.validator.EmailValidator.validateEmail;
 import static pl.bk.pizza.store.domain.validator.customer.AddressValidator.validateAddress;
@@ -26,10 +27,11 @@ public class OrderFactory
         return new Order(
             generateID(),
             email,
-            emptyList(),
+            new ArrayList<>(),
             OrderStatus.STARTED,
             BigDecimal.ZERO,
-            deliveryInfo
+            deliveryInfo,
+            new HashSet<>()
         );
     }
 }
