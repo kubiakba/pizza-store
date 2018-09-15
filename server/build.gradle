@@ -49,6 +49,8 @@ dependencies {
     // embedded mongo for tests
     testCompile "de.flapdoodle.embed:de.flapdoodle.embed.mongo:${embeddedMongo}"
 
+    compile group: 'com.google.guava', name: 'guava', version: '26.0-jre'
+
     // spock
     compile "org.codehaus.groovy:groovy-all:${groovy}"
     testCompile "org.spockframework:spock-core:${spockCore}"
