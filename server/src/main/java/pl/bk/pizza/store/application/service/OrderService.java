@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.bk.common.dto.order.NewOrderDTO;
 import pl.bk.common.dto.order.OrderDTO;
+import pl.bk.common.dto.order.discount.DiscountDTO;
+import pl.bk.pizza.store.application.mapper.order.DiscountMapper;
 import pl.bk.pizza.store.application.mapper.order.NewOrderMapper;
 import pl.bk.pizza.store.application.mapper.order.OrderMapper;
 import pl.bk.pizza.store.domain.broker.OrderQueue;
 import pl.bk.pizza.store.domain.customer.user.User;
+import pl.bk.pizza.store.domain.discount.DiscountProcessor;
 import pl.bk.pizza.store.domain.order.Order;
 import pl.bk.pizza.store.domain.order.OrderRepository;
 import pl.bk.pizza.store.domain.product.BaseProductInfo;
@@ -32,6 +35,8 @@ public class OrderService
     private final UserService userService;
     private final PointsService pointsService;
     private final OrderQueue queue;
+    private final DiscountProcessor discountProcessor;
+    private final DiscountMapper discountMapper;
     
     public Mono<OrderDTO> createOrder(NewOrderDTO orderDTO)
     {
@@ -104,6 +109,25 @@ public class OrderService
             .flatMap(orderRepository::save)
             .doOnNext(ord -> log.info("Order with id:[{}] has been delivered.", ord.getId()))
             .map(orderMapper::mapToDTO);
+    }
+    
+    public Mono<OrderDTO> applyDiscounts(String orderId)
+    {
+        final Mono<Order> order = orderRepository.findById(orderId)
+                                                 .switchIfEmpty(orderShouldExists(orderId));
+        
+        return order
+            .map(discountProcessor::applyDiscounts)
+            .map(orderMapper::mapToDTO);
+    }
+    
+    public Mono<OrderDTO> addDiscountToOrder(String orderId, DiscountDTO discountDTO)
+    {
+        return orderRepository.findById(orderId)
+                              .switchIfEmpty(orderShouldExists(orderId))
+                              .map(o -> o.addDiscount(discountMapper.mapFromDTO(discountDTO)))
+                              .flatMap(orderRepository::save)
+                              .map(orderMapper::mapToDTO);
     }
     
     private Mono<User> applyPointsToUser(Order order)

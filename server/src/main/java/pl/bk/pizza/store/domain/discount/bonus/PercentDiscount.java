@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.domain.discount.bonus;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import pl.bk.pizza.store.domain.discount.Discount;
 import pl.bk.pizza.store.domain.order.Order;
 
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 import static java.util.stream.Stream.of;
 
 @AllArgsConstructor
+@Getter
 public class PercentDiscount implements Discount
 {
     private final BigDecimal discountPercent;

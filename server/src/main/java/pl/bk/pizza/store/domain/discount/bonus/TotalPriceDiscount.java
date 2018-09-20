@@ -1,6 +1,7 @@
 package pl.bk.pizza.store.domain.discount.bonus;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import pl.bk.pizza.store.domain.discount.Discount;
 import pl.bk.pizza.store.domain.order.Order;
 
@@ -9,6 +10,7 @@ import java.math.BigDecimal;
 import static java.util.stream.Stream.of;
 
 @AllArgsConstructor
+@Getter
 public class TotalPriceDiscount implements Discount
 {
     private final BigDecimal minAmountOfPaidMoneyToActivateDiscount;
@@ -18,7 +20,7 @@ public class TotalPriceDiscount implements Discount
     {
         return of(order)
             .map(o -> o.getTotalPrice().compareTo(minAmountOfPaidMoneyToActivateDiscount) > 0 ?
-                      order.setPriceAfterDiscount(order.getTotalPriceWithDiscounts().subtract(moneyToReturn)) : o)
+                      order.setPriceAfterDiscount(order.getTotalPrice().subtract(moneyToReturn)) : o)
             .findFirst()
             .get();
     }
