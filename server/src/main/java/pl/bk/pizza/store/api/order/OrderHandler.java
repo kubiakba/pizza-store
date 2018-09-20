@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import pl.bk.pizza.store.api.ErrorHandler;
 import pl.bk.common.dto.order.NewOrderDTO;
 import pl.bk.common.dto.order.OrderProductsDTO;
+import pl.bk.common.dto.order.discount.DiscountDTO;
+import pl.bk.pizza.store.api.ErrorHandler;
 import pl.bk.pizza.store.application.service.OrderService;
 import pl.bk.pizza.store.domain.report.OrderReport;
 import reactor.core.publisher.Mono;
@@ -54,12 +55,33 @@ public class OrderHandler
             .onErrorResume(ErrorHandler::handleException);
     }
     
+    Mono<ServerResponse> addDiscountToOrder(ServerRequest request)
+    {
+        final String orderId = request.pathVariable("orderId");
+        
+        return request
+            .bodyToMono(DiscountDTO.class)
+            .flatMap(discount -> orderService.addDiscountToOrder(orderId, discount)
+                                             .flatMap(order -> ServerResponse.ok().body(fromObject(order)))
+                                             .onErrorResume(ErrorHandler::handleException));
+        
+    }
+    
+    Mono<ServerResponse> applyDiscount(ServerRequest request)
+    {
+        return Mono.just(request.pathVariable("orderId"))
+                   .flatMap(orderId -> orderService.applyDiscounts(orderId)
+                                                   .flatMap(order -> ServerResponse.ok().body(fromObject(order)))
+                                                   .onErrorResume(ErrorHandler::handleException));
+        
+    }
+    
     Mono<ServerResponse> addProductsToOrder(ServerRequest request)
     {
         return request.bodyToMono(OrderProductsDTO.class)
-               .flatMap(x -> orderService.addProductsToOrder(x.getOrderId(), x.getProductsIds()))
-               .flatMap(order -> ServerResponse.ok().body(fromObject(order)))
-               .onErrorResume(ErrorHandler::handleException);
+                      .flatMap(x -> orderService.addProductsToOrder(x.getOrderId(), x.getProductsIds()))
+                      .flatMap(order -> ServerResponse.ok().body(fromObject(order)))
+                      .onErrorResume(ErrorHandler::handleException);
     }
     
     Mono<ServerResponse> setToRealization(ServerRequest request)

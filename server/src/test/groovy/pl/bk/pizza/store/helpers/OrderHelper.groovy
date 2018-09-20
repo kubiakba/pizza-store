@@ -4,6 +4,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import pl.bk.common.dto.order.DeliveryInfoDTO
 import pl.bk.common.dto.order.NewOrderDTO
 import pl.bk.common.dto.order.OrderDTO
+import pl.bk.common.dto.order.discount.DiscountDTO
 import pl.bk.pizza.store.infrastructure.error.ErrorMessage
 import reactor.core.publisher.Mono
 
@@ -22,6 +23,32 @@ trait OrderHelper
             .exchange()
             .expectStatus()
             .isCreated()
+            .expectBody(OrderDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    OrderDTO addDiscountToOrder(String orderId, DiscountDTO discountDTO)
+    {
+        client
+            .put()
+            .uri("/orders/discounts/$orderId/addDiscount")
+            .body(Mono.just(discountDTO),DiscountDTO)
+            .exchange()
+            .expectStatus()
+            .isOk()
+            .expectBody(OrderDTO)
+            .returnResult()
+            .responseBody
+    }
+
+    OrderDTO applyDiscounts(String orderId){
+        client
+            .put()
+            .uri("/orders/discounts/$orderId/apply")
+            .exchange()
+            .expectStatus()
+            .isOk()
             .expectBody(OrderDTO)
             .returnResult()
             .responseBody

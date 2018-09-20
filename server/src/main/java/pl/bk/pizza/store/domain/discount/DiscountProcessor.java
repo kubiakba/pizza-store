@@ -1,22 +1,27 @@
 package pl.bk.pizza.store.domain.discount;
 
-import lombok.AllArgsConstructor;
-import pl.bk.pizza.store.domain.discount.rule.DiscountRule;
-import pl.bk.pizza.store.domain.discount.rule.DiscountRuleProcessor;
+import com.google.common.collect.ImmutableSortedMap;
+import org.springframework.stereotype.Component;
 import pl.bk.pizza.store.domain.order.Order;
 
-@AllArgsConstructor
+import static pl.bk.pizza.store.domain.discount.DiscountPriority.prioritizeDiscounts;
+
+//TODO add rules to processor
+
+@Component
 public class DiscountProcessor
 {
-    private final DiscountRule rule;
-    private final DiscountRuleProcessor ruleProcessor;
-    
-    void applyDiscounts(Order order)
+    public Order applyDiscounts(Order order)
     {
-        ruleProcessor.process(rule, order)
-                     .forEach((key, value) -> order.getDiscounts()
-                                                   .stream()
-                                                   .filter(discount -> discount.getClass().equals(value))
-                                                   .forEach(discount -> discount.apply(order)));
+        return apply(prioritizeDiscounts, order);
+    }
+    
+    private Order apply(ImmutableSortedMap<Integer, Class<? extends Discount>> discounts, Order order)
+    {
+        discounts.forEach((key, value) -> order.getDiscounts()
+                                               .stream()
+                                               .filter(discount -> discount.getClass().equals(value))
+                                               .forEach(discount -> discount.apply(order)));
+        return order;
     }
 }

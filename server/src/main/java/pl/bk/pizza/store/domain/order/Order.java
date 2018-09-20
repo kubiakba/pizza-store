@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
-import static pl.bk.pizza.store.domain.order.OrderStatus.*;
+import static pl.bk.pizza.store.domain.order.OrderStatus.DELIVERED;
+import static pl.bk.pizza.store.domain.order.OrderStatus.TO_REALIZATION;
 import static pl.bk.pizza.store.domain.service.NowProvider.now;
 import static pl.bk.pizza.store.domain.validator.order.OrderValidator.realizationShouldBeStarted;
 
@@ -29,7 +30,7 @@ public class Order
     private final DeliveryInfo deliveryInfo;
     private final Set<Discount> discounts;
     
-    Order(String id, String userEmail, List<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo, Set<Discount> discounts)
+    Order(String id, String userEmail, List<BaseProductInfo> products, OrderStatus orderStatus, BigDecimal totalPrice, DeliveryInfo deliveryInfo, Set<Discount> discounts, BigDecimal totalPriceWithDiscounts)
     {
         this.id = id;
         this.userEmail = userEmail;
@@ -38,6 +39,7 @@ public class Order
         this.totalPrice = totalPrice;
         this.deliveryInfo = deliveryInfo;
         this.discounts = discounts;
+        this.totalPriceWithDiscounts = totalPriceWithDiscounts;
     }
     
     public Order addProduct(BaseProductInfo product)
@@ -46,7 +48,8 @@ public class Order
         return this;
     }
     
-    public Order addDiscount(Discount discount){
+    public Order addDiscount(Discount discount)
+    {
         discounts.add(discount);
         return this;
     }
@@ -56,6 +59,7 @@ public class Order
         orderStatus = TO_REALIZATION;
         orderDateTime = now().toEpochSecond();
         totalPrice = calculateTotalPrice();
+        setPriceAfterDiscount(totalPrice);
         return this;
     }
     
@@ -74,7 +78,8 @@ public class Order
         return this;
     }
     
-    public Order setPriceAfterDiscount(BigDecimal newPrice){
+    public Order setPriceAfterDiscount(BigDecimal newPrice)
+    {
         totalPriceWithDiscounts = newPrice;
         return this;
     }

@@ -1,14 +1,13 @@
 package pl.bk.pizza.store
 
-import pl.bk.common.dto.order.OrderStatusDTO
+import pl.bk.common.dto.order.OrderDTO
+import pl.bk.common.dto.order.discount.TotalPriceDiscountDTO
 import pl.bk.pizza.store.helpers.CommonSpecification
 
-import static java.math.BigDecimal.*
+import static java.math.BigDecimal.ONE
+import static java.math.BigDecimal.ZERO
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.common.dto.order.OrderStatusDTO.*
-import static pl.bk.common.dto.order.OrderStatusDTO.*
-import static pl.bk.common.dto.order.OrderStatusDTO.TO_REALIZATION
-import static pl.bk.pizza.store.domain.order.OrderStatus.*
 import static pl.bk.pizza.store.helpers.stubs.OrderStub.getNewDeliveryInfoStub
 import static pl.bk.pizza.store.helpers.stubs.ProductStub.getNewPizzaDTOStub
 import static pl.bk.pizza.store.helpers.stubs.UserStub.getNewUserDTOStub
@@ -163,5 +162,54 @@ class OrderSpecification extends CommonSpecification
 
         expect:
         generateReport(1)
+    }
+
+    def "should add discount to order"()
+    {
+        given:
+        OrderDTO order = getOrderWithProduct()
+
+        and: "create discount"
+        def discount = new TotalPriceDiscountDTO(ZERO, ONE)
+
+        when:
+        def orderAfterDiscount = addDiscountToOrder(order.id, discount)
+
+        then:
+        assertThat(orderAfterDiscount.discounts.size()).isEqualTo(1)
+    }
+
+    def "should apply discount to order"()
+    {
+        given:
+        OrderDTO order = getOrderWithProduct()
+
+        and:
+        startOrderRealization(order.id)
+
+        and: "create discount"
+        def discount = new TotalPriceDiscountDTO(ZERO, ONE)
+
+        and:
+        addDiscountToOrder(order.id, discount)
+
+        when:
+        def orderWithAppliedDiscounts = applyDiscounts(order.id)
+
+        then:
+        assertThat(orderWithAppliedDiscounts.totalPriceWithDiscount)
+            .isEqualTo(order.getProducts().get(0).price.subtract(discount.moneyToReturn))
+    }
+
+    private OrderDTO getOrderWithProduct()
+    {
+        def email = "aa@wp.pl"
+        createUser(getNewUserDTOStub(email))
+
+        def product = createProduct(getNewPizzaDTOStub())
+
+        def order = createOrder(email, getNewDeliveryInfoStub())
+
+        return addProductToOrder(order.id, product.id)
     }
 }

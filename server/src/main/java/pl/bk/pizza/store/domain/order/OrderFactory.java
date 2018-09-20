@@ -31,7 +31,8 @@ public class OrderFactory
             OrderStatus.STARTED,
             BigDecimal.ZERO,
             deliveryInfo,
-            new HashSet<>()
+            new HashSet<>(),
+            BigDecimal.ZERO
         );
     }
 }
