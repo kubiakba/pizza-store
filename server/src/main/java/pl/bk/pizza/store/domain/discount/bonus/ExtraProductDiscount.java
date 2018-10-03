@@ -12,7 +12,7 @@ import static java.util.stream.Stream.of;
 @Getter
 public class ExtraProductDiscount implements Discount
 {
-    private final int numberOfBoughtProducts;
+    private final Integer numberOfBoughtProducts;
     private final String productId;
     private final Integer extraProducts;
     
