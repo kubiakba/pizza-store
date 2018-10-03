@@ -54,7 +54,7 @@ public class PercentDiscount implements Discount
     
     private BigDecimal calculatePriceToWithdraw(BigDecimal price, long numberOfProducts)
     {
-        return new BigDecimal(numberOfProducts)
-            .multiply(price.multiply(discountPercent));
+        final BigDecimal fraction = new BigDecimal("0.01").multiply(discountPercent);
+        return new BigDecimal(numberOfProducts).multiply(price.multiply(fraction));
     }
 }

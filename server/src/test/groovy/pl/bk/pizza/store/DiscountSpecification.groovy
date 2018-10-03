@@ -2,6 +2,7 @@ package pl.bk.pizza.store
 
 import pl.bk.common.dto.order.OrderDTO
 import pl.bk.common.dto.order.discount.ExtraProductDiscountDTO
+import pl.bk.common.dto.order.discount.PercentDiscountDTO
 import pl.bk.common.dto.order.discount.TotalPriceDiscountDTO
 import pl.bk.pizza.store.helpers.CommonSpecification
 
@@ -81,6 +82,28 @@ class DiscountSpecification extends CommonSpecification
         assertThat(orderWithAppliedDiscounts.products.size())
             .isEqualTo(2)
         assertThat(orderWithAppliedDiscounts.totalPriceWithDiscount).isEqualByComparingTo(new BigDecimal("29.0"))
+    }
+
+    def "should apply PercentDiscount"()
+    {
+        given:
+        OrderDTO order = getOrderWithProduct()
+
+        and:
+        startOrderRealization(order.id)
+
+        and: "create discount"
+        def discount = new PercentDiscountDTO(new BigDecimal("10.0"), order.products.get(0).id)
+
+        and:
+        addDiscountToOrder(order.id, discount)
+
+        when:
+        def orderWithAppliedDiscounts = applyDiscounts(order.id)
+
+        then:
+        assertThat(orderWithAppliedDiscounts.totalPriceWithDiscount)
+            .isEqualTo(new BigDecimal("27.0"))
     }
 
     private OrderDTO getOrderWithProduct()
