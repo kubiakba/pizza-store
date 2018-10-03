@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class ExtraProductDiscountDTO extends DiscountDTO
 {
-    private final int numberOfBoughtProducts;
+    private final Integer numberOfBoughtProducts;
     private final String productId;
     private final Integer extraProducts;
 }
