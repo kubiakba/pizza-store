@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import pl.bk.pizza.store.domain.discount.Discount;
 import pl.bk.pizza.store.domain.order.Order;
+import pl.bk.pizza.store.domain.product.BaseProductInfo;
+
+import java.util.List;
 
 import static java.util.stream.IntStream.range;
 import static java.util.stream.Stream.of;
@@ -32,11 +35,16 @@ public class ExtraProductDiscount implements Discount
     {
         return of(order)
             .flatMap(o -> range(0, extraProducts)
-                .mapToObj(x -> o.addProduct(o.getProducts()
-                                             .stream()
-                                             .filter(p -> p.getId().equals(productId))
-                                             .findFirst()
-                                             .get())))
+                .mapToObj(x -> o.addProduct(getProductById(o.getProducts()))))
+            .findFirst()
+            .get();
+    }
+    
+    private BaseProductInfo getProductById(List<BaseProductInfo> products)
+    {
+        return products
+            .stream()
+            .filter(p -> p.getId().equals(productId))
             .findFirst()
             .get();
     }
