@@ -1,10 +1,8 @@
 package pl.bk.pizza.store
 
 import pl.bk.common.dto.order.OrderDTO
-import pl.bk.common.dto.order.discount.TotalPriceDiscountDTO
 import pl.bk.pizza.store.helpers.CommonSpecification
 
-import static java.math.BigDecimal.ONE
 import static java.math.BigDecimal.ZERO
 import static org.assertj.core.api.Assertions.assertThat
 import static pl.bk.common.dto.order.OrderStatusDTO.*
@@ -164,43 +162,6 @@ class OrderSpecification extends CommonSpecification
         generateReport(1)
     }
 
-    def "should add discount to order"()
-    {
-        given:
-        OrderDTO order = getOrderWithProduct()
-
-        and: "create discount"
-        def discount = new TotalPriceDiscountDTO(ZERO, ONE)
-
-        when:
-        def orderAfterDiscount = addDiscountToOrder(order.id, discount)
-
-        then:
-        assertThat(orderAfterDiscount.discounts.size()).isEqualTo(1)
-    }
-
-    def "should apply discount to order"()
-    {
-        given:
-        OrderDTO order = getOrderWithProduct()
-
-        and:
-        startOrderRealization(order.id)
-
-        and: "create discount"
-        def discount = new TotalPriceDiscountDTO(ZERO, ONE)
-
-        and:
-        addDiscountToOrder(order.id, discount)
-
-        when:
-        def orderWithAppliedDiscounts = applyDiscounts(order.id)
-
-        then:
-        assertThat(orderWithAppliedDiscounts.totalPriceWithDiscount)
-            .isEqualTo(order.getProducts().get(0).price.subtract(discount.moneyToReturn))
-    }
-
     private OrderDTO getOrderWithProduct()
     {
         def email = "aa@wp.pl"
@@ -213,3 +174,4 @@ class OrderSpecification extends CommonSpecification
         return addProductToOrder(order.id, product.id)
     }
 }
+
