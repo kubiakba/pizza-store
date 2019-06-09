@@ -6,27 +6,27 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "se.transmode.gradle:gradle-docker:$gradleDocker"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring"
+        
     }
-}
-
-plugins {
-    id "org.sonarqube" version "2.6.2"
+    configurations {
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+    }
 }
 
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'application'
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'docker'
 apply plugin: 'jacoco'
 
 dependencies {
 
-    compile project(':textSearch')
     compile project(':common')
-
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
     // spring
     compile "org.springframework.boot:spring-boot-starter-webflux"
     compile "org.springframework.boot:spring-boot-starter-data-mongodb-reactive"
@@ -42,7 +42,8 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:${rxjava}"
     compile "commons-lang:commons-lang:${commonsLang}"
     compile "commons-validator:commons-validator:${commonsLangValidator}"
-    compileOnly "org.projectlombok:lombok:${lombok}"
+    annotationProcessor "org.projectlombok:lombok:1.18.6"
+    compileOnly "org.projectlombok:lombok:1.18.6"
 
     compile "org.springframework.kafka:spring-kafka:2.1.8.RELEASE"
 
@@ -64,17 +65,6 @@ bootJar {
     version = '1.0'
 }
 
-task buildDocker(type: Docker, dependsOn: build) {
-    baseImage = 'frolvlad/alpine-oraclejdk8:slim'
-    applicationName = jar.baseName
-    addFile {
-        from bootJar
-        rename { 'app.jar' }
-    }
-    exposePort(8081)
-    entryPoint(['java', '-Dspring.profiles.active=docker', '-jar', '/app.jar'])
-}
-
 jacocoTestReport {
     reports {
         xml.enabled true
@@ -82,7 +72,5 @@ jacocoTestReport {
     }
 }
 
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
-
 check.dependsOn jacocoTestReport
+

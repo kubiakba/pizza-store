@@ -3,46 +3,12 @@ server:
 
 jwt:
   header: Authorization
-  secret: m6sXDUKZSY154e9N
+  secret: ${JWT_SECRET}
   prefix: Bearer
 
 spring:
-    kafka:
-        bootstrap-servers: ark-01.srvs.cloudkafka.com:9094,ark-02.srvs.cloudkafka.com:9094,ark-03.srvs.cloudkafka.com:9094
-        consumer:
-            auto-offset-reset: latest
-            group-id: 9wc1061t-consumers
-            value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        producer:
-            value-serializer: org.apache.kafka.common.serialization.StringSerializer
-        properties:
-            sasl:
-                jaas:
-                    config: org.apache.kafka.common.security.scram.ScramLoginModule required username="9wc1061t" password="r57LDd0En7jCDvneebry59Vy5_KfgO_-";
-                mechanism: SCRAM-SHA-256
-            security:
-                protocol: SASL_SSL
     data:
       mongodb:
-        uri: mongodb://admin1234:admin1234@ds020168.mlab.com:20168/pizza-store
-
-order:
-  queue:
-    topic: 9wc1061t-orders
+        uri: ${MONGO_DB_PATH}
 
 price-point-multiplier : 0.1
-
----
-spring:
-  profiles: docker
-  data:
-    mongodb:
-      database: pizza-store
-      uri: mongodb://mongodb:27017
-
----
-spring:
-  profiles: heroku
-  data:
-    mongodb:
-      uri: ${MONGODB_URI}

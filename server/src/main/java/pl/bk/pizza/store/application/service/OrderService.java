@@ -9,7 +9,6 @@ import pl.bk.common.dto.order.discount.DiscountDTO;
 import pl.bk.pizza.store.application.mapper.order.DiscountMapper;
 import pl.bk.pizza.store.application.mapper.order.NewOrderMapper;
 import pl.bk.pizza.store.application.mapper.order.OrderMapper;
-import pl.bk.pizza.store.domain.broker.OrderQueue;
 import pl.bk.pizza.store.domain.customer.user.User;
 import pl.bk.pizza.store.domain.discount.DiscountProcessor;
 import pl.bk.pizza.store.domain.order.Order;
@@ -34,7 +33,6 @@ public class OrderService
     private final NewOrderMapper newOrderMapper;
     private final UserService userService;
     private final PointsService pointsService;
-    private final OrderQueue queue;
     private final DiscountProcessor discountProcessor;
     private final DiscountMapper discountMapper;
     
@@ -85,8 +83,7 @@ public class OrderService
             .switchIfEmpty(orderShouldExists(orderId))
             .flatMap(orderRepository::save)
             .doOnNext(order -> log.info("Order with id:[{}] has been set to realization.", order.getId()))
-            .map(orderMapper::mapToDTO)
-            .doOnNext(queue::send);
+            .map(orderMapper::mapToDTO);
     }
     
     public Mono<OrderDTO> getOrderById(String orderId)
