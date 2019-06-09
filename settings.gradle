@@ -1,5 +1,4 @@
 rootProject.name ='pizza-store'
 include 'server'
-include 'textSearch'
 include 'common'
 

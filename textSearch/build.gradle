@@ -1,8 +1,0 @@
-dependencies {
-    compile project (":common")
-    compile "org.springframework:spring-context:${springContext}"
-    compile "org.elasticsearch:elasticsearch:${elasticsearch}"
-    compile "com.fasterxml.jackson.core:jackson-databind:${jackson}"
-    compile "io.searchbox:jest:${jest}"
-    compileOnly "org.projectlombok:lombok:${lombok}"
-}

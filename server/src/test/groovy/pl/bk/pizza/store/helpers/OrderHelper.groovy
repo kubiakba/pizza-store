@@ -115,14 +115,4 @@ trait OrderHelper
             .returnResult()
             .responseBody
     }
-
-    void generateReport(Integer timeInMinutes)
-    {
-        client
-            .put()
-            .uri("/admin/orders/report/$timeInMinutes")
-            .exchange()
-            .expectStatus()
-            .isAccepted()
-    }
 }

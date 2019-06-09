@@ -22,11 +22,25 @@ subprojects {
         spockSpring = "1.1-groovy-2.4-rc-4"
         assertJ = "3.10.0"
         elasticsearch = "6.4.0"
-        springContext="5.0.9.RELEASE"
+        springContext = "5.0.9.RELEASE"
         springSecurityTest = "5.0.6.RELEASE"
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.3'
+task hello {
+
+    doFirst {
+        println "First hello"
+    }
+    doLast {
+        println 'Hello Gradle'
+    }
 }
+
+task other(dependsOn: 'hello') {
+    doFirst {
+        println "I'm not a default task!"
+    }
+}
+
+defaultTasks 'shit'

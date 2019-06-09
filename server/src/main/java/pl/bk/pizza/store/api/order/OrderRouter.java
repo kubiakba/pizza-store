@@ -19,7 +19,6 @@ public class OrderRouter
         return route(POST("/orders"), orderHandler::createOrder)
             .andRoute(PUT("/orders/discounts/{orderId}/addDiscount"), orderHandler::addDiscountToOrder)
             .andRoute(PUT("/orders/discounts/{orderId}/apply"), orderHandler::applyDiscount)
-            .andRoute(PUT("/admin/orders/report/{timeInMinutes}"), orderHandler::generateLastOrdersReport)
             .andRoute(GET("/orders/{orderId}"), orderHandler::getOrder)
             .andRoute(PUT("/orders/{orderId}/to-realization"), orderHandler::setToRealization)
             .andRoute(PUT("/admin/orders/{orderId}/delivered"), orderHandler::setToDelivered)

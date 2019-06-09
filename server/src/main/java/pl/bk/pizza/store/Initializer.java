@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"pl.bk.search", "pl.bk.common", "pl.bk.pizza"})
+@ComponentScan({"pl.bk.common", "pl.bk.pizza"})
 public class Initializer
 {
     public static void main(String[] args)

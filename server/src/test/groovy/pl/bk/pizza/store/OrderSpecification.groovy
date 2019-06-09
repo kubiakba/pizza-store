@@ -139,39 +139,5 @@ class OrderSpecification extends CommonSpecification
         then:
         assertThat(user.points).isEqualTo(3)
     }
-
-    def "should generate report"()
-    {
-        given: "create user"
-        def email = "aa@wp.pl"
-        createUser(getNewUserDTOStub(email))
-
-        and: "create product"
-        def productDto = getNewPizzaDTOStub()
-        def product = createProduct(productDto)
-
-        and: "add product to order"
-        def order = createOrder(email, getNewDeliveryInfoStub())
-        addProductToOrder(order.id, product.id)
-
-        and: "start and deliver order"
-        startOrderRealization(order.id)
-        deliverOrder(order.id)
-
-        expect:
-        generateReport(1)
-    }
-
-    private OrderDTO getOrderWithProduct()
-    {
-        def email = "aa@wp.pl"
-        createUser(getNewUserDTOStub(email))
-
-        def product = createProduct(getNewPizzaDTOStub())
-
-        def order = createOrder(email, getNewDeliveryInfoStub())
-
-        return addProductToOrder(order.id, product.id)
-    }
 }
 
